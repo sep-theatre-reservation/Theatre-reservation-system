@@ -1,18 +1,13 @@
-import NavbarComponent from "../components/NavbarComponent"
-import CarouselComponent from "../components/CarouselComponent"
-import MoviesSection from "../components/MoviesSection"
-import Footer from "../components/Footer"
-
+import CarouselComponent from "../components/CarouselComponent";
+import MoviesSection from "../components/MoviesSection";
 
 const HomePage = () => {
   return (
     <>
-      <NavbarComponent />
       <CarouselComponent />
-      <MoviesSection/>
-      <Footer/>
+      <MoviesSection />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
