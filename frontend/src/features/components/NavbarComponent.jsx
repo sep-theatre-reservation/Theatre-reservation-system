@@ -62,7 +62,7 @@ function NavbarComponent() {
                 Contact Us
               </Nav.Link>
               {auth.isLoggedIn && (
-                <Nav.Link as={Link} to="/">
+                <Nav.Link as={Link} to="/Admin">
                   Admin Dashboard
                 </Nav.Link>
               )}

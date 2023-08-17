@@ -5,6 +5,7 @@ import NavbarComponent from "./features/components/NavbarComponent";
 import Footer from "./features/components/Footer";
 import { useCallback, useState } from "react";
 import { AuthContext } from "./features/context/auth-context";
+import AdminPage from "./features/pages/AdminPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,9 +24,10 @@ function App() {
     >
       <Router>
         <NavbarComponent />
-        <main>
+        <main style={{ minHeight: "80vh" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/Admin" element={<AdminPage />} />
           </Routes>
         </main>
         <Footer />
