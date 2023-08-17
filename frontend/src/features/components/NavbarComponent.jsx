@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
-
 function NavbarComponent() {
     return (
         <>
@@ -18,7 +17,7 @@ function NavbarComponent() {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <LinkContainer to="/movies">
+                            <LinkContainer to="/movies/nowshowing">
                             <Nav.Link>Movies</Nav.Link>
                             </LinkContainer>
                             <Nav.Link href="/contactus">
