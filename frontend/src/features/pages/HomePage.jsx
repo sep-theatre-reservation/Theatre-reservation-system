@@ -3,7 +3,6 @@ import CarouselComponent from "../components/CarouselComponent"
 import MoviesSection from "../components/MoviesSection"
 import Footer from "../components/Footer"
 
-
 const HomePage = () => {
   return (
     <>

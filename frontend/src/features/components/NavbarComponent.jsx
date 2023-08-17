@@ -3,14 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function NavbarComponent() {
     return (
         <>
             <Navbar expand="lg" bg="dark" data-bs-theme="dark">
                 <Container fluid>
-                    <Navbar.Brand href="#">Book My Show</Navbar.Brand>
+                    <Navbar.Brand href="/">Book My Show</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -18,8 +18,10 @@ function NavbarComponent() {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="#action2">Movies</Nav.Link>
-                            <Nav.Link href="#">
+                            <LinkContainer to="/movies">
+                            <Nav.Link>Movies</Nav.Link>
+                            </LinkContainer>
+                            <Nav.Link href="/contactus">
                                 Contact Us
                             </Nav.Link>
                         </Nav>
