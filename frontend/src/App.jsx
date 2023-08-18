@@ -4,6 +4,7 @@ import MoviesPage from './features/pages/MoviesPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NowShowing from './features/components/NowShowing'
 import CommingSoon from './features/components/CommingSoon'
+import MovieShowcasePage from './features/pages/MovieShowcasePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path='nowshowing' element={<NowShowing />}></Route>
             <Route path='commingsoon' element={<CommingSoon />}></Route>
           </Route>
+          <Route path='movies/movie1' element={<MovieShowcasePage />}></Route>
         </Routes>
       </Router>
     </>
