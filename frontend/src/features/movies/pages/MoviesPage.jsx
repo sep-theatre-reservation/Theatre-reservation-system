@@ -1,6 +1,6 @@
 import Stack from 'react-bootstrap/Stack';
 import { LinkContainer } from 'react-router-bootstrap';
-import NavbarComponent from '../components/NavbarComponent'
+import NavbarComponent from '../../shared/components/NavbarComponent'
 import { Navigate, Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 

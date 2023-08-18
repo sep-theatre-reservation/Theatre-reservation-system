@@ -1,15 +1,15 @@
-import HomePage from './features/pages/HomePage'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MoviesPage from './features/pages/MoviesPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NowShowing from './features/components/NowShowing'
-import CommingSoon from './features/components/CommingSoon'
-import MovieShowcasePage from './features/pages/MovieShowcasePage';
-import NavbarComponent from "./features/components/NavbarComponent";
-import Footer from "./features/components/Footer";
 import { useCallback, useState } from "react";
-import { AuthContext } from "./features/context/auth-context";
-import AdminPage from "./features/pages/AdminPage";
+import {AuthContext} from './features/shared/context/auth-context'
+import NavbarComponent from './features/shared/components/NavbarComponent'
+import HomePage from './features/home/pages/HomePage'
+import NowShowing from './features/movies/components/NowShowing'
+import CommingSoon from './features/movies/components/CommingSoon'
+import MovieShowcasePage from './features/movieShowcase/pages/MovieShowcasePage'
+import MoviesPage from './features/movies/pages/MoviesPage'
+import Footer from './features/shared/components/Footer'
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

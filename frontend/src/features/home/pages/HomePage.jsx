@@ -1,5 +1,5 @@
 import CarouselComponent from "../components/CarouselComponent"
-import MoviesSection from "../components/MoviesSection"
+import MoviesSection from "../../shared/components/MoviesSection";
 
 
 const HomePage = () => {

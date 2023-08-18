@@ -1,4 +1,4 @@
-import MoviesSection from "./MoviesSection";
+import MoviesSection from "../../shared/components/MoviesSection";
 
 function CommingSoon() {
   return (
