@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom';
 function MoviesPage() {
   return (
     <>
-      <NavbarComponent />
       <Stack>
         <div className="p-4 "><h3>Movies</h3></div>
         <Stack direction="horizontal">
