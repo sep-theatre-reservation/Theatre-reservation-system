@@ -9,6 +9,7 @@ import CommingSoon from './features/movies/components/CommingSoon'
 import MovieShowcasePage from './features/movieShowcase/pages/MovieShowcasePage'
 import MoviesPage from './features/movies/pages/MoviesPage'
 import Footer from './features/shared/components/Footer'
+import BookingPage from './features/booking/pages/BookingPage'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path='commingsoon' element={<CommingSoon />}></Route>
           </Route>
           <Route path='movies/movie1' element={<MovieShowcasePage />}></Route>
+          <Route path='booking' element={<BookingPage />}></Route>
         </Routes>
         </main>
         <Footer />

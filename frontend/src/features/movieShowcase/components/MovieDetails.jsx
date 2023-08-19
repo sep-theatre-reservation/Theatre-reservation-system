@@ -1,18 +1,13 @@
-import { Container, Card, Row, Col, Stack, Button } from "react-bootstrap"
+import { Container, Row, Col, Stack, Button } from "react-bootstrap"
 import { Link } from 'react-router-dom';
+import MovieImageCard from "../../shared/components/MovieImageCard";
 
 function MovieDetails() {
     return (
         <Container fluid className="p-5">
             <Row>
                 <Col lg={3} className="d-none d-xl-block">
-                    <Card style={{ width: '18rem' }} >
-                        <Card.Img
-                            variant=""
-                            src="https://lk-aps.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/oppenheimer-et00004979-23-06-2023-02-14-08.jpg"
-                            alt="Movie Poster"
-                        />
-                    </Card>
+                    <MovieImageCard/>
                 </Col>
                 <Col lg={9}>
                     <Stack gap={5}>
@@ -28,7 +23,7 @@ function MovieDetails() {
                                     </Stack>
                                 </Stack>
                             </div>
-                            <Button as={Link} to="/another-page" variant="primary" className=" m-auto">
+                            <Button as={Link} to="/booking" variant="primary" className=" m-auto">
                                 Book Tickets
                             </Button>
                         </Stack>
@@ -64,13 +59,13 @@ function MovieDetails() {
                         <Stack>
                             <h3>Team</h3>
                             <Stack direction="horizontal" gap={5} className="pt-3">
-                            <div className="circular-image-container">
-                                <div className="circular-image">
-                                    <img src='https://e00-marca.uecdn.es/assets/multimedia/imagenes/2023/07/29/16906452894987.jpg' alt="Circular Image" />
+                                <div className="circular-image-container">
+                                    <div className="circular-image">
+                                        <img src='https://e00-marca.uecdn.es/assets/multimedia/imagenes/2023/07/29/16906452894987.jpg' alt="Circular Image" />
+                                    </div>
+                                    <h6>Chrisoper Nolan</h6>
+                                    <p>Director</p>
                                 </div>
-                                <h6>Chrisoper Nolan</h6>
-                                <p>Director</p>
-                            </div>
                             </Stack>
                         </Stack>
                     </Stack>
