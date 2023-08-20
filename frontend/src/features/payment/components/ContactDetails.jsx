@@ -5,10 +5,10 @@ import Card from 'react-bootstrap/Card';
 function ContactDetails() {
     return (
         <Card style={{ width: '30rem' }}>
-            <Card.Header as="h5">Contact Details</Card.Header>
             <Card.Body>
+                <Card.Title>Contact Details</Card.Title>
                 <Form>
-                    <Form.Group controlId="formEmail">
+                    <Form.Group controlId="formEmail" className='mb-2'>
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
                             type="email"
@@ -16,15 +16,14 @@ function ContactDetails() {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formPhoneNumber">
+                    <Form.Group controlId="formPhoneNumber" className='mb-2'>
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter phone number"
                         />
                     </Form.Group>
-
-                    <Button variant="primary" >
+                    <Button variant="primary" className='mt-2' >
                         Continue
                     </Button>
                 </Form>
