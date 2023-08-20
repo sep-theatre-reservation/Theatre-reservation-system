@@ -2,7 +2,6 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 
 function MovieImageCard({ className,size }) {
-    console.log(className,size)
     return (
         <Card style={{  width: `${size || 18}rem`}} className={className}>
             <Card.Img

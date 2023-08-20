@@ -45,8 +45,8 @@ function NavbarComponent() {
     <>
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">
-            Book My Show
+          <Navbar.Brand as={Link} to="/" id="navBarBrand">
+            Booking.Lk
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -55,14 +55,14 @@ function NavbarComponent() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/movies">
+              <Nav.Link as={Link} to="/movies" className="navLink">
                 Movies
               </Nav.Link>
-              <Nav.Link as={Link} to="/contactus">
+              <Nav.Link as={Link} to="/contactus" className="navLink">
                 Contact Us
               </Nav.Link>
               {auth.isLoggedIn && (
-                <Nav.Link as={Link} to="/Admin">
+                <Nav.Link as={Link} to="/Admin" className="navLink">
                   Admin Dashboard
                 </Nav.Link>
               )}

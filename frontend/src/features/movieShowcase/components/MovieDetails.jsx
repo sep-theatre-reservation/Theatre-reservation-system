@@ -7,7 +7,7 @@ function MovieDetails() {
         <Container fluid className="p-5">
             <Row>
                 <Col lg={3} className="d-none d-xl-block">
-                    <MovieImageCard/>
+                    <MovieImageCard />
                 </Col>
                 <Col lg={9}>
                     <Stack gap={5}>
