@@ -1,3 +1,27 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap');
+body {
+  font-family: 'roboto', sans-serif;
+
+}
+#navBarBrand{
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  margin-left: 10px;
+  margin-right: 25px;
+  margin-bottom: 12px;
+}
+
+.navLink{
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+
+
+
 .active {
     font-weight: bold;
 }

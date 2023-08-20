@@ -7,8 +7,9 @@ function BookingPage() {
   return (
     <Container className='pt-5'>
       <Stack gap={3}>
+        <h2>Buy Tickets</h2>
         <UpcomingWeekSelect />
-        <h2>Oppenheimer</h2>
+        <h3>Oppenheimer</h3>
         <Row>
           <Col className='d-md-none'>
             <MovieImageCard size={10} />
