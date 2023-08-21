@@ -1,6 +1,6 @@
 import Seat from "../components/Seat";
 import "./SeatSelection.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const rows = 4;
 const cols = 7;
@@ -46,8 +46,12 @@ const SeatSelection = () => {
         selectedList.filter((seat) => seat != selectedId)
       );
     }
-    console.log(selected);
   };
+
+  //side effect updating...
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
 
   let rowAr = [];
   let Sid = 0;
@@ -62,6 +66,7 @@ const SeatSelection = () => {
     for (let i = 0; i < sec1; i++) {
       secAr1.push(
         <Seat
+          key={SEATS[Sid].id}
           id={SEATS[Sid].id}
           onSelect={handleSelect}
           available={SEATS[Sid].availability}
@@ -72,6 +77,7 @@ const SeatSelection = () => {
     for (let i = 0; i < sec2; i++) {
       secAr2.push(
         <Seat
+          key={SEATS[Sid].id}
           id={SEATS[Sid].id}
           onSelect={handleSelect}
           available={SEATS[Sid].availability}
@@ -81,8 +87,8 @@ const SeatSelection = () => {
     }
     rowAr.push(
       <tr key={row}>
-        <td>{secAr1}</td>
-        <td>{secAr2}</td>
+        <td key="sec1">{secAr1}</td>
+        <td key="sec2">{secAr2}</td>
       </tr>
     );
   }
