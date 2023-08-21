@@ -1,0 +1,31 @@
+.seat{
+    background-color: rgb(222, 237, 249);
+    border: 3px solid black;
+    color: black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.seat:hover {
+    transform: scale(1.2);
+  }
+
+.unavailable{
+    border: 3px solid black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background-color: #5df57e;
+  }
