@@ -1,5 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useCallback, useState } from "react";
 import {AuthContext} from './features/shared/context/auth-context'
 import NavbarComponent from './features/shared/components/NavbarComponent'
@@ -11,6 +11,9 @@ import MoviesPage from './features/movies/pages/MoviesPage'
 import Footer from './features/shared/components/Footer'
 import BookingPage from './features/booking/pages/bookingPage';
 import PaymentPage from './features/payment/pages/PaymentPage'
+import AdminPage from "./features/admin/pages/AdminPage";
+import SeatSelection from "./features/reservations/pages/SeatSelection";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,15 +27,17 @@ function App() {
   }, []);
 
   return (
-    
     <AuthContext.Provider
-    value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-  >
+      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+    >
       <Router>
+
       <NavbarComponent />
       <main style={{ minHeight: "80vh" }}>
         <Routes>
           <Route path='/' element={<HomePage />} />
+                        <Route path="/Admin" element={<AdminPage />} />
+            <Route path="/seats" element={<SeatSelection />} />
           <Route path='/movies/*' element={<MoviesPage />}>
             <Route index element={<NowShowing />}></Route>
             <Route path='nowshowing' element={<NowShowing />}></Route>
@@ -45,8 +50,8 @@ function App() {
         </main>
         <Footer />
       </Router>
-      </AuthContext.Provider>
-  )
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
