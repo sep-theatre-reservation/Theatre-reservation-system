@@ -2,7 +2,7 @@ import React from 'react'
 import OrderSummary from '../components/OrderSummary'
 import ContactDetails from '../components/ContactDetails'
 import CardDetails from '../components/CardDetails'
-import { Container, Stack, Col,Row } from 'react-bootstrap'
+import { Container, Stack, Col, Row } from 'react-bootstrap'
 function PaymentPage() {
   return (
     <Container className='pt-5  '>
@@ -21,7 +21,6 @@ function PaymentPage() {
             <OrderSummary />
           </div>
         </Col>
-
       </Row>
     </Container>
   )
