@@ -1,6 +1,6 @@
 import React from 'react'
 import UpcomingWeekSelect from '../components/UpcomingWeekDropdown'
-import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
+import { Col, Container, Row, Stack } from 'react-bootstrap'
 import MovieImageCard from '../../shared/components/MovieImageCard'
 import SeatCountModal from '../components/SeatCountModal';
 import ShowTimes from '../components/ShowTimes';
@@ -28,7 +28,7 @@ function BookingPage() {
             </Col>
             <h4 className='my-3'>Show Times</h4>
             <Stack gap={5}>
-              <ShowTimes/>
+              <ShowTimes setModalShow={setModalShow}/>
             </Stack>
           </Stack>
         </Col>

@@ -1,7 +1,7 @@
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { Button,Stack } from 'react-bootstrap';
+import { Button, Stack } from 'react-bootstrap';
 
-function ShowTimes() {
+function ShowTimes({ setModalShow }) {
     return (
         <Stack >
             <div>
