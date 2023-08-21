@@ -1,7 +1,7 @@
 import { Container, Row, Col, Stack, Button } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import MovieImageCard from "../../shared/components/MovieImageCard";
-
+import CharacterIcon from "./CharacterIcon";
 function MovieDetails() {
     return (
         <Container fluid className="p-5">
@@ -48,24 +48,13 @@ function MovieDetails() {
                         <Stack>
                             <h3>Cast</h3>
                             <Stack direction="horizontal" gap={5} className="pt-3">
-                                <div className="circular-image-container">
-                                    <div className="circular-image">
-                                        <img src='https://static.standard.co.uk/2023/05/11/14/newFile.jpg?width=1200&height=1200&fit=crop' alt="Circular Image" />
-                                    </div>
-                                    <h6>Lillian Murphy</h6>
-                                </div>
+                                <CharacterIcon title="Cillian Murphy" subtitle="J. Robert" imgUrl="https://static.standard.co.uk/2023/05/11/14/newFile.jpg?width=1200&height=1200&fit=crop" />
                             </Stack>
                         </Stack>
                         <Stack>
                             <h3>Team</h3>
                             <Stack direction="horizontal" gap={5} className="pt-3">
-                                <div className="circular-image-container">
-                                    <div className="circular-image">
-                                        <img src='https://e00-marca.uecdn.es/assets/multimedia/imagenes/2023/07/29/16906452894987.jpg' alt="Circular Image" />
-                                    </div>
-                                    <h6>Chrisoper Nolan</h6>
-                                    <p>Director</p>
-                                </div>
+                                <CharacterIcon title="Chrisoper Nolan" subtitle="Director" imgUrl="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2023/07/29/16906452894987.jpg" />
                             </Stack>
                         </Stack>
                     </Stack>
