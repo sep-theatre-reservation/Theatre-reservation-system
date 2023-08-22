@@ -24,7 +24,7 @@ function SeatCountModal(props) {
                 <Stack>
                     <SeatCountSelector />
                     <div className='ms-auto p-2'>
-                    <Button as={Link} to="/payment" onClick={props.onHide} >Select Seats</Button>
+                        <Button as={Link} to="/seats" onClick={props.onHide} >Select Seats</Button>
                     </div>
                 </Stack>
             </Modal.Body>
