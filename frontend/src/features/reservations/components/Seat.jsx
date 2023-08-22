@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import "./Seat.css";
+import Button from 'react-bootstrap/Button';
 
 const Seat = ({ id, onSelect, available }) => {
   const seatClicked = (event) => {
@@ -14,14 +15,15 @@ const Seat = ({ id, onSelect, available }) => {
   };
 
   return (
-    <button
-      className={`${available ? "seat" : "unavailable"}`}
+    <Button
+      className="seat-button"
       id={id}
       onClick={(e) => seatClicked(e)}
       disabled={!available}
+      variant="outline-success"
     >
       {id}
-    </button>
+    </Button>
   );
 };
 

@@ -1,5 +1,9 @@
-const AdminPage = () => {
-  return <div>AdminPage</div>;
-};
+import React from 'react'
 
-export default AdminPage;
+function AdminPage() {
+  return (
+    <div>AdminPage</div>
+  )
+}
+
+export default AdminPage

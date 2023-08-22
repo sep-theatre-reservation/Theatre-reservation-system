@@ -1,6 +1,7 @@
 import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useEffect, useState } from "react";
+import Stack from 'react-bootstrap/Stack';
 
 const rows = 4;
 const cols = 7;
@@ -95,12 +96,14 @@ const SeatSelection = () => {
 
   return (
     <>
-      <div id="seatChart">
+    <Stack>
+      <div className="m-auto mt-5">
         <table>
           <tbody>{rowAr}</tbody>
         </table>
       </div>
       <div className="screen">screen</div>
+    </Stack>
     </>
   );
 };
