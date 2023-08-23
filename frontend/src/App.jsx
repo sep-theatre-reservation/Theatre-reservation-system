@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useCallback, useState } from "react"
 import { AuthContext } from './features/shared/context/auth-context'
 import NavbarComponent from './features/shared/components/NavbarComponent'
 import HomePage from './features/home/pages/HomePage'
@@ -13,7 +13,6 @@ import BookingPage from './features/booking/pages/bookingPage';
 import PaymentPage from './features/payment/pages/PaymentPage'
 import AdminPage from "./features/admin/pages/AdminPage";
 import SeatSelection from "./features/reservations/pages/SeatSelection";
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,7 +30,6 @@ function App() {
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
       <Router>
-
         <NavbarComponent />
         <main style={{ minHeight: "80vh" }}>
           <Routes>
