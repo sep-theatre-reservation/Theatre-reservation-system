@@ -11,8 +11,9 @@ import MoviesPage from './features/movies/pages/MoviesPage'
 import Footer from './features/shared/components/Footer'
 import BookingPage from './features/booking/pages/bookingPage';
 import PaymentPage from './features/payment/pages/PaymentPage'
-import AdminPage from "./features/admin/pages/AdminPage";
+import DashboardPage from './features/admin/pages/DashboardPage'
 import SeatSelection from "./features/reservations/pages/SeatSelection";
+import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,7 +35,13 @@ function App() {
         <main style={{ minHeight: "80vh" }}>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path="/Admin" element={<AdminPage />} />
+            <Route path="/admin/*" element={<DashboardPage/>} >
+              <Route index element={<DashboardPage/>}></Route>
+              <Route path='movies' element={<DashboardPage/>}></Route>
+              <Route path='theatres' element={<TheatreManagePage/>}></Route>
+              <Route path='promo' element={<DashboardPage/>}></Route>
+            </Route>
+
             <Route path="/seats" element={<SeatSelection />} />
             <Route path='/movies/*' element={<MoviesPage />}>
               <Route index element={<NowShowing />}></Route>
