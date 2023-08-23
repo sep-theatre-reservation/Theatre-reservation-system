@@ -10,7 +10,7 @@ function DrawerMenu({show,handleClose}) {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Stack>
-
+            
           </Stack>
         </Offcanvas.Body>
       </Offcanvas>
