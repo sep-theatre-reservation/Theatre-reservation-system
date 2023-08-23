@@ -5,15 +5,18 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AuthContext } from "../context/auth-context";
-import { Modal } from "react-bootstrap";
+import { Dropdown, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 function NavbarComponent() {
   const auth = useContext(AuthContext);
 
   function handleCallbackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
-    auth.login();
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    auth.login(userObject);
     handleClose();
   }
 
@@ -89,7 +92,25 @@ function NavbarComponent() {
             </Modal>
             <Nav>
               {!auth.isLoggedIn && <Button onClick={handleShow}>Login</Button>}
-              {auth.isLoggedIn && <Button onClick={auth.logout}>Logout</Button>}
+              {auth.isLoggedIn && (
+                <Dropdown>
+                  <Dropdown.Toggle variant="link" id="avatar-dropdown">
+                    <img
+                      src={auth.user.picture} // Replace with your avatar image URL
+                      alt="profile_pic"
+                      className="rounded-circle"
+                      width="40"
+                      height="40"
+                    />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu align="end" className="dropdown-menu-right">
+                    <Dropdown.Item>{auth.user.name}</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={auth.logout}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
