@@ -1,0 +1,17 @@
+td{
+    padding-top:4px;
+    padding-bottom:4px;
+    padding-left:30px;
+    padding-right:40px;
+}
+
+
+.screen{
+    position: relative;
+    justify-content: center;
+    top:10px;
+    display: flex;
+    margin: 0 auto;
+    width: 50%;
+    background-color: rgb(205, 210, 246);
+}

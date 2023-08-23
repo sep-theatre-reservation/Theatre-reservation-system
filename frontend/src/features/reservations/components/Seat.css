@@ -1,0 +1,44 @@
+/* .seat{
+    background-color: rgb(222, 237, 249);
+    border: 3px solid black;
+    color: black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+} */
+
+/* .seat:hover {
+    transform: scale(1.2);
+  } */
+
+/* .unavailable{
+    border: 3px solid black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: not-allowed;
+} */
+
+.selected {
+    background-color: #198754;
+    color: aliceblue;
+  }
+  .seat-button{
+    width: 28px;
+    height: 28px;
+    margin: 3px;
+    font-size: 10px;
+    padding:5px;
+    font-weight:bold;
+    color: black;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 2px;
+  }
