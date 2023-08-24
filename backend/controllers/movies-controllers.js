@@ -1,15 +1,13 @@
-const mongoose = require("mongoose");
-const { validationResult } = require("express-validator");
+import { validationResult } from "express-validator";
+import HttpError from "../models/http-error.js";
+import Movie from "../models/movie.js";
 
-const HttpError = require("../models/http-error");
-const Movie = require("../models/movie");
-
-const getMovieById = async (req, res, next) => {
+export const getMovieById = async (req, res, next) => {
   const movieId = req.params.mid;
 
   let movie;
   try {
-    movie = await Movie.findById(movieId);
+    movie = await findById(movieId);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a movie",
@@ -26,7 +24,7 @@ const getMovieById = async (req, res, next) => {
   res.json({ movie: movie.toObject({ getters: true }) });
 };
 
-const createMovie = async (req, res, next) => {
+export const createMovie = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -67,5 +65,4 @@ const createMovie = async (req, res, next) => {
   res.status(201).json({ movie: createdMovie });
 };
 
-exports.getMovieById = getMovieById;
-exports.createMovie = createMovie;
+

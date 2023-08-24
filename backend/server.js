@@ -1,9 +1,8 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-
-const movvieRoutes = require("./routes/movies-routes");
-const HttpError = require("./models/http-error");
+import express from "express";
+import bodyParser from "body-parser"
+import mongoose from "mongoose";
+import movvieRoutes from "./routes/movies-routes.js"
+import HttpError from "./models/http-error.js"
 
 const app = express();
 

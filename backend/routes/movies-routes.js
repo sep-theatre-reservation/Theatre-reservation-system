@@ -1,10 +1,9 @@
-const express = require("express");
-
-const movieControllers = require("../controllers/movies-controllers");
+import express from "express";
+import {getMovieById,createMovie} from "../controllers/movies-controllers.js"
 
 const router = express.Router();
 
-router.get("/:mid", movieControllers.getMovieById);
-router.post("/", movieControllers.createMovie);
+router.get("/:mid",getMovieById);
+router.post("/", createMovie);
 
-module.exports = router;
+export default router;
