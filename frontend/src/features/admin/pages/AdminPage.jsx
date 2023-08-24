@@ -1,9 +1,12 @@
-import React from 'react'
+import { useState } from 'react';
 
 function AdminPage() {
+
   return (
-    <div>AdminPage</div>
-  )
+    <>
+      
+    </>
+  );
 }
 
-export default AdminPage
+export default AdminPage;

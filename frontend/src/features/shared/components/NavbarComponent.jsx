@@ -8,6 +8,9 @@ import { AuthContext } from "../context/auth-context";
 import { Dropdown, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import DrawerMenu from "../../admin/components/DrawerMenu";
+import { FaThList} from 'react-icons/fa';
+
 
 function NavbarComponent() {
   const auth = useContext(AuthContext);
@@ -17,13 +20,13 @@ function NavbarComponent() {
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
     auth.login(userObject);
-    handleClose();
+    handleLoginClose();
   }
 
   const [showLogin, setShowLogin] = useState(false);
 
-  const handleClose = () => setShowLogin(false);
-  const handleShow = () => setShowLogin(true);
+  const handleLoginClose = () => setShowLogin(false);
+  const handleLoginShow = () => setShowLogin(true);
 
   useEffect(() => {
     /* global google */
@@ -44,10 +47,24 @@ function NavbarComponent() {
     //google.accounts.id.prompt();
   }); //dependency array [] removed...
 
+  //Drawer menu functions
+
+  const [showDrawerMenu, setShowDrawerMenu] = useState(false);
+
+  const handleDrawerMenuClose = () => setShowDrawerMenu(false);
+  const handleDrawerMenuShow = () => setShowDrawerMenu(true);
+
   return (
     <>
+      <DrawerMenu show={showDrawerMenu} handleClose={handleDrawerMenuClose} />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
+          {auth.isLoggedIn && (
+            <Button variant="danger" className="me-3" size="lg"onClick={handleDrawerMenuShow}>
+              <FaThList size={20} className='me-2 mb-1'/>
+                Admin Panel
+            </Button>
+          )}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
             Booking.Lk
           </Navbar.Brand>
@@ -64,11 +81,6 @@ function NavbarComponent() {
               <Nav.Link as={Link} to="/contactus" className="navLink">
                 Contact Us
               </Nav.Link>
-              {auth.isLoggedIn && (
-                <Nav.Link as={Link} to="/Admin" className="navLink">
-                  Admin Dashboard
-                </Nav.Link>
-              )}
             </Nav>
 
             <Form className="d-flex">
@@ -80,18 +92,18 @@ function NavbarComponent() {
               />
               <Button variant="outline-success">Search</Button>
             </Form>
-            <Modal show={showLogin} onHide={handleClose}>
+            <Modal show={showLogin} onHide={handleLoginClose}>
               <Modal.Body>
                 <div id="signUpDiv"></div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={handleClose} variant="secondary">
+                <Button onClick={handleLoginClose} variant="secondary">
                   Close
                 </Button>
               </Modal.Footer>
             </Modal>
             <Nav>
-              {!auth.isLoggedIn && <Button onClick={handleShow}>Login</Button>}
+              {!auth.isLoggedIn && <Button onClick={handleLoginShow}>Login</Button>}
               {auth.isLoggedIn && (
                 <Dropdown>
                   <Dropdown.Toggle variant="link" id="avatar-dropdown">
