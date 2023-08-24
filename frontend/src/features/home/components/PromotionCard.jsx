@@ -4,19 +4,18 @@ import Row from 'react-bootstrap/Row';
 
 function PromotionCard() {
   return (
-    <Row md={1} lg={2} className="g-4">
+    <Row md={1} lg={3} className="g-4">
       {Array.from({ length: 4 }).map((_, idx) => (
         <Col key={idx}>
-          <Card style={{ height: '15rem' }}>
-            <Card.Img variant="top" src="https://theatersollution.s3.amazonaws.com/d4f5a72a-fb7c-40fe-a3b6-dd24eefbc0a3.png" />
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
+          <Card className="bg-dark text-white">
+            <Card.Img src="https://c4.wallpaperflare.com/wallpaper/102/633/279/dark-gradient-artist-artwork-wallpaper-preview.jpg" alt="Card image" />
+            <Card.ImgOverlay>
+              <Card.Title className='custom-card'>20% Savings</Card.Title>
               <Card.Text>
-                This is a longer card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto, culpa!
               </Card.Text>
-            </Card.Body>
+              <Card.Text>Last updated 3 mins ago</Card.Text>
+            </Card.ImgOverlay>
           </Card>
         </Col>
       ))}
