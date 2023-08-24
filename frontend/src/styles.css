@@ -111,3 +111,23 @@ a{
     background-color: gray;
     color: white;
   }
+
+  /*admin sidebar navlink*/
+
+#admin-panel-link{
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-weight: bolder;
+    font-size: larger;
+    color: white;
+}
+#admin-panel-link:hover{
+  background-color: #dbdddf;
+  color: black;
+}
+
+.active-link {
+  background-color: white;
+  /* Other styles for the active link */
+}

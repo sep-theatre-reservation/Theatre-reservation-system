@@ -59,12 +59,12 @@ function NavbarComponent() {
       <DrawerMenu show={showDrawerMenu} handleClose={handleDrawerMenuClose} />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
-          {auth.isLoggedIn && (
+          {/* {auth.isLoggedIn && ( */}
             <Button variant="danger" className="me-3" size="lg"onClick={handleDrawerMenuShow}>
               <FaThList size={20} className='me-2 mb-1'/>
                 Admin Panel
             </Button>
-          )}
+          {/* )} */}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
             Booking.Lk
           </Navbar.Brand>
