@@ -14,7 +14,7 @@ function SeatCountModal(props) {
             backdrop="static"
             className='custom-modal'
         >
-            <Modal.Header closeButton>
+            <Modal.Header closeButton className='bg-dark'>
                 <Modal.Title id="contained-modal-title-vcenter">
                     How many Seats?
                 </Modal.Title>
