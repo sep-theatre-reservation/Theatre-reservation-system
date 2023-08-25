@@ -15,6 +15,7 @@ import DashboardPage from "./features/admin/pages/DashboardPage";
 import SeatSelection from "./features/reservations/pages/SeatSelection";
 import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 import PromoManagerPage from "./features/admin/pages/PromoManagerPage";
+import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,7 +47,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/admin/*" element={<DashboardPage />}>
               <Route index element={<DashboardPage />}></Route>
-              <Route path="movies" element={<DashboardPage />}></Route>
+              <Route path="movies" element={<MovieManagerPage />}></Route>
               <Route path="theatres" element={<TheatreManagePage />}></Route>
               <Route path="promo" element={<PromoManagerPage />}></Route>
             </Route>
