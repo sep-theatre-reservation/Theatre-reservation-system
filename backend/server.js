@@ -1,14 +1,27 @@
 import express from "express";
-import bodyParser from "body-parser"
+import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import movvieRoutes from "./routes/movies-routes.js"
-import HttpError from "./models/http-error.js"
+import movieRoutes from "./routes/movies-routes.js";
+import HttpError from "./models/http-error.js";
+import theatreRoutes from "./routes/theatres-routes.js";
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/api/movies", movvieRoutes);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
+});
+
+app.use("/api/movies", movieRoutes);
+app.use("/api/theatres", theatreRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
@@ -23,13 +36,14 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occured!.." });
 });
 
+let uri =
+  "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/sep?retryWrites=true&w=majority";
+
 mongoose
-  .connect(
-    "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/sep?retryWrites=true&w=majority"
-  )
+  .connect(uri)
   .then(() => {
-    app.listen(5001, () => {
-      console.log("Server is running on port 5001");
+    app.listen(3000, () => {
+      console.log("Server is running on port 3000");
     });
   })
   .catch((err) => {

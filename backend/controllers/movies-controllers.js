@@ -7,7 +7,7 @@ export const getMovieById = async (req, res, next) => {
 
   let movie;
   try {
-    movie = await findById(movieId);
+    movie = await Movie.findById(movieId);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a movie",
@@ -64,5 +64,3 @@ export const createMovie = async (req, res, next) => {
 
   res.status(201).json({ movie: createdMovie });
 };
-
-
