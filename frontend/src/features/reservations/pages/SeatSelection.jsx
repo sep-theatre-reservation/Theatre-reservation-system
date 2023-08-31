@@ -2,7 +2,8 @@ import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useEffect, useState } from "react";
 import Stack from 'react-bootstrap/Stack';
-
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const rows = 4;
 const cols = 7;
 const SEATS = [
@@ -96,14 +97,19 @@ const SeatSelection = () => {
 
   return (
     <>
-    <Stack>
-      <div className="m-auto mt-5">
-        <table>
-          <tbody>{rowAr}</tbody>
-        </table>
-      </div>
-      <div className="screen">screen</div>
-    </Stack>
+      <Stack>
+        <div className="m-auto mt-5 py-5">
+          <table>
+            <tbody>{rowAr}</tbody>
+          </table>
+        </div>
+        <div className="screen mb-4">screen</div>
+        <hr className="container"/>
+        <Stack direction="horizontal" gap={3} className="m-auto">
+          <Button as={Link} to="/booking" variant="secondary">Back</Button>{' '}
+          <Button as={Link} to="/payment" variant="primary">Continue</Button>{' '}
+        </Stack>
+      </Stack>
     </>
   );
 };
