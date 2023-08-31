@@ -10,7 +10,7 @@ function Movie({ movie }) {
     <Row xs={1} md={2} lg={4} className="g-5">
       {Array.from({ length: 4 }).map((_, idx) => (
         <Col key={idx}>
-          <Link to="/movies/movie1">
+          <Link to={`/movies/${movie.id}`}>
             <Card>
               <Card.Img variant="top" src={movie.poster_url} />
               <Card.Body>

@@ -1,12 +1,40 @@
-import Movie from '../../shared/components/Movie'
-import {Container} from 'react-bootstrap'
+import Movie from "../../shared/components/Movie";
+import { Container } from "react-bootstrap";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import React, { useEffect, useState } from "react";
+import LoadingOverlay from "../../shared/components/LoadingOverlay";
 function CommingSoon() {
+  const { isLoading, sendRequest } = useHttpClient();
+  const [loadedMovies, setLoadedMovies] = useState();
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:3000/api/movies"
+        );
+        setLoadedMovies(responseData.movies);
+      } catch (err) {
+        /* */
+      }
+    };
+
+    fetchMovies();
+  }, [sendRequest]);
   return (
-    <Container fluid className="bg-light" style={{ paddingLeft: "100px", paddingRight: "100px" }}>
-      <h2 className="py-5">Movies(CommingSoon)</h2>
-      <Movie />
-    </Container>
-  )
+    <React.Fragment>
+      {isLoading && <LoadingOverlay asOverlay />}
+
+      <Container
+        fluid
+        className="bg-light"
+        style={{ paddingLeft: "100px", paddingRight: "100px" }}
+      >
+        <h2 className="py-5">Movies(CommingSoon)</h2>
+        {loadedMovies && loadedMovies[0] && <Movie movie={loadedMovies[0]} />}
+      </Container>
+    </React.Fragment>
+  );
 }
 
-export default CommingSoon
+export default CommingSoon;
