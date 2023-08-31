@@ -39,7 +39,8 @@ app.use((error, req, res, next) => {
 const uri =
   "mongodb+srv://ashashipriya:ne7rAGwdHsicdr91@cluster0.zkwkqs7.mongodb.net/?retryWrites=true&w=majority";
 
-//const uri = "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/?retryWrites=true&w=majority"
+// const uri =
+//   "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
   .connect(uri)

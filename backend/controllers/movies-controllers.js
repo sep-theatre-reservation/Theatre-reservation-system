@@ -2,6 +2,22 @@ import { validationResult } from "express-validator";
 import HttpError from "../models/http-error.js";
 import Movie from "../models/movie.js";
 
+export const getMovies = async (req, res, next) => {
+  let movies;
+  try {
+    movies = await Movie.find({});
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching movies failed, please try again later",
+      500
+    );
+    return next(error);
+  }
+  res.json({
+    movies: movies.map((movie) => movie.toObject({ getters: true })),
+  });
+};
+
 export const getMovieById = async (req, res, next) => {
   const movieId = req.params.mid;
 
@@ -31,26 +47,24 @@ export const createMovie = async (req, res, next) => {
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
-  const { title, release_date } = req.body;
+  const {
+    title,
+    release_date,
+    poster_url,
+    trailerLink,
+    description,
+    director,
+    cast,
+  } = req.body;
 
   const createdMovie = new Movie({
     title,
     release_date,
-    poster_url: "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H.jpg",
-    director: {
-      name: "Christopher Nolan",
-      img: "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQfhx2z_xQoCdczKH0SS_Kt31aHFKp7Mr_uIM1UYFQiEKNwXlzs5NddxoKQ86f3nDrnGmkP-lnxk3yA8dA",
-    },
-    cast: [
-      {
-        name: "Cillian Murphy",
-        img: "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQZIuXgDofNrOab8XnYOJ6ge3aFm1BEKitpuFPdgSdSgV49UE91EySMXgBwtS6xJBY-LoiS8OS0ziOzDY0",
-      },
-      {
-        name: "Florence Pugh",
-        img: "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTxfRKH-zYlvwZAENxe-rPB4XdLUWHOs09hPGuPzrsSsOH9WuFdDekaQ9rIBgugAir6pqsZ9WfUuHCqY2c",
-      },
-    ],
+    poster_url,
+    trailerLink,
+    description,
+    director,
+    cast,
   });
   try {
     await createdMovie.save();
