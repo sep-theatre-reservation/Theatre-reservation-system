@@ -1,6 +1,5 @@
-import React from 'react'
-import MovieDetails from '../components/MovieDetails';
-import MovieTrailerSection from '../components/MovieTrailerSection';
+import MovieDetails from "../components/MovieDetails";
+import MovieTrailerSection from "../components/MovieTrailerSection";
 
 function MovieShowcasePage() {
   return (
@@ -8,7 +7,7 @@ function MovieShowcasePage() {
       <MovieTrailerSection />
       <MovieDetails />
     </>
-  )
+  );
 }
 
-export default MovieShowcasePage
+export default MovieShowcasePage;

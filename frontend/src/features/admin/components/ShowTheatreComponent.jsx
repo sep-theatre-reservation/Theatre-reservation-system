@@ -45,14 +45,6 @@ function ShowTheatreComponent({ shouldUpdate }) {
                   onDeleteTheatre={theatreDeletedHandler}
                 />
               )}
-              {/* <Stack direction="horizontal" gap={3}>
-                <span className="mb-0 me-auto">
-                  <FaMapMarkerAlt size={20} className="mb-2" />
-                  LIBERTY BY SCOPE CINEMAS
-                </span>
-                <Button variant="warning"> Edit</Button>
-                <Button variant="danger">Remove</Button>
-              </Stack> */}
             </Stack>
           </Card.Text>
         </Card.Body>
