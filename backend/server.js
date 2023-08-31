@@ -36,7 +36,19 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occured!.." });
 });
 
-let uri =
+// const DB_USERNAME = "Anushna";
+// const DB_PASSWORD = "6n5cAEtqbgeOeDP9";
+// const DB_CLUSTER = "cluster0";
+// const DB_NAME = "sep";
+
+// const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
+
+// , {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }
+
+const uri =
   "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/sep?retryWrites=true&w=majority";
 
 mongoose
