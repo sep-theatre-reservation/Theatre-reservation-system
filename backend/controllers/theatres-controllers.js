@@ -42,11 +42,10 @@ export const getTheatres = async (req, res, next) => {
 };
 
 export const deleteTheatre = async (req, res, next) => {
-  const theatreId = req.params.pid;
+  const theatreId = req.params.tid;
 
-  let theatre;
   try {
-    await Theatre.findByIdAndRemove(theatreId);
+    await Theatre.findByIdAndDelete(theatreId);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not remove theatre.",
