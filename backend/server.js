@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import movieRoutes from "./routes/movies-routes.js";
 import HttpError from "./models/http-error.js";
 import theatreRoutes from "./routes/theatres-routes.js";
+import carouselRoutes from "./routes/carousel-router.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 app.use("/api/movies", movieRoutes);
 app.use("/api/theatres", theatreRoutes);
+app.use("/api/carousel", carouselRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
