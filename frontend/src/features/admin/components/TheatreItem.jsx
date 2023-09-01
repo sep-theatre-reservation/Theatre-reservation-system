@@ -39,19 +39,19 @@ const TheatreItem = ({ theatre, onDelete }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id={theatre.id}>Are you Sure?</Modal.Title>
-          <Modal.Body>
-            Do you want to proceed and remove this theatre? Please note that,
-            this action cannot be reverted.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={cancelRemoveHandler}>
-              CANCEL
-            </Button>
-            <Button variant="danger" onClick={ConfirmRemoveHandler}>
-              Remove
-            </Button>
-          </Modal.Footer>
         </Modal.Header>
+        <Modal.Body>
+          Do you want to proceed and remove this theatre? Please note that, this
+          action cannot be reverted.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelRemoveHandler}>
+            CANCEL
+          </Button>
+          <Button variant="danger" onClick={ConfirmRemoveHandler}>
+            Remove
+          </Button>
+        </Modal.Footer>
       </Modal>
       <ErrorModal error={error} onClear={clearError} />
       <Stack key={theatre.id} id={theatre.id} direction="horizontal" gap={3}>
