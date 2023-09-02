@@ -1,5 +1,5 @@
 import { Card, Stack } from "react-bootstrap";
-import LoadingOverlay from "../../shared/components/LoadingOverlay";
+import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import TheatreList from "./TheatreList";
 
 function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,theatreList,onDeleteTheatre }) {

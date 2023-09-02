@@ -1,6 +1,6 @@
 import { Container, Col, Row } from "react-bootstrap";
-import AddMovieComponent from "../components/AddMovieComponent";
-import ShowMoviesComponent from "../components/ShowMoviesComponent";
+import AddMovieComponent from "../components/Movie/AddMovieComponent";
+import ShowMoviesComponent from "../components/Movie/ShowMoviesComponent";
 import { useState } from "react";
 
 function MovieManagerPage() {

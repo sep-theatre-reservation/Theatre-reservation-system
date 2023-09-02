@@ -1,8 +1,8 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Stack, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import LoadingOverlay from "../../shared/components/LoadingOverlay";
-import ConfirmationModal from "../../shared/components/ConfirmationModal";
+import LoadingOverlay from "../../../shared/components/LoadingOverlay";
+import ConfirmationModal from "../../../shared/components/ConfirmationModal";
 import { useState } from "react";
 
 const TheatreItem = ({ theatre, isLoading,onDeleteTheatre }) => {
