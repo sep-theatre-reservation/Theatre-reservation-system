@@ -1,24 +1,19 @@
-import PropTypes from "prop-types";
 import TheatreItem from "./TheatreItem";
 
-const TheatreList = ({ theatres, onDeleteTheatre }) => {
+const TheatreList = ({ isLoading,theatreList,onDeleteTheatre }) => {
   return (
     <>
-      {theatres.map((theatre) => (
+      {theatreList.map((theatre) => (
         <TheatreItem
           key={theatre.id}
-          id={theatre.id}
+          isLoading={isLoading}
           theatre={theatre}
-          onDelete={onDeleteTheatre}
+          onDeleteTheatre={onDeleteTheatre}
         ></TheatreItem>
       ))}
     </>
   );
 };
 
-TheatreList.propTypes = {
-  theatres: PropTypes.array,
-  onDeleteTheatre: PropTypes.func,
-};
 
 export default TheatreList;

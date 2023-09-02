@@ -1,10 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import movieRoutes from "./routes/movies-routes.js";
 import HttpError from "./models/http-error.js";
 import theatreRoutes from "./routes/theatres-routes.js";
 import carouselRoutes from "./routes/carousel-router.js";
+import connectDB from "./config/db.js";
+import { config } from "dotenv";
+config()
+
+const port=process.env.PORT||3000
+connectDB()
 
 const app = express();
 
@@ -38,19 +43,23 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occured!.." });
 });
 
-const uri =
-  "mongodb+srv://ashashipriya:ne7rAGwdHsicdr91@cluster0.zkwkqs7.mongodb.net/?retryWrites=true&w=majority";
+app.listen(port, () => {
+  console.log(`server started on port ${port}`);
+})
 
 // const uri =
-//   "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/?retryWrites=true&w=majority";
+//   "mongodb+srv://user:user@cluster0.aapg2bb.mongodb.net/mernapp";
 
-mongoose
-  .connect(uri)
-  .then(() => {
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
-    });
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
-  });
+//const uri = "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/?retryWrites=true&w=majority"
+
+// mongoose
+//   .connect(uri)
+//   .then(() => {
+//     app.listen(3000, () => {
+//       console.log("Server is running on port 3000");
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("Error connecting to MongoDB:", err);
+//   });
+

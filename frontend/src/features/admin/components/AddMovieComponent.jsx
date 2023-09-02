@@ -1,15 +1,13 @@
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import DatePicker from "react-datepicker"; // Import react-datepicker
-import "react-datepicker/dist/react-datepicker.css"; // Import date picker styles
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
-
 function AddMovieComponent({ onAddMovie }) {
   const [formData, setFormData] = useState({
     title: "",
