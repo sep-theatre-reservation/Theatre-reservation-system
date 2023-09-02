@@ -7,6 +7,7 @@ import TheatreList from "./TheatreList";
 //import ErrorModal from "../../shared/components/ErrorModal";
 
 function ShowTheatreComponent({ shouldUpdate }) {
+
   const { isLoading, sendRequest } = useHttpClient();
   const [loadedTheatres, setLoadedTheatres] = useState();
 
@@ -21,7 +22,7 @@ function ShowTheatreComponent({ shouldUpdate }) {
         /* */
       }
     };
-
+    
     fetchTheatres();
   }, [shouldUpdate, sendRequest]);
 
