@@ -1,6 +1,6 @@
 import { Container, Col, Row } from "react-bootstrap";
-import AddTheaterComponent from "../components/AddTheaterComponent";
-import ShowTheatreComponent from "../components/ShowTheatreComponent";
+import AddTheaterComponent from "../components/Theatre/AddTheaterComponent";
+import ShowTheatreComponent from "../components/Theatre/ShowTheatreComponent";
 import { useEffect, useState } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
@@ -9,7 +9,7 @@ function TheatreManagePage() {
 
   const [updateShowTheatres, setUpdateShowTheatres] = useState(false);
   const [theatreList, setTheatreList] = useState();
-  
+
   const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest } = useHttpClient();
   const { isLoading: isShowTheatreLoading, sendRequest: sendShowTheatreRequest } = useHttpClient();
   const { isLoading: isDeleteTheatreLoading, error, sendRequest: sendDeleteTheatreRequest, clearError } = useHttpClient();

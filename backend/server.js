@@ -46,20 +46,3 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
   console.log(`server started on port ${port}`);
 })
-
-// const uri =
-//   "mongodb+srv://user:user@cluster0.aapg2bb.mongodb.net/mernapp";
-
-//const uri = "mongodb+srv://Anushna:6n5cAEtqbgeOeDP9@cluster0.1cddrqz.mongodb.net/?retryWrites=true&w=majority"
-
-// mongoose
-//   .connect(uri)
-//   .then(() => {
-//     app.listen(3000, () => {
-//       console.log("Server is running on port 3000");
-//     });
-//   })
-//   .catch((err) => {
-//     console.error("Error connecting to MongoDB:", err);
-//   });
-

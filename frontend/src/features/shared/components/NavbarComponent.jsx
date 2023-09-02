@@ -14,37 +14,38 @@ import { FaThList } from "react-icons/fa";
 function NavbarComponent() {
   const auth = useContext(AuthContext);
 
-  function handleCallbackResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    let userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    auth.login(userObject);
-    handleLoginClose();
-  }
+  // function handleCallbackResponse(response) {
+  //   console.log("Encoded JWT ID token: " + response.credential);
+  //   let userObject = jwt_decode(response.credential);
+  //   console.log(userObject);
+  //   auth.login(userObject);
+  //   handleLoginClose();
+  // }
 
-  const [showLogin, setShowLogin] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
 
-  const handleLoginClose = () => setShowLogin(false);
-  const handleLoginShow = () => setShowLogin(true);
+  // const handleLoginClose = () => setShowLogin(false);
+  // const handleLoginShow = () => setShowLogin(true);
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
+  // useEffect(() => {
+  //   /* global google */
+  //   google.accounts.id.initialize({
+  //     client_id:
+  //       "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
+  //     callback: handleCallbackResponse,
+  //   });
 
-    google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
-      theme: "outline",
-      size: "large",
-      width: "200",
-      logo_alignment: "center",
-      text: "continue_with",
-    });
+  //   google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+  //     theme: "outline",
+  //     size: "large",
+  //     width: "200",
+  //     logo_alignment: "center",
+  //     text: "continue_with",
+  //   });
 
-    //google.accounts.id.prompt();
-  }); //dependency array [] removed...
+  //   //google.accounts.id.prompt();
+  // });
+   //dependency array [] removed...
 
   //Drawer menu functions
 
@@ -96,7 +97,7 @@ function NavbarComponent() {
               />
               <Button variant="outline-success">Search</Button>
             </Form>
-            <Modal show={showLogin} onHide={handleLoginClose}>
+            {/* <Modal show={showLogin} onHide={handleLoginClose}>
               <Modal.Body>
                 <div id="signUpDiv"></div>
               </Modal.Body>
@@ -129,7 +130,7 @@ function NavbarComponent() {
                   </Dropdown.Menu>
                 </Dropdown>
               )}
-            </Nav>
+            </Nav> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

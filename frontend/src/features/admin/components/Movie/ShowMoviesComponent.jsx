@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MovieList from "./MovieList";
 import { Card, Stack } from "react-bootstrap";
-import LoadingOverlay from "../../shared/components/LoadingOverlay";
-import { useHttpClient } from "../../shared/hooks/http-hook";
+import LoadingOverlay from "../../../shared/components/LoadingOverlay";
+import { useHttpClient } from "../../../shared/hooks/http-hook";
 import PropTypes from "prop-types";
 
 function ShowMoviesComponent({ shouldUpdate }) {

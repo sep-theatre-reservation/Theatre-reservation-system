@@ -1,8 +1,6 @@
 import { Container, Stack, Col, Row } from 'react-bootstrap'
-import AddTheaterComponent from '../components/AddTheaterComponent'
-import ShowTheatreComponent from '../components/ShowTheatreComponent'
-import AddPromoComponent from '../components/AddPromoComponent'
-import ShowPromoComponent from '../components/ShowPromoComponent'
+import AddPromoComponent from '../components/Promotion/AddPromoComponent'
+import ShowPromoComponent from '../components/Promotion/ShowPromoComponent'
 
 function PromoManagerPage() {
   return (
