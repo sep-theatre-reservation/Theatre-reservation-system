@@ -2,51 +2,33 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Stack } from "react-bootstrap";
-import { useHttpClient } from "../../shared/hooks/http-hook";
 import React, { useState } from "react";
-import ErrorModal from "../../shared/components/ErrorModal";
-import LoadingOverlay from "../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
 
-function AddTheaterComponent({ onAddTheatre }) {
+function AddTheaterComponent({onAddTheatre,isLoading}) {
+
   const [formData, setFormData] = useState({
     theatreName: "",
     rows: "",
     cols: "",
   });
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const addTheatreSubmitHandler = async (event) => {
+  const handleAddTheatre =(event)=>{
     event.preventDefault();
-    try {
-      const responseData = await sendRequest(
-        "http://localhost:3000/api/theatres",
-        "POST",
-        JSON.stringify({
-          theatreName: formData.theatreName,
-          rows: parseInt(formData.rows),
-          cols: parseInt(formData.cols),
-        }),
-        { "Content-Type": "application/json" }
-      );
-      console.log(responseData);
-      setFormData({
-        theatreName: "",
-        rows: "",
-        cols: "",
-      });
-      onAddTheatre();
-    } catch (err) {
-      /* */
-    }
-  };
+    onAddTheatre(formData)
+    console.log(formData)
+    setFormData({
+      theatreName: "",
+      rows: "",
+      cols: "",
+    });
+  }
 
   const generateIntegerOptions = () => {
     const maxNumber = 25; // You can adjust the maximum number of rows and columns
@@ -65,12 +47,12 @@ function AddTheaterComponent({ onAddTheatre }) {
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
       <Card style={{ width: "30rem" }}>
-        {isLoading && <LoadingOverlay asOverlay />}
+        {/* {isLoading && <LoadingOverlay asOverlay />} */}
         <Card.Body>
           <Card.Title>Add Theatre</Card.Title>
-          <Form onSubmit={addTheatreSubmitHandler}>
+          <Form onSubmit={handleAddTheatre}>
             <Form.Group controlId="cardName" className="mb-2">
               <Form.Label>Theatre Name</Form.Label>
               <Form.Control
