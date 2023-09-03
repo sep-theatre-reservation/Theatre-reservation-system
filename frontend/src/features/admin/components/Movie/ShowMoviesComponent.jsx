@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MovieList from "./MovieList";
 import { Card, Stack } from "react-bootstrap";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
-import { useHttpClient } from "../../../shared/hooks/http-hook";
 import PropTypes from "prop-types";
 
-function ShowMoviesComponent({ shouldUpdate }) {
-  const { isLoading, sendRequest } = useHttpClient();
-  const [loadedMovies, setLoadedMovies] = useState();
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const responseData = await sendRequest(
-          "http://localhost:3000/api/movies"
-        );
-        setLoadedMovies(responseData.movies);
-      } catch (err) {
-        /* */
-      }
-    };
-
-    fetchMovies();
-  }, [shouldUpdate, sendRequest]);
-
+function ShowMoviesComponent({ moviesList,isLoading}) {
   return (
     <React.Fragment>
       {isLoading && <LoadingOverlay asOverlay />}
@@ -32,8 +13,8 @@ function ShowMoviesComponent({ shouldUpdate }) {
           <Card.Title>Movies List</Card.Title>
           <Card.Text>
             <Stack gap={2}>
-              {!isLoading && loadedMovies && (
-                <MovieList movies={loadedMovies} />
+              {!isLoading && moviesList && (
+                <MovieList movies={moviesList} />
               )}
             </Stack>
           </Card.Text>
