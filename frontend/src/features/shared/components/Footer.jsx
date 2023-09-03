@@ -24,7 +24,7 @@ function Footer() {
                 </Row>
             </Container>
             <div className="text-center mt-3">
-                <p className='lead'>© 2023 Theatre Reservation System</p>className='lead'
+                <p className='lead m-0 pb-3'>© 2023 Theatre Reservation System</p>
             </div>
         </div>
     )

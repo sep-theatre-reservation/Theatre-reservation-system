@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Stack } from "react-bootstrap";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 
 function AddTheaterComponent({onAddTheatre,isLoading}) {
 
@@ -49,7 +50,7 @@ function AddTheaterComponent({onAddTheatre,isLoading}) {
     <React.Fragment>
       {/* <ErrorModal error={error} onClear={clearError} /> */}
       <Card style={{ width: "30rem" }}>
-        {/* {isLoading && <LoadingOverlay asOverlay />} */}
+        {isLoading && <LoadingOverlay asOverlay />}
         <Card.Body>
           <Card.Title>Add Theatre</Card.Title>
           <Form onSubmit={handleAddTheatre}>

@@ -21,7 +21,6 @@ function MovieShowcasePage() {
         /* */
       }
     };
-
     fetchMovies();
   }, [sendRequest, movieId]);
 

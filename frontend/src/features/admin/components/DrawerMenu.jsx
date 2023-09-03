@@ -2,7 +2,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { FaChartArea, FaSynagogue, FaFilm, FaTicketAlt } from "react-icons/fa";
+import { FaChartArea, FaSynagogue, FaFilm, FaTicketAlt,FaRegImages } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -49,12 +49,21 @@ function DrawerMenu({ show, handleClose }) {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to="/admin/promo"
+                  to="/admin/promotions"
                   id="admin-panel-link"
                   onClick={handleClose}
                 >
                   <FaTicketAlt className="me-3 mb-2" size={30} />
                   Promotions
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/admin/carousel"
+                  id="admin-panel-link"
+                  onClick={handleClose}
+                >
+                  <FaRegImages className="me-3 mb-2" size={30} />
+                  Carousel Settings
                 </Nav.Link>
               </Nav>
             </Container>

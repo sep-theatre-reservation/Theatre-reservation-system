@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from "react";
-import { useHttpClient } from "../../../shared/hooks/http-hook";
-import ErrorModal from "../../../shared/components/ErrorModal";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
-function AddMovieComponent({ onAddMovie }) {
+
+function AddMovieComponent({ onAddMovie,isLoading }) {
+  
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -24,8 +24,6 @@ function AddMovieComponent({ onAddMovie }) {
       { name: "", imageUrl: "" },
     ],
   });
-
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -44,26 +42,10 @@ function AddMovieComponent({ onAddMovie }) {
   };
 
   const handleSubmit = async (event) => {
+    console.log(formData)
     event.preventDefault();
     try {
-      const responseData = await sendRequest(
-        "http://localhost:3000/api/movies",
-        "POST",
-        JSON.stringify({
-          title: formData.title,
-          release_date: formData.releaseDate,
-          poster_url: formData.imageUrl,
-          trailerLink: formData.trailerLink,
-          description: formData.description,
-          director: {
-            name: formData.directorName,
-            imageUrl: formData.directorImageUrl,
-          },
-          cast: formData.cast,
-        }),
-        { "Content-Type": "application/json" }
-      );
-      console.log(responseData);
+      onAddMovie(formData)
       setFormData({
         title: "",
         description: "",
@@ -79,16 +61,13 @@ function AddMovieComponent({ onAddMovie }) {
           { name: "", imageUrl: "" },
         ],
       });
-      onAddMovie();
     } catch (err) {
       /* */
     }
-    //console.log("Form Data:", formData);
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Card style={{ width: "30rem" }}>
         {isLoading && <LoadingOverlay asOverlay />}
         <Card.Body>
@@ -169,17 +148,18 @@ function AddMovieComponent({ onAddMovie }) {
                 placeholder="Enter Director Image Url"
               />
             </Form.Group>
-            <Form.Group controlId="cast" className="mb-2">
+            <Form.Group controlId="cast" className="my-3">
               <Form.Label>Cast Members</Form.Label>
               {formData.cast.map((castMember, index) => (
                 <div key={index}>
-                  <Form.Label>Cast {index + 1}</Form.Label>
+                  <Form.Label className="mt-2">Cast {index + 1}</Form.Label>
                   <Form.Control
                     type="text"
                     name="name"
                     value={castMember.name}
                     onChange={(e) => handleCastChange(e, index)}
                     placeholder="Enter Cast Member Name"
+                    className="mb-2"
                   />
                   <Form.Control
                     type="text"

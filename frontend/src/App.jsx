@@ -16,7 +16,7 @@ import SeatSelection from "./features/reservations/pages/SeatSelection";
 import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 import PromoManagerPage from "./features/admin/pages/PromoManagerPage";
 import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
-
+import CarouselManagerPage from "./features/admin/pages/CarouselManagerPage";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
@@ -49,7 +49,8 @@ function App() {
               <Route index element={<DashboardPage />}></Route>
               <Route path="movies" element={<MovieManagerPage />}></Route>
               <Route path="theatres" element={<TheatreManagePage />}></Route>
-              <Route path="promo" element={<PromoManagerPage />}></Route>
+              <Route path="promotions" element={<PromoManagerPage />}></Route>
+              <Route path="carousel" element={<CarouselManagerPage />}></Route>
             </Route>
             <Route path="/seats" element={<SeatSelection />} />
             <Route path="/movies/*" element={<MoviesPage />}>
@@ -57,10 +58,7 @@ function App() {
               <Route path="nowshowing" element={<NowShowing />}></Route>
               <Route path="commingsoon" element={<CommingSoon />}></Route>
             </Route>
-            <Route
-              path="movies/:movieId"
-              element={<MovieShowcasePage />}
-            ></Route>
+            <Route path="/movies/:movieId" element={<MovieShowcasePage />}></Route>
             <Route path="booking" element={<BookingPage />}></Route>
             <Route path="payment" element={<PaymentPage />}></Route>
           </Routes>

@@ -9,7 +9,6 @@ function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,thea
       <Card style={{ width: "30rem" }}>
         <Card.Body>
           <Card.Title>Theatre List</Card.Title>
-          <Card.Text>
             <Stack gap={2}>
               {!isShowTheatreLoading && theatreList && (
                 <TheatreList
@@ -19,7 +18,6 @@ function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,thea
                 />
               )}
             </Stack>
-          </Card.Text>
         </Card.Body>
       </Card>
       </>

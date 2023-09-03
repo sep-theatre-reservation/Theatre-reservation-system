@@ -9,12 +9,9 @@ const TheatreItem = ({ theatre, isLoading,onDeleteTheatre }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const handleDeleteClick = () => {
-    showWarning();
-  };
-  
-  const showWarning = () => {
     setShowConfirmationModal(true);
   };
+  
   const cancelDeletion = () => {
     setShowConfirmationModal(false);
   };

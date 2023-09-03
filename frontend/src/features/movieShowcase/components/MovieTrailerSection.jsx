@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 function MovieTrailerSection({ movie }) {
   return (
-    <Container fluid className="p-0">
       <div>
         <iframe
           title="YouTube Video"
@@ -13,7 +12,6 @@ function MovieTrailerSection({ movie }) {
           style={{ height: "60vh" }}
         ></iframe>
       </div>
-    </Container>
   );
 }
 
