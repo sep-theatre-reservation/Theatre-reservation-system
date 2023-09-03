@@ -4,10 +4,9 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
 import TheatreList from "./TheatreList";
-//import ErrorModal from "../../shared/components/ErrorModal";
 
 function ShowTheatreComponent({ shouldUpdate }) {
-  const { isLoading, sendRequest } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient(); //errorModal not working check later
   const [loadedTheatres, setLoadedTheatres] = useState();
 
   useEffect(() => {

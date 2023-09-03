@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import { Stack } from "react-bootstrap";
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ErrorModal from "../../shared/components/ErrorModal";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
+import { AuthContext } from "../../shared/context/auth-context";
 
 function AddTheaterComponent({ onAddTheatre }) {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ function AddTheaterComponent({ onAddTheatre }) {
     rows: "",
     cols: "",
   });
+
+  const auth = useContext(AuthContext);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -35,7 +38,10 @@ function AddTheaterComponent({ onAddTheatre }) {
           rows: parseInt(formData.rows),
           cols: parseInt(formData.cols),
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
       setFormData({

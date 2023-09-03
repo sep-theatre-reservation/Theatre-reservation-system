@@ -2,13 +2,15 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { Stack, Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ErrorModal from "../../shared/components/ErrorModal";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const TheatreItem = ({ theatre, onDelete }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const auth = useContext(AuthContext);
 
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
@@ -22,7 +24,9 @@ const TheatreItem = ({ theatre, onDelete }) => {
     try {
       await sendRequest(
         `http://localhost:3000/api/theatres/${theatre.id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
       );
       onDelete(theatre.id);
     } catch (err) {
