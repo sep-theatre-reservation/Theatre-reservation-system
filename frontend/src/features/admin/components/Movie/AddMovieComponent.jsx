@@ -148,17 +148,18 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
                 placeholder="Enter Director Image Url"
               />
             </Form.Group>
-            <Form.Group controlId="cast" className="mb-2">
+            <Form.Group controlId="cast" className="my-3">
               <Form.Label>Cast Members</Form.Label>
               {formData.cast.map((castMember, index) => (
                 <div key={index}>
-                  <Form.Label>Cast {index + 1}</Form.Label>
+                  <Form.Label className="mt-2">Cast {index + 1}</Form.Label>
                   <Form.Control
                     type="text"
                     name="name"
                     value={castMember.name}
                     onChange={(e) => handleCastChange(e, index)}
                     placeholder="Enter Cast Member Name"
+                    className="mb-2"
                   />
                   <Form.Control
                     type="text"
