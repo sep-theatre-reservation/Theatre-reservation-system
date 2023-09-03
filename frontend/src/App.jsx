@@ -16,7 +16,7 @@ import SeatSelection from "./features/reservations/pages/SeatSelection";
 import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 import PromoManagerPage from "./features/admin/pages/PromoManagerPage";
 import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
-
+import CarouselManagerPage from "./features/admin/pages/CarouselManagerPage";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
@@ -50,6 +50,7 @@ function App() {
               <Route path="movies" element={<MovieManagerPage />}></Route>
               <Route path="theatres" element={<TheatreManagePage />}></Route>
               <Route path="promo" element={<PromoManagerPage />}></Route>
+              <Route path="carousel" element={<CarouselManagerPage />}></Route>
             </Route>
             <Route path="/seats" element={<SeatSelection />} />
             <Route path="/movies/*" element={<MoviesPage />}>

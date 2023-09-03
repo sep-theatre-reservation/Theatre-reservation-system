@@ -1,6 +1,6 @@
 import { Container, Row, Col, Stack, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import MovieImageCard from "../../shared/components/MovieImageCard";
+import MovieImageCard from "./MovieImageCard";
 import CharacterIcon from "./CharacterIcon";
 import PropTypes from "prop-types";
 

@@ -5,7 +5,6 @@ import LoadingOverlay from "../../shared/components/LoadingOverlay";
 
 const CarouselComponent = () => {
   const [loadedSlides, setLoadedSlides] = useState();
-
   const { isLoading, sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const CarouselComponent = () => {
   return (
     <React.Fragment>
       {isLoading && <LoadingOverlay asOverlay />}
-
       <Carousel>
         {!isLoading &&
           loadedSlides &&
