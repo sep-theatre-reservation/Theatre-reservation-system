@@ -49,7 +49,7 @@ function App() {
               <Route index element={<DashboardPage />}></Route>
               <Route path="movies" element={<MovieManagerPage />}></Route>
               <Route path="theatres" element={<TheatreManagePage />}></Route>
-              <Route path="promo" element={<PromoManagerPage />}></Route>
+              <Route path="promotions" element={<PromoManagerPage />}></Route>
               <Route path="carousel" element={<CarouselManagerPage />}></Route>
             </Route>
             <Route path="/seats" element={<SeatSelection />} />

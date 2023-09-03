@@ -49,7 +49,7 @@ function DrawerMenu({ show, handleClose }) {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to="/admin/promo"
+                  to="/admin/promotions"
                   id="admin-panel-link"
                   onClick={handleClose}
                 >
