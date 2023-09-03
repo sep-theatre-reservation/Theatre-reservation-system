@@ -4,13 +4,15 @@ import movieRoutes from "./routes/movies-routes.js";
 import HttpError from "./models/http-error.js";
 import theatreRoutes from "./routes/theatres-routes.js";
 import carouselRoutes from "./routes/carousel-router.js";
-import promotionRoutes from "./routes/promotions-routes.js"
+import promotionRoutes from "./routes/promotions-routes.js";
 import connectDB from "./config/db.js";
-import { config } from "dotenv";
-config()
+import usersRoutes from "./routes/users-routes.js";
 
-const port=process.env.PORT||3000
-connectDB()
+import { config } from "dotenv";
+config();
+
+const port = process.env.PORT || 3000;
+connectDB();
 
 const app = express();
 
@@ -31,6 +33,7 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/theatres", theatreRoutes);
 app.use("/api/promotions", promotionRoutes);
 app.use("/api/carousel", carouselRoutes);
+app.use("/api/users", usersRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
@@ -47,4 +50,4 @@ app.use((error, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`server started on port ${port}`);
-})
+});
