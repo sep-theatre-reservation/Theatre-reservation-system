@@ -6,30 +6,28 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 
-function AddTheaterComponent({onAddTheatre,isLoading}) {
-
+function AddTheaterComponent({ onAddTheatre, isLoading }) {
   const [formData, setFormData] = useState({
     theatreName: "",
     rows: "",
     cols: "",
   });
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleAddTheatre =(event)=>{
+  const handleAddTheatre = (event) => {
     event.preventDefault();
-    onAddTheatre(formData)
-    console.log(formData)
+    onAddTheatre(formData);
+    console.log(formData);
     setFormData({
       theatreName: "",
       rows: "",
       cols: "",
     });
-  }
+  };
 
   const generateIntegerOptions = () => {
     const maxNumber = 25; // You can adjust the maximum number of rows and columns

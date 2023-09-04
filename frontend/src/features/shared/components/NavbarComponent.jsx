@@ -10,42 +10,58 @@ import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import DrawerMenu from "../../admin/components/DrawerMenu";
 import { FaThList } from "react-icons/fa";
+import { useHttpClient } from "../hooks/http-hook";
 
 function NavbarComponent() {
   const auth = useContext(AuthContext);
+  const { sendRequest } = useHttpClient();
 
-  // function handleCallbackResponse(response) {
-  //   console.log("Encoded JWT ID token: " + response.credential);
-  //   let userObject = jwt_decode(response.credential);
-  //   console.log(userObject);
-  //   auth.login(userObject);
-  //   handleLoginClose();
-  // }
+  const authenticationHandler = async (email, user) => {
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:3000/api/users",
+        "POST",
+        JSON.stringify({ email: email }),
+        { "Content-Type": "application/json" }
+      );
+      auth.login(user, responseData.token, responseData.isAdmin);
+    } catch (err) {
+      /* */
+    }
+  };
 
-  // const [showLogin, setShowLogin] = useState(false);
+  function handleCallbackResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    authenticationHandler(userObject.email, userObject);
+    //auth.login(userObject, response.credential);
+    handleLoginClose();
+  }
 
-  // const handleLoginClose = () => setShowLogin(false);
-  // const handleLoginShow = () => setShowLogin(true);
+  const [showLogin, setShowLogin] = useState(false);
 
-  // useEffect(() => {
-  //   /* global google */
-  //   google.accounts.id.initialize({
-  //     client_id:
-  //       "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
-  //     callback: handleCallbackResponse,
-  //   });
+  const handleLoginClose = () => setShowLogin(false);
+  const handleLoginShow = () => setShowLogin(true);
 
-  //   google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
-  //     theme: "outline",
-  //     size: "large",
-  //     width: "200",
-  //     logo_alignment: "center",
-  //     text: "continue_with",
-  //   });
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
 
-  //   //google.accounts.id.prompt();
-  // });
-   //dependency array [] removed...
+    google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+      theme: "outline",
+      size: "large",
+      width: "200",
+      logo_alignment: "center",
+      text: "continue_with",
+    });
+
+    //google.accounts.id.prompt();
+  }); //dependency array [] removed...
 
   //Drawer menu functions
 
@@ -59,17 +75,17 @@ function NavbarComponent() {
       <DrawerMenu show={showDrawerMenu} handleClose={handleDrawerMenuClose} />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
-          {/* {auth.isLoggedIn && ( */}
-          <Button
-            variant="danger"
-            className="me-3"
-            size="lg"
-            onClick={handleDrawerMenuShow}
-          >
-            <FaThList size={20} className="me-2 mb-1" />
-            Admin Panel
-          </Button>
-          {/* )} */}
+          {auth.isLoggedIn && auth.isAdmin && (
+            <Button
+              variant="danger"
+              className="me-3"
+              size="lg"
+              onClick={handleDrawerMenuShow}
+            >
+              <FaThList size={20} className="me-2 mb-1" />
+              Admin Panel
+            </Button>
+          )}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
             Booking.Lk
           </Navbar.Brand>
@@ -97,7 +113,7 @@ function NavbarComponent() {
               />
               <Button variant="outline-success">Search</Button>
             </Form>
-            {/* <Modal show={showLogin} onHide={handleLoginClose}>
+            <Modal show={showLogin} onHide={handleLoginClose}>
               <Modal.Body>
                 <div id="signUpDiv"></div>
               </Modal.Body>
@@ -130,7 +146,7 @@ function NavbarComponent() {
                   </Dropdown.Menu>
                 </Dropdown>
               )}
-            </Nav> */}
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

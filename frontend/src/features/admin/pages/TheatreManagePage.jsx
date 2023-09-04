@@ -1,20 +1,33 @@
 import { Container, Col, Row } from "react-bootstrap";
 import AddTheaterComponent from "../components/Theatre/AddTheaterComponent";
 import ShowTheatreComponent from "../components/Theatre/ShowTheatreComponent";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
+import { AuthContext } from "../../shared/context/auth-context";
 
 function TheatreManagePage() {
+  const auth = useContext(AuthContext);
 
   const [updateShowTheatres, setUpdateShowTheatres] = useState(false);
   const [theatreList, setTheatreList] = useState();
 
-  const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest } = useHttpClient();
-  const { isLoading: isShowTheatreLoading, sendRequest: sendShowTheatreRequest } = useHttpClient();
-  const { isLoading: isDeleteTheatreLoading, error, sendRequest: sendDeleteTheatreRequest, clearError } = useHttpClient();
+  const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest } =
+    useHttpClient();
+  const {
+    isLoading: isShowTheatreLoading,
+    sendRequest: sendShowTheatreRequest,
+  } = useHttpClient();
+  const {
+    isLoading: isDeleteTheatreLoading,
+    error,
+    sendRequest: sendDeleteTheatreRequest,
+    clearError,
+  } = useHttpClient();
 
-  useEffect(() => { getTheatres() }, [updateShowTheatres, sendShowTheatreRequest]);
+  useEffect(() => {
+    getTheatres();
+  }, [updateShowTheatres, sendShowTheatreRequest]);
 
   const getTheatres = async () => {
     try {
@@ -22,8 +35,7 @@ function TheatreManagePage() {
         "http://localhost:3000/api/theatres"
       );
       setTheatreList(responseData.theatres);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const addTheatre = async (formData) => {
@@ -36,7 +48,10 @@ function TheatreManagePage() {
           rows: parseInt(formData.rows),
           cols: parseInt(formData.cols),
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
 
@@ -54,12 +69,12 @@ function TheatreManagePage() {
     try {
       await sendDeleteTheatreRequest(
         `http://localhost:3000/api/theatres/${deletedTheatreId}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
       );
-    } catch (err) {
-    }
+    } catch (err) {}
   };
-
 
   return (
     <>
@@ -67,10 +82,18 @@ function TheatreManagePage() {
       <Container className="pt-5  ">
         <Row>
           <Col lg={6}>
-            <AddTheaterComponent onAddTheatre={addTheatre} isLoading={isAddTheatreLoading} />
+            <AddTheaterComponent
+              onAddTheatre={addTheatre}
+              isLoading={isAddTheatreLoading}
+            />
           </Col>
           <Col lg={6}>
-            <ShowTheatreComponent isShowTheatreLoading={isShowTheatreLoading} isDeleteTheatreLoading={isDeleteTheatreLoading} theatreList={theatreList} onDeleteTheatre={deleteTheatre} />
+            <ShowTheatreComponent
+              isShowTheatreLoading={isShowTheatreLoading}
+              isDeleteTheatreLoading={isDeleteTheatreLoading}
+              theatreList={theatreList}
+              onDeleteTheatre={deleteTheatre}
+            />
           </Col>
         </Row>
       </Container>

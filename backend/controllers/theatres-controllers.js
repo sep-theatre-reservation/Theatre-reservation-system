@@ -10,6 +10,15 @@ export const addTheatre = async (req, res, next) => {
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
+
+  if (!req.userData.isAdmin) {
+    const error = new HttpError(
+      "You do not have permission to perform this action",
+      403
+    );
+    return next(error);
+  }
+
   const { theatreName, rows, cols } = req.body;
 
   const addedTheatre = new Theatre({ theatreName, rows, cols });
@@ -42,6 +51,13 @@ export const getTheatres = async (req, res, next) => {
 };
 
 export const deleteTheatre = async (req, res, next) => {
+  if (!req.userData.isAdmin) {
+    const error = new HttpError(
+      "You do not have permission to perform this action",
+      403
+    );
+    return next(error);
+  }
   const theatreId = req.params.tid;
 
   try {

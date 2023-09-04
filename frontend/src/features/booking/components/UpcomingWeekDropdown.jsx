@@ -1,8 +1,8 @@
-import React from 'react';
-import { Form, Stack } from 'react-bootstrap';
-import { FaCalendarAlt   } from 'react-icons/fa';
+import React from "react";
+import { Form, Stack } from "react-bootstrap";
+import { FaCalendarAlt } from "react-icons/fa";
 
-function UpcomingWeekSelect() {
+function UpcomingWeekSelect({ onDateSelect }) {
   const getUpcomingWeekDates = () => {
     const today = new Date();
     const daysInWeek = 7;
@@ -17,20 +17,29 @@ function UpcomingWeekSelect() {
     return upcomingWeekDates;
   };
 
+  const handleDateChange = (event) => {
+    const selectedValue = event.target.value;
+    onDateSelect(selectedValue);
+  };
+
   const upcomingWeekDates = getUpcomingWeekDates();
 
   return (
     <div>
-      <Stack direction='horizontal'>
-      <FaCalendarAlt   size={30}/>
-      <Form.Select aria-label="Select a Date" style={{ width: '150px' , marginLeft:'10px'}}>
-        <option>Select a Date</option>
-        {upcomingWeekDates.map((date, index) => (
-          <option key={index} value={date.toISOString()}>
-            {date.toDateString()}
-          </option>
-        ))}
-      </Form.Select>
+      <Stack direction="horizontal">
+        <FaCalendarAlt size={30} />
+        <Form.Select
+          aria-label="Select a Date"
+          style={{ width: "180px", marginLeft: "10px" }}
+          onChange={handleDateChange}
+        >
+          <option>Select a Date</option>
+          {upcomingWeekDates.map((date, index) => (
+            <option key={index} value={date.toISOString()}>
+              {date.toDateString()}
+            </option>
+          ))}
+        </Form.Select>
       </Stack>
     </div>
   );
