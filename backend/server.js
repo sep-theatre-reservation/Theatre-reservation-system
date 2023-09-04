@@ -6,6 +6,7 @@ import HttpError from "./models/http-error.js";
 import theatreRoutes from "./routes/theatres-routes.js";
 import carouselRoutes from "./routes/carousel-router.js";
 import usersRoutes from "./routes/users-routes.js";
+import showsRoutes from "./routes/shows-routes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/theatres", theatreRoutes);
 app.use("/api/carousel", carouselRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/shows", showsRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

@@ -13,7 +13,7 @@ import CommingSoon from "./features/movies/components/CommingSoon";
 import MovieShowcasePage from "./features/movieShowcase/pages/MovieShowcasePage";
 import MoviesPage from "./features/movies/pages/MoviesPage";
 import Footer from "./features/shared/components/Footer";
-import BookingPage from "./features/booking/pages/bookingPage";
+import BookingPage from "./features/booking/pages/BookingPage";
 import PaymentPage from "./features/payment/pages/PaymentPage";
 import DashboardPage from "./features/admin/pages/DashboardPage";
 import SeatSelection from "./features/reservations/pages/SeatSelection";
@@ -36,14 +36,14 @@ function App() {
           <Route path="theatres" element={<TheatreManagePage />}></Route>
           <Route path="promo" element={<PromoManagerPage />}></Route>
         </Route>
-        <Route path="/seats" element={<SeatSelection />} />
+        <Route path="/seats/:showId" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
           <Route path="commingsoon" element={<CommingSoon />}></Route>
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
-        <Route path="booking" element={<BookingPage />}></Route>
+        <Route path="booking/:movieId" element={<BookingPage />}></Route>
         <Route path="payment" element={<PaymentPage />}></Route>
       </Routes>
     );
@@ -51,14 +51,14 @@ function App() {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/seats" element={<SeatSelection />} />
+        <Route path="/seats/:showId" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
           <Route path="commingsoon" element={<CommingSoon />}></Route>
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
-        <Route path="booking" element={<BookingPage />}></Route>
+        <Route path="booking/:movieId" element={<BookingPage />}></Route>
         <Route path="payment" element={<PaymentPage />}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
