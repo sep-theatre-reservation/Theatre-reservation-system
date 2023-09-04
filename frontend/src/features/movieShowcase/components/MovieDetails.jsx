@@ -9,7 +9,7 @@ function MovieDetails({ movie }) {
     <Container fluid className="p-5">
       <Row>
         <Col lg={3} className="d-none d-xl-block">
-          <MovieImageCard />
+          <MovieImageCard img={movie.poster_url} />
         </Col>
         <Col lg={9}>
           <Stack gap={5}>
@@ -27,7 +27,7 @@ function MovieDetails({ movie }) {
               </div>
               <Button
                 as={Link}
-                to="/booking"
+                to={`/booking/${movie.id}`}
                 variant="primary"
                 className=" m-auto"
               >

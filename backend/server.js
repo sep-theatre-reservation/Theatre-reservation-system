@@ -7,6 +7,7 @@ import carouselRoutes from "./routes/carousel-router.js";
 import promotionRoutes from "./routes/promotions-routes.js";
 import connectDB from "./config/db.js";
 import usersRoutes from "./routes/users-routes.js";
+import showsRoutes from "./routes/shows-routes.js";
 
 import { config } from "dotenv";
 config();
@@ -34,6 +35,7 @@ app.use("/api/theatres", theatreRoutes);
 app.use("/api/promotions", promotionRoutes);
 app.use("/api/carousel", carouselRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/shows", showsRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
