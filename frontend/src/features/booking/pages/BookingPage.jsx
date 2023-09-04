@@ -1,20 +1,11 @@
-<<<<<<< HEAD
-import React from 'react'
-import UpcomingWeekSelect from '../components/UpcomingWeekDropdown'
-import { Col, Container, Row, Stack } from 'react-bootstrap'
-import MovieImageCard from '../../movieShowcase/components/MovieImageCard';
-import SeatCountModal from '../components/SeatCountModal';
-import ShowTimes from '../components/ShowTimes';
-=======
 import { useEffect, useState } from "react";
 import UpcomingWeekSelect from "../components/UpcomingWeekDropdown";
 import { Col, Container, Row, Stack } from "react-bootstrap";
-import MovieImageCard from "../../shared/components/MovieImageCard";
+import MovieImageCard from "../../movieShowcase/components/MovieImageCard";
 import SeatCountModal from "../components/SeatCountModal";
 import ShowTimes from "../components/ShowTimes";
 import { useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
->>>>>>> e23b284 (Seat Selection partially implemented)
 
 const BookingPage = () => {
   const [modalShow, setModalShow] = useState(false);
