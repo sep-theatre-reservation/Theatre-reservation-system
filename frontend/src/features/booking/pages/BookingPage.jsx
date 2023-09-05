@@ -109,7 +109,7 @@ const BookingPage = () => {
                   setModalShow={setModalShow}
                   showTimes={filteredShowtimes}
                   onSelect={handleShowtimeSelect} // Pass the callback function
-                  selectedShowtime={selectedShowtime} // Pass the selected showtime
+                  //selectedShowtime={selectedShowtime} // Pass the selected showtime
                 />
               )}
             </Stack>
