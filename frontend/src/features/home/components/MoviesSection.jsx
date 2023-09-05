@@ -27,9 +27,9 @@ function MoviesSection() {
       <div className="custom-background">
         <Container
           fluid
-          style={{ paddingLeft: "100px", paddingRight: "100px" }}
+          style={{ paddingLeft: "100px", paddingRight: "100px" ,paddingBottom:"100px"}}
         >
-          <h2 className="py-5">Movies</h2>
+          <h1 className="py-5 text-white">Movies</h1>
           <MoviesGrid movieList={movieList} />
         </Container>
       </div>

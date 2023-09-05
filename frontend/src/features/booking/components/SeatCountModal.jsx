@@ -16,7 +16,7 @@ const SeatCountModal = ({ show, onHide, showId }) => {
       className="custom-modal"
     >
       <Modal.Header closeButton className="bg-dark">
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter" className="text-white">
           How many Seats?
         </Modal.Title>
       </Modal.Header>

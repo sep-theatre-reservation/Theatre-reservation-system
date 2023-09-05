@@ -7,80 +7,38 @@ import Navbar from "react-bootstrap/Navbar";
 import { AuthContext } from "../context/auth-context";
 import { Dropdown, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import DrawerMenu from "../../admin/components/DrawerMenu";
+import AdminDrawerMenu from "../../admin/components/AdminDrawerMenu";
 import { FaThList } from "react-icons/fa";
-import { useHttpClient } from "../hooks/http-hook";
+import { FaUserCircle } from "react-icons/fa";
+import useGoogleAuth from "../hooks/google-auth-hook";
+
 
 function NavbarComponent() {
+
   const auth = useContext(AuthContext);
-  const { sendRequest } = useHttpClient();
-
-  const authenticationHandler = async (email, user) => {
-    try {
-      const responseData = await sendRequest(
-        "http://localhost:3000/api/users",
-        "POST",
-        JSON.stringify({ email: email }),
-        { "Content-Type": "application/json" }
-      );
-      auth.login(user, responseData.token, responseData.isAdmin);
-    } catch (err) {
-      /* */
-    }
-  };
-
-  function handleCallbackResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    let userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    authenticationHandler(userObject.email, userObject);
-    //auth.login(userObject, response.credential);
-    handleLoginClose();
-  }
-
+  
+  const [showAdminDrawerMenu, setShowAdminDrawerMenu] = useState(false);
+  
+  const handleAdminDrawerMenuClose = () => setShowAdminDrawerMenu(false);
+  const handleAdminDrawerMenuShow = () => setShowAdminDrawerMenu(true);
+  
   const [showLogin, setShowLogin] = useState(false);
-
+  
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
-
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
-    google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
-      theme: "outline",
-      size: "large",
-      width: "200",
-      logo_alignment: "center",
-      text: "continue_with",
-    });
-
-    //google.accounts.id.prompt();
-  }); //dependency array [] removed...
-
-  //Drawer menu functions
-
-  const [showDrawerMenu, setShowDrawerMenu] = useState(false);
-
-  const handleDrawerMenuClose = () => setShowDrawerMenu(false);
-  const handleDrawerMenuShow = () => setShowDrawerMenu(true);
+  useGoogleAuth(handleLoginClose);
 
   return (
     <>
-      <DrawerMenu show={showDrawerMenu} handleClose={handleDrawerMenuClose} />
+      <AdminDrawerMenu show={showAdminDrawerMenu} handleClose={handleAdminDrawerMenuClose} />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
             <Button
               variant="danger"
-              className="me-3"
+              className={"me-3 d-none d-lg-block"}
               size="lg"
-              onClick={handleDrawerMenuShow}
+              onClick={handleAdminDrawerMenuShow}
             >
               <FaThList size={20} className="me-2 mb-1" />
               Admin Panel
@@ -89,13 +47,44 @@ function NavbarComponent() {
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
             Booking.Lk
           </Navbar.Brand>
+
+          <div className="d-lg-none ms-auto me-3">
+            {!auth.isLoggedIn && (
+              <Button className={"mx-3"} onClick={handleLoginShow}><FaUserCircle size={20} className="me-2 mb-1" />Login</Button>
+            )}
+            {auth.isLoggedIn && (
+              <Dropdown>
+                <Dropdown.Toggle variant="link" id="avatar-dropdown">
+                  <img
+                    src={auth.user.picture}
+                    alt="profile_pic"
+                    className="rounded-circle"
+                    width="40"
+                    height="40"
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu align="end" className="dropdown-menu-right">
+                  <Dropdown.Item>{auth.user.name}</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={auth.logout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </div>
+
+
           <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
+          <Navbar.Collapse id="navbarScroll" className="pb-lg-0 pb-3">
             <Nav
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
+              {auth.isLoggedIn && auth.isAdmin && (
+                <Nav.Link as={Link} to="/admin" className="navLink text-danger d-lg-none">
+                    Admin Page
+                </Nav.Link>
+              )}
               <Nav.Link as={Link} to="/movies" className="navLink">
                 Movies
               </Nav.Link>
@@ -113,7 +102,11 @@ function NavbarComponent() {
               />
               <Button variant="outline-success">Search</Button>
             </Form>
+
             <Modal show={showLogin} onHide={handleLoginClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Login to your Account</Modal.Title>
+              </Modal.Header>
               <Modal.Body>
                 <div id="signUpDiv"></div>
               </Modal.Body>
@@ -123,22 +116,22 @@ function NavbarComponent() {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <Nav>
+
+            <div className="d-none d-lg-block">
               {!auth.isLoggedIn && (
-                <Button onClick={handleLoginShow}>Login</Button>
+                <Button className={"mx-3"} onClick={handleLoginShow}><FaUserCircle size={20} className="me-2 mb-1" />Login</Button>
               )}
               {auth.isLoggedIn && (
                 <Dropdown>
                   <Dropdown.Toggle variant="link" id="avatar-dropdown">
                     <img
-                      src={auth.user.picture} // Replace with your avatar image URL
+                      src={auth.user.picture}
                       alt="profile_pic"
                       className="rounded-circle"
                       width="40"
                       height="40"
                     />
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu align="end" className="dropdown-menu-right">
                     <Dropdown.Item>{auth.user.name}</Dropdown.Item>
                     <Dropdown.Divider />
@@ -146,7 +139,8 @@ function NavbarComponent() {
                   </Dropdown.Menu>
                 </Dropdown>
               )}
-            </Nav>
+            </div>
+
           </Navbar.Collapse>
         </Container>
       </Navbar>
