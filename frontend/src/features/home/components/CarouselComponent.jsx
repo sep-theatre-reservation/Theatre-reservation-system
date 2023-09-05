@@ -1,34 +1,51 @@
-import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Carousel } from "react-bootstrap";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import LoadingOverlay from "../../shared/components/LoadingOverlay";
 
 const CarouselComponent = () => {
-  return (
-    <Carousel>
-    <Carousel.Item>
-      <img
-        className="d-block w-100"
-        src="https://www.koimoi.com/wp-content/new-galleries/2022/07/oppenheimer-first-poster-highlights-devastation-caused-by-atomic-bomb-0001.jpg"
-        alt="First slide"
-      />
-      <Carousel.Caption>
-        <h3>First Slide</h3>
-        <p>This is the caption for the first slide.</p>
-      </Carousel.Caption>
-    </Carousel.Item>
-    <Carousel.Item>
-      <img
-        className="d-block w-100"
-        src="https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/rockcms/2023-04/230404-ryan-gosling-margot-robbie-barbie-movie-ac-525p-ab72ab.jpg"
-        alt="Second slide"
-      />
-      <Carousel.Caption>
-        <h3>Second Slide</h3>
-        <p>This is the caption for the second slide.</p>
-      </Carousel.Caption>
-    </Carousel.Item>
-    {/* Add more Carousel.Items for additional slides */}
-  </Carousel>
-  )
-}
+  const [loadedSlides, setLoadedSlides] = useState();
+  const { isLoading, sendRequest } = useHttpClient();
 
-export default CarouselComponent
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:3000/api/carousel"
+        );
+        setLoadedSlides(responseData.slides);
+      } catch (err) {
+        /* */
+      }
+    };
+
+    fetchSlides();
+  }, [sendRequest]);
+
+  return (
+    <React.Fragment>
+      {isLoading && <LoadingOverlay asOverlay />}
+      <Carousel>
+        {!isLoading &&
+          loadedSlides &&
+          loadedSlides.map((slide, index) => (
+            <Carousel.Item key={slide.id}>
+              <img
+                className="d-block w-100"
+                src={slide.imgUrl}
+                alt={`Slide ${index + 1}`}
+              />
+              <Carousel.Caption>
+                <h3>{`Slide ${index + 1}`}</h3>
+                <p>This is the caption for the slide.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          ))}
+
+        {/* Add more Carousel.Items for additional slides */}
+      </Carousel>
+    </React.Fragment>
+  );
+};
+
+export default CarouselComponent;

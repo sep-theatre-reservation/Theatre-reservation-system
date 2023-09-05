@@ -1,12 +1,41 @@
-import MoviesSection from "../../shared/components/MoviesSection";
+import React, { useEffect, useState } from "react";
+import MoviesGrid from "../../shared/components/MoviesGrid";
+import { Container } from "react-bootstrap";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import LoadingOverlay from "../../shared/components/LoadingOverlay";
 
 function NowShowing() {
+  const { isLoading, sendRequest } = useHttpClient();
+  const [movieList, setMovieList] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:3000/api/movies"
+        );
+        setMovieList(responseData.movies);
+      } catch (err) {
+        /* */
+      }
+    };
+
+    fetchMovies();
+  }, [sendRequest]);
+
   return (
-  <>
-    now showing
-    <MoviesSection/>
-  </>
-  )
+    <React.Fragment>
+      {isLoading && <LoadingOverlay asOverlay />}
+      <Container
+        fluid
+        className="bg-light"
+        style={{ paddingLeft: "100px", paddingRight: "100px" }}
+      >
+        <h2 className="py-5">Movies(Now Showing)</h2>
+        <MoviesGrid movieList={movieList} />
+      </Container>
+    </React.Fragment>
+  );
 }
 
-export default NowShowing
+export default NowShowing;

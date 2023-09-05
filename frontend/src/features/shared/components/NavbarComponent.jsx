@@ -5,18 +5,37 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AuthContext } from "../context/auth-context";
-import { Modal } from "react-bootstrap";
+import { Dropdown, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import DrawerMenu from "../../admin/components/DrawerMenu";
-import { FaThList} from 'react-icons/fa';
-
+import { FaThList } from "react-icons/fa";
+import { useHttpClient } from "../hooks/http-hook";
 
 function NavbarComponent() {
   const auth = useContext(AuthContext);
+  const { sendRequest } = useHttpClient();
+
+  const authenticationHandler = async (email, user) => {
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:3000/api/users",
+        "POST",
+        JSON.stringify({ email: email }),
+        { "Content-Type": "application/json" }
+      );
+      auth.login(user, responseData.token, responseData.isAdmin);
+    } catch (err) {
+      /* */
+    }
+  };
 
   function handleCallbackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
-    auth.login();
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    authenticationHandler(userObject.email, userObject);
+    //auth.login(userObject, response.credential);
     handleLoginClose();
   }
 
@@ -56,10 +75,15 @@ function NavbarComponent() {
       <DrawerMenu show={showDrawerMenu} handleClose={handleDrawerMenuClose} />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
-          {auth.isLoggedIn && (
-            <Button variant="danger" className="me-3" size="lg"onClick={handleDrawerMenuShow}>
-              <FaThList size={20} className='me-2 mb-1'/>
-                Admin Panel
+          {auth.isLoggedIn && auth.isAdmin && (
+            <Button
+              variant="danger"
+              className="me-3"
+              size="lg"
+              onClick={handleDrawerMenuShow}
+            >
+              <FaThList size={20} className="me-2 mb-1" />
+              Admin Panel
             </Button>
           )}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
@@ -100,8 +124,28 @@ function NavbarComponent() {
               </Modal.Footer>
             </Modal>
             <Nav>
-              {!auth.isLoggedIn && <Button onClick={handleLoginShow}>Login</Button>}
-              {auth.isLoggedIn && <Button onClick={auth.logout}>Logout</Button>}
+              {!auth.isLoggedIn && (
+                <Button onClick={handleLoginShow}>Login</Button>
+              )}
+              {auth.isLoggedIn && (
+                <Dropdown>
+                  <Dropdown.Toggle variant="link" id="avatar-dropdown">
+                    <img
+                      src={auth.user.picture} // Replace with your avatar image URL
+                      alt="profile_pic"
+                      className="rounded-circle"
+                      width="40"
+                      height="40"
+                    />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu align="end" className="dropdown-menu-right">
+                    <Dropdown.Item>{auth.user.name}</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={auth.logout}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
