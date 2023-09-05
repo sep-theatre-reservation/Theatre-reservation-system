@@ -12,18 +12,9 @@ function TheatreManagePage() {
   const [updateShowTheatres, setUpdateShowTheatres] = useState(false);
   const [theatreList, setTheatreList] = useState();
 
-  const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest } =
-    useHttpClient();
-  const {
-    isLoading: isShowTheatreLoading,
-    sendRequest: sendShowTheatreRequest,
-  } = useHttpClient();
-  const {
-    isLoading: isDeleteTheatreLoading,
-    error,
-    sendRequest: sendDeleteTheatreRequest,
-    clearError,
-  } = useHttpClient();
+  const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest, error:addError, clearError:clearAddError } =useHttpClient();
+  const {isLoading: isShowTheatreLoading,sendRequest: sendShowTheatreRequest, error:showError, clearError:clearShowError} = useHttpClient();
+  const {isLoading: isDeleteTheatreLoading, sendRequest: sendDeleteTheatreRequest, error:deleteError, clearError:clearDeleteError} = useHttpClient();
 
   useEffect(() => {
     getTheatres();
@@ -35,7 +26,7 @@ function TheatreManagePage() {
         "http://localhost:3000/api/theatres"
       );
       setTheatreList(responseData.theatres);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const addTheatre = async (formData) => {
@@ -73,12 +64,14 @@ function TheatreManagePage() {
         null,
         { Authorization: "Bearer " + auth.token }
       );
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
     <>
-      <ErrorModal error={error} onClear={clearError} />
+      <ErrorModal error={addError} onClear={clearAddError} />
+      <ErrorModal error={showError} onClear={clearShowError} />
+      <ErrorModal error={deleteError} onClear={clearDeleteError} />
       <Container className="pt-5  ">
         <Row>
           <Col lg={6}>

@@ -10,9 +10,11 @@ import {
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
-import { useState,useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../shared/context/auth-context";
 
 function CarouselManagerPage() {
+    const auth = useContext(AuthContext)
     const [avatars, setAvatars] = useState([]);
     const [showAddSlide, setShowAddSlide] = useState(false);
     const [imgUrl, setImgUrl] = useState("");
@@ -54,11 +56,12 @@ function CarouselManagerPage() {
                 JSON.stringify({
                     imgUrl: imgUrl,
                 }),
-                { "Content-Type": "application/json" }
+                {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + auth.token
+                }
             );
-            setImgUrl(""); // Clear the input field immediately
-
-            // After the request is successful, update the state
+            setImgUrl("");
             setAvatars((prevAvatars) => [...prevAvatars, responseData.slide]);
         } catch (err) {
             /* */
@@ -70,12 +73,15 @@ function CarouselManagerPage() {
         try {
             await sendRequest(
                 `http://localhost:3000/api/carousel/${avatarId}`,
-                "DELETE"
+                "DELETE",
+                null,
+                {
+                    Authorization: "Bearer " + auth.token
+                }
             );
             const updatedAvatars = avatars.filter((avatar) => avatar.id !== avatarId);
             setAvatars(updatedAvatars);
         } catch (err) {
-            /* */
         }
     };
     return (
