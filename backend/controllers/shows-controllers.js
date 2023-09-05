@@ -13,7 +13,6 @@ function generateArray(rows, columns) {
       result.push(`${letter}${j}`);
     }
   }
-
   return result;
 }
 
@@ -56,7 +55,8 @@ export const createShow = async (req, res, next) => {
     );
     return next(error);
   }
-
+  console.log("test")
+  console.log(createShow)
   res.status(201).json({ show: createdShow });
 };
 
