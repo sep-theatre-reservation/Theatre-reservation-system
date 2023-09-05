@@ -1,7 +1,13 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Button, Stack } from "react-bootstrap";
 
-function ShowTimes({ setModalShow, showTimes }) {
+function formatDateToTime(inputDateStr) {
+  const inputDate = new Date(inputDateStr);
+  const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+  return inputDate.toLocaleTimeString([], options);
+}
+
+function ShowTimes({ setModalShow, showTimes, onSelect, selectedShowtime }) {
   return (
     <Stack>
       <div>
@@ -14,18 +20,14 @@ function ShowTimes({ setModalShow, showTimes }) {
           <Button
             key={show.id}
             variant="outline-secondary"
-            onClick={() => setModalShow(true)}
-            link
+            onClick={() => {
+              onSelect(show); // Call the callback function with the selected showtime
+              setModalShow(true);
+            }}
           >
-            {show.showtime}
+            {formatDateToTime(show.showtime)}
           </Button>
         ))}
-        <Button variant="outline-secondary" onClick={() => setModalShow(true)}>
-          7.30 PM
-        </Button>
-        <Button variant="outline-secondary" onClick={() => setModalShow(true)}>
-          9.30 PM
-        </Button>
       </Stack>
     </Stack>
   );
