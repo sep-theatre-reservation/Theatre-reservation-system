@@ -1,7 +1,7 @@
 import { Container, Stack, Col, Row } from 'react-bootstrap'
 import AddPromoComponent from '../components/Promotion/AddPromoComponent'
 import ShowPromoComponent from '../components/Promotion/ShowPromoComponent'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/ErrorModal';
@@ -14,17 +14,19 @@ function PromoManagerPage() {
   const { isLoading: isShowPromoLoading, sendRequest: sendShowPromoRequest, error:showError, clearError:clearShowError } = useHttpClient();
   const { isLoading: isDeletePromoLoading, sendRequest: sendDeletePromoRequest, error:deleteError, clearError:clearDeleteError } = useHttpClient();
   useEffect(() => { getPromotions() }, [updateShowPromotions, sendShowPromoRequest])
-
-  const getPromotions = async () => {
+  
+  
+  const getPromotions = useCallback( async () => {
     try {
       const responseData = await sendShowPromoRequest(
         "http://localhost:3000/api/promotions"
-      );
-      setPromotionList(responseData.promotions);
-    } catch (err) {
+        );
+        setPromotionList(responseData.promotions);
+      } catch (err) {
+      }
+      console.log(promotionList)
     }
-    console.log(promotionList)
-  }
+  )
 
   const addPromotion = async (formData) => {
     try {
@@ -66,7 +68,7 @@ function PromoManagerPage() {
   return (
     <>
     <ErrorModal error={addError} onClear={clearAddError} />
-    <ErrorModal error={showError} onClear={clearShowError} />
+    {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
     <ErrorModal error={deleteError} onClear={clearDeleteError} />
     <Container className='pt-5  '>
       <Row >

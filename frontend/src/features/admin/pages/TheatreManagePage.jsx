@@ -70,7 +70,7 @@ function TheatreManagePage() {
   return (
     <>
       <ErrorModal error={addError} onClear={clearAddError} />
-      <ErrorModal error={showError} onClear={clearShowError} />
+      {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
       <ErrorModal error={deleteError} onClear={clearDeleteError} />
       <Container className="pt-5  ">
         <Row>
