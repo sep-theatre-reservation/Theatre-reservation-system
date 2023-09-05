@@ -53,6 +53,7 @@ const BookingPage = () => {
     if (loadedShowtimes) {
       // Filter the showtimes based on selectedDate
       if (selectedDate) {
+        //console.log(selectedDate);
         const selectedDateObject = new Date(selectedDate);
         const formattedSelectedDate = selectedDateObject
           .toISOString()

@@ -19,6 +19,14 @@ function UpcomingWeekSelect({ onDateSelect }) {
 
   const handleDateChange = (event) => {
     const selectedValue = event.target.value;
+    console.log("Selected Value:", selectedValue);
+    const selectedDate = new Date(selectedValue);
+    selectedDate.setMinutes(
+      selectedDate.getMinutes() + selectedDate.getTimezoneOffset()
+    );
+    const isoString = selectedDate.toISOString();
+
+    console.log("Adjusted ISO String:", isoString);
     onDateSelect(selectedValue);
   };
 
