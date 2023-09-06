@@ -9,13 +9,13 @@ const SeatCountModal = ({ show, onHide, showId }) => {
     <Modal
       show={show}
       onHide={onHide}
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
-      className="custom-modal"
+      data-bs-theme="dark"
     >
-      <Modal.Header closeButton className="bg-dark">
+      <Modal.Header closeButton className="bg-dark ">
         <Modal.Title id="contained-modal-title-vcenter" className="text-white">
           How many Seats?
         </Modal.Title>

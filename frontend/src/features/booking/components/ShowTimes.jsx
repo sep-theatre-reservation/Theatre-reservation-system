@@ -43,7 +43,7 @@ function ShowTimes({ setModalShow, showTimes, onSelect }) {
                 key={show.id}
                 variant="outline-secondary"
                 onClick={() => {
-                  onSelect(show); // Call the callback function with the selected showtime
+                  onSelect(show); 
                   setModalShow(true);
                 }}
               >
@@ -53,27 +53,6 @@ function ShowTimes({ setModalShow, showTimes, onSelect }) {
           </Stack>
         </Stack>
       ))}
-      {/* <Stack>
-        <div>
-          <FaMapMarkerAlt size={20} className="mb-2" />
-          <span className="mb-0 lead">LIBERTY BY SCOPE CINEMAS</span>
-          <hr className="mt-0" />
-        </div>
-        <Stack direction="horizontal" gap={3}>
-          {showTimes.map((show) => (
-            <Button
-              key={show.id}
-              variant="outline-secondary"
-              onClick={() => {
-                onSelect(show); // Call the callback function with the selected showtime
-                setModalShow(true);
-              }}
-            >
-              {formatDateToTime(show.showtime)}
-            </Button>
-          ))}
-        </Stack>
-      </Stack> */}
     </React.Fragment>
   );
 }

@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import UpcomingWeekSelect from "../components/UpcomingWeekDropdown";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Col, Container, Modal, Row, Stack } from "react-bootstrap";
 import MovieImageCard from "../../movieShowcase/components/MovieImageCard";
 import SeatCountModal from "../components/SeatCountModal";
 import ShowTimes from "../components/ShowTimes";
 import { useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import ErrorModal from "../../shared/components/ErrorModal"
-const BookingPage = () => {
 
-  const [dateSelectionError, setDateSelectionError] = useState(null)
-  const [seatCountModalShow, setSeatCountModalShow] = useState(false);
+const BookingPage = () => {
+  const [modalShow, setModalShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedShowtime, setSelectedShowtime] = useState(null);
   const { isLoading, sendRequest } = useHttpClient();
@@ -21,12 +19,12 @@ const BookingPage = () => {
   const movieId = useParams().movieId;
 
   useEffect(() => {
-    const fetchMovies = async () => {3
+    const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
           `http://localhost:3000/api/movies/${movieId}`
         );
-        setMovie(responseData.movie);
+        setLoadedMovie(responseData.movie);
       } catch (err) {
         /* */
       }
@@ -41,13 +39,14 @@ const BookingPage = () => {
         const responseData = await sendRequest(
           `http://localhost:3000/api/shows/movie/${movieId}`
         );
-        setShowtimes(responseData.shows);
+        setLoadedShowtimes(responseData.shows);
       } catch (err) {
         /* */
       }
     };
 
     fetchShows();
+    //console.log(loadedShowtimes);
   }, [sendRequest, movieId]);
 
   useEffect(() => {
@@ -74,25 +73,12 @@ const BookingPage = () => {
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
-    //console.log(selectedDate);
-    // Reset selected showtime when a new date is selected
     setSelectedShowtime(null);
   };
 
-  // Callback function to handle showtime selection
   const handleShowtimeSelect = (showtime) => {
     setSelectedShowtime(showtime);
   };
-
-  const handleShowTimeSelect = (showTime) => {
-    if (!selectedDate) {
-      setDateSelectionError("Please Select a Date first")
-    } else {
-      setSelectedShowTime(showTime)
-      setSeatCountModalShow(true)
-    }
-  }
-
 
   return (
     <Container>
@@ -111,25 +97,26 @@ const BookingPage = () => {
         <Col>
           <Stack gap={3}>
             <h3>{!isLoading && loadedMovie && loadedMovie.title}</h3>
-            {/* <Col className="d-md-none">
-              <MovieImageCard size={10} />
-            </Col> */}
+            <Col className="d-md-none">
+              {!isLoading && loadedMovie && (
+                <MovieImageCard img={loadedMovie.poster_url} size={10} />
+              )}
+            </Col>
             <h4 className="my-3">Show Times</h4>
             <Stack gap={5}>
-              {!isLoading && showTimeList && (
+              {!isLoading && loadedShowtimes && (
                 <ShowTimes
                   setModalShow={setModalShow}
                   showTimes={filteredShowtimes}
-                  onSelect={handleShowtimeSelect} // Pass the callback function
-                  //selectedShowtime={selectedShowtime} // Pass the selected showtime
+                  onSelect={handleShowtimeSelect} 
                 />
               )}
             </Stack>
           </Stack>
         </Col>
         <Col className="d-none d-md-block">
-          {!isLoading && movie && (
-            <MovieImageCard img={movie.poster_url} className="m-auto" />
+          {!isLoading && loadedMovie && (
+            <MovieImageCard img={loadedMovie.poster_url} className="m-auto" />
           )}
         </Col>
       </Row>

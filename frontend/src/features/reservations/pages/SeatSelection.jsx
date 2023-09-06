@@ -2,7 +2,7 @@ import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 // let rows = 4;
@@ -146,9 +146,10 @@ const SeatSelection = () => {
 
   return (
     <>
+    <Container className="pt-4">
       <Stack>
         <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
-        <div className="m-auto mt-5 py-5">
+        <div className="m-auto mt-3 py-5">
           <table>
             <tbody>{rowAr}</tbody>
           </table>
@@ -164,11 +165,12 @@ const SeatSelection = () => {
             to="/payment"
             variant="primary"
             onClick={btnContinueHandler}
-          >
+            >
             Continue
           </Button>{" "}
         </Stack>
       </Stack>
+            </Container>
     </>
   );
 };
