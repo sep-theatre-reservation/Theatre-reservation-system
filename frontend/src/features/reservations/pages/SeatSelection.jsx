@@ -5,38 +5,6 @@ import Stack from "react-bootstrap/Stack";
 import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-// let rows = 4;
-// let cols = 7;
-// let SEATS = [
-//   { id: "A1", availability: true },
-//   { id: "A2", availability: true },
-//   { id: "A3", availability: true },
-//   { id: "A4", availability: true },
-//   { id: "A5", availability: true },
-//   { id: "A6", availability: true },
-//   { id: "A7", availability: true },
-//   { id: "B1", availability: true },
-//   { id: "B2", availability: true },
-//   { id: "B3", availability: true },
-//   { id: "B4", availability: false },
-//   { id: "B5", availability: true },
-//   { id: "B6", availability: true },
-//   { id: "B7", availability: true },
-//   { id: "C1", availability: true },
-//   { id: "C2", availability: false },
-//   { id: "C3", availability: true },
-//   { id: "C4", availability: true },
-//   { id: "C5", availability: true },
-//   { id: "C6", availability: true },
-//   { id: "C7", availability: true },
-//   { id: "D1", availability: true },
-//   { id: "D2", availability: false },
-//   { id: "D3", availability: true },
-//   { id: "D4", availability: true },
-//   { id: "D5", availability: true },
-//   { id: "D6", availability: true },
-//   { id: "D7", availability: true },
-// ];
 
 const SeatSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -47,13 +15,14 @@ const SeatSelection = () => {
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
 
-  const showId = useParams().showId;
-  console.log(showId)
+  const { showId, seatCount } = useParams()
+  const [selectedSeatCount, setSelectedSeatCount] = useState(0)
   //const showId = "64f50afcb3c21042568e874d";
 
   useEffect(() => {
     const fetchShow = async () => {
       try {
+        console.log(`http://localhost:3000/api/shows/${showId}`)
         const responseData = await sendRequest(
           `http://localhost:3000/api/shows/${showId}`
         );
@@ -146,31 +115,40 @@ const SeatSelection = () => {
 
   return (
     <>
-    <Container className="pt-4">
-      <Stack>
-        <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
-        <div className="m-auto mt-3 py-5">
-          <table>
-            <tbody>{rowAr}</tbody>
-          </table>
-        </div>
-        <div className="screen mb-4">screen</div>
-        <hr className="container" />
-        <Stack direction="horizontal" gap={3} className="m-auto">
-          <Button as={Link} to="/booking" variant="secondary">
-            Back
-          </Button>{" "}
-          <Button
-            as={Link}
-            to="/payment"
-            variant="primary"
-            onClick={btnContinueHandler}
+      <Container className="pt-4">
+        <Stack>
+          <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
+          <div className="m-auto mt-3 py-5">
+            <table>
+              <tbody>{rowAr}</tbody>
+            </table>
+          </div>
+          <div className="screen mb-4">screen</div>
+          <hr className="container" />
+          <Stack direction="horizontal" gap={3} className="m-auto">
+            <Button as={Link} to="/booking" variant="secondary">
+              Back
+            </Button>
+            {selectedSeatCount == seatCount ?
+              <Button
+                as={Link}
+                to="/payment"
+                variant="primary"
+                onClick={btnContinueHandler}
+              >
+                Continue
+              </Button>
+              :
+              <Button
+              disabled
+              variant="primary"
             >
-            Continue
-          </Button>{" "}
+              Continue
+            </Button>
+            }
+          </Stack>
         </Stack>
-      </Stack>
-            </Container>
+      </Container>
     </>
   );
 };

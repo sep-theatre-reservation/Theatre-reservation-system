@@ -27,7 +27,7 @@ const SeatCountModal = ({ show, onHide, showId }) => {
         <Stack>
           <SeatCountSelector setCount={(count)=>setSeatCount(count)}/>
           <div className="ms-auto p-2">
-            <Button as={Link} to={`/seats/:${showId}/:${seatCount}`} onClick={onHide}>
+            <Button as={Link} to={`/seats/${showId}/${seatCount}`} onClick={onHide}>
               Select Seats
             </Button>
           </div>
