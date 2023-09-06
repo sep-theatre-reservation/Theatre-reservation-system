@@ -48,7 +48,7 @@ const SeatSelection = () => {
   const [SEATS, setSeats] = useState(null);
 
   const showId = useParams().showId;
-
+  console.log(showId)
   //const showId = "64f50afcb3c21042568e874d";
 
   useEffect(() => {

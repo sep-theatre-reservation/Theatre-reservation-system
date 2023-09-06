@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonToolbar, ToggleButton } from 'react-bootstrap'
 
-function SeatCountSelector() {
+function SeatCountSelector({setCount}) {
   const [radioValue, setRadioValue] = useState('0');
+  useEffect(() => {
+    setCount(radioValue);
+  }, [radioValue]);
 
   const radios = [
     { value: '1' },
@@ -21,7 +24,9 @@ function SeatCountSelector() {
           name="radio"
           value={radio.value}
           checked={radioValue === radio.value}
-          onChange={(e) => setRadioValue(e.currentTarget.value)
+          onChange={(e) => {
+            setRadioValue(e.currentTarget.value)
+          }
           }
           className='mx-2'
         >
