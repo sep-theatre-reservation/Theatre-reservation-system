@@ -46,8 +46,10 @@ const SeatSelection = () => {
   const [rows, setRows] = useState(null);
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
-  //const showId = useParams().showid;
-  const showId = "64f50afcb3c21042568e874d";
+
+  const showId = useParams().showId;
+
+  //const showId = "64f50afcb3c21042568e874d";
 
   useEffect(() => {
     const fetchShow = async () => {
@@ -145,6 +147,7 @@ const SeatSelection = () => {
   return (
     <>
       <Stack>
+        <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
         <div className="m-auto mt-5 py-5">
           <table>
             <tbody>{rowAr}</tbody>

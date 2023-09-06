@@ -3,7 +3,11 @@ import { Button, Stack } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { FaFilm } from "react-icons/fa";
 
-const MovieItem = ({ movie }) => {
+const MovieItem = ({ movie, showSchedule }) => {
+  const onSchedule = () => {
+    showSchedule(movie.id);
+  };
+
   return (
     <React.Fragment>
       <Stack key={movie.id} id={movie.id} direction="horizontal" gap={3}>
@@ -13,7 +17,9 @@ const MovieItem = ({ movie }) => {
           {movie.title}
         </span>
 
-        <Button variant="warning">Edit</Button>
+        <Button variant="warning" onClick={onSchedule}>
+          Schedule
+        </Button>
       </Stack>
     </React.Fragment>
   );
@@ -21,6 +27,7 @@ const MovieItem = ({ movie }) => {
 
 MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
+  showSchedule: PropTypes.func,
 };
 
 export default MovieItem;

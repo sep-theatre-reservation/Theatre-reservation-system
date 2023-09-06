@@ -4,7 +4,7 @@ import { Card, Stack } from "react-bootstrap";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
 
-function ShowMoviesComponent({ moviesList,isLoading}) {
+function ShowMoviesComponent({ moviesList, isLoading, showSchedule }) {
   return (
     <React.Fragment>
       {isLoading && <LoadingOverlay asOverlay />}
@@ -14,7 +14,7 @@ function ShowMoviesComponent({ moviesList,isLoading}) {
           <Card.Text>
             <Stack gap={2}>
               {!isLoading && moviesList && (
-                <MovieList movies={moviesList} />
+                <MovieList movies={moviesList} showSchedule={showSchedule} />
               )}
             </Stack>
           </Card.Text>

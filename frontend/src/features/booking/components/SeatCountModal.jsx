@@ -4,11 +4,11 @@ import SeatCountSelector from "../components/SeatCountSelector";
 import { Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function SeatCountModal(props) {
-  let showId;
+const SeatCountModal = ({ show, onHide, showId }) => {
   return (
     <Modal
-      {...props}
+      show={show}
+      onHide={onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -26,7 +26,7 @@ function SeatCountModal(props) {
           <SeatCountSelector />
           <div className="ms-auto p-2">
             {/*enter show id to the route */}
-            <Button as={Link} to={`/seats/${showId}`} onClick={props.onHide}>
+            <Button as={Link} to={`/seats/${showId}`} onClick={onHide}>
               Select Seats
             </Button>
           </div>
@@ -34,6 +34,6 @@ function SeatCountModal(props) {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default SeatCountModal;

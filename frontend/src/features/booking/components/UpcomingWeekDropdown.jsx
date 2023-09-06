@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -19,6 +19,14 @@ function UpcomingWeekSelect({ onDateSelect }) {
 
   const handleDateChange = (event) => {
     const selectedValue = event.target.value;
+    console.log("Selected Value:", selectedValue);
+    const selectedDate = new Date(selectedValue);
+    selectedDate.setMinutes(
+      selectedDate.getMinutes() + selectedDate.getTimezoneOffset()
+    );
+    const isoString = selectedDate.toISOString();
+
+    console.log("Adjusted ISO String:", isoString);
     onDateSelect(selectedValue);
   };
 
