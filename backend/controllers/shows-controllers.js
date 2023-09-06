@@ -65,7 +65,7 @@ export const getShowsByMovieId = async (req, res, next) => {
   let shows;
 
   try {
-    shows = await Show.find({ movie: movieId });
+    shows = await Show.find({ movie: movieId }).populate("theatre");
   } catch (err) {
     const error = new HttpError("Fetching shows failed, try again", 500);
     return next(error);

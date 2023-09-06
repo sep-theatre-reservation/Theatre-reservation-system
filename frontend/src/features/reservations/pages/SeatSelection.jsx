@@ -2,7 +2,7 @@ import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 // let rows = 4;
@@ -46,8 +46,10 @@ const SeatSelection = () => {
   const [rows, setRows] = useState(null);
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
-  //const showId = useParams().showid;
-  const showId = "64f50afcb3c21042568e874d";
+
+  const showId = useParams().showId;
+  console.log(showId)
+  //const showId = "64f50afcb3c21042568e874d";
 
   useEffect(() => {
     const fetchShow = async () => {
@@ -144,8 +146,10 @@ const SeatSelection = () => {
 
   return (
     <>
+    <Container className="pt-4">
       <Stack>
-        <div className="m-auto mt-5 py-5">
+        <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
+        <div className="m-auto mt-3 py-5">
           <table>
             <tbody>{rowAr}</tbody>
           </table>
@@ -161,11 +165,12 @@ const SeatSelection = () => {
             to="/payment"
             variant="primary"
             onClick={btnContinueHandler}
-          >
+            >
             Continue
           </Button>{" "}
         </Stack>
       </Stack>
+            </Container>
     </>
   );
 };

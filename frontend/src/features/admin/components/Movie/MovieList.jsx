@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
 import MovieItem from "./MovieItem";
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, showSchedule }) => {
   return (
     <>
       {movies.map((movie) => (
-        <MovieItem key={movie.id} id={movie.id} movie={movie}></MovieItem>
+        <MovieItem
+          key={movie.id}
+          id={movie.id}
+          movie={movie}
+          showSchedule={showSchedule}
+        ></MovieItem>
       ))}
     </>
   );

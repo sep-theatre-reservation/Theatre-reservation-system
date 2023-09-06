@@ -38,7 +38,7 @@ function App() {
           <Route path="promotions" element={<PromoManagerPage />}></Route>
           <Route path="carousel" element={<CarouselManagerPage />}></Route>
         </Route>
-        <Route path="/seats/:showId" element={<SeatSelection />} />
+        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
@@ -53,7 +53,7 @@ function App() {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/seats/:showId" element={<SeatSelection />} />
+        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
