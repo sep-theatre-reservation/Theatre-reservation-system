@@ -11,9 +11,9 @@ export const createBooking = async (req, res, next) => {
     );
   }
 
-  const {show, seatCount, customer, status} = req.body;
+  const { show, seatCount, customer, status } = req.body;
 
-  const addedBooking = new Booking({show, seatCount, customer, status});
+  const addedBooking = new Booking({ show, seatCount, customer, status });
   try {
     await addedBooking.save();
   } catch (err) {
@@ -26,3 +26,8 @@ export const createBooking = async (req, res, next) => {
   res.status(201).json({ booking: addedBooking });
 };
 
+export const getBookingById = () => {
+
+}
+
+export const getBookings=()=>{}

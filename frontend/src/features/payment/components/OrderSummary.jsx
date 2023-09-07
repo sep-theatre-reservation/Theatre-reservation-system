@@ -1,9 +1,8 @@
 import Card from 'react-bootstrap/Card';
-import Paypal from './Paypal';
 
 function OrderSummary() {
     return (
-        <Card style={{ width: '30rem' }}>
+        <Card  className='mb-3'>
             <Card.Body>
                 <Card.Title>Order Summary</Card.Title>
                 <Card.Text>
@@ -11,8 +10,9 @@ function OrderSummary() {
                 </Card.Text>
                 <hr />
             </Card.Body>
-            <Card.Footer>Amount Payable</Card.Footer>
-            <Paypal/>
+            <Card.Footer>
+                <h5>Amount Payable</h5>
+            </Card.Footer>
         </Card>
     )
 }

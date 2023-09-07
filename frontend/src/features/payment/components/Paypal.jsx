@@ -1,6 +1,6 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-export default function Paypal({ bookingId }) {
+export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
 
     const initialOptions = {
         clientId: "Ab0srraMjiEqhu5-dfGj7oDKFouBx8TK2F5xM-3vrcAfl0zktcfDUHvlde9dPg6H-Rjvvh3kABbve8s5",
@@ -94,9 +94,11 @@ export default function Paypal({ bookingId }) {
         }
     }
 
+
+
     return (
         <PayPalScriptProvider options={initialOptions} >
-            <PayPalButtons style={{ layout: "horizontal" }} className="w-75 m-auto" createOrder={createOrder} onApprove={onApprove} />
+            <PayPalButtons style={{ layout: "horizontal" }} className="w-50 ms-auto pt-3" createOrder={createOrder} onApprove={onApprove} />
         </PayPalScriptProvider>
     );
 }

@@ -1,11 +1,11 @@
 import express from "express";
-import {createBooking} from "../controllers/booking-controller.js";
+import {getBookingById,createBooking} from "../controllers/booking-controller.js";
 import checkAuth from "../middleware/check-auth.js";
 
 const router = express.Router();
 
 // router.get("/", getBookings);
-// router.get("/:bid", getBookingById);
+router.get("/:bid", getBookingById);
 router.use(checkAuth);
 router.post("/", createBooking);
 
