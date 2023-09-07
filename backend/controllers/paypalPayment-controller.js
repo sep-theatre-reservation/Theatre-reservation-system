@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
-
-const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET} = process.env;
+import cors from "cors"
+const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 const app = express();
 
@@ -10,7 +10,7 @@ const app = express();
 
 // parse post params sent in body in json format
 app.use(express.json());
-
+const router = express.Router();
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.
  * @see https://developer.paypal.com/api/rest/authentication/
@@ -42,12 +42,10 @@ const generateAccessToken = async () => {
  * Create an order to start the transaction.
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
  */
-export const createOrder = async (cart) => {
-  // use the cart information passed from the front-end to calculate the purchase unit details
-  console.log(
-    "shopping cart information passed from the frontend createOrder() callback:",
-    cart,
-  );
+const createOrder = async (bookingData) => {
+  // console.log(
+  //   bookingData
+  // );
 
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
@@ -57,9 +55,9 @@ export const createOrder = async (cart) => {
       {
         amount: {
           currency_code: "USD",
-          value: "100.00",
+          value: bookingData[0].price,
         },
-      },
+      }
     ],
   };
 
@@ -84,7 +82,7 @@ export const createOrder = async (cart) => {
  * Capture payment for the created order to complete the transaction.
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
  */
-export const captureOrder = async (orderID) => {
+const captureOrder = async (orderID) => {
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders/${orderID}/capture`;
 
@@ -117,19 +115,19 @@ async function handleResponse(response) {
   }
 }
 
-app.post("/api/orders", async (req, res) => {
+export const handleCreateOrder = async (req, res) => {
   try {
     // use the cart information passed from the front-end to calculate the order amount detals
-    const { cart } = req.body;
-    const { jsonResponse, httpStatusCode } = await createOrder(cart);
+    const { bookingData } = req.body;
+    const { jsonResponse, httpStatusCode } = await createOrder(bookingData);
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {
     console.error("Failed to create order:", error);
     res.status(500).json({ error: "Failed to create order." });
   }
-});
+}
 
-app.post("/api/orders/:orderID/capture", async (req, res) => {
+export const handleCaptureOrder=async (req, res) => {
   try {
     const { orderID } = req.params;
     const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
@@ -138,4 +136,4 @@ app.post("/api/orders/:orderID/capture", async (req, res) => {
     console.error("Failed to create order:", error);
     res.status(500).json({ error: "Failed to capture order." });
   }
-});
+}
