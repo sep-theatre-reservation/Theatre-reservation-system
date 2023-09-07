@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UpcomingWeekSelect from "../components/UpcomingWeekDropdown";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Col, Container, Modal, Row, Stack } from "react-bootstrap";
 import MovieImageCard from "../../movieShowcase/components/MovieImageCard";
 import SeatCountModal from "../components/SeatCountModal";
 import ShowTimes from "../components/ShowTimes";
@@ -73,12 +73,9 @@ const BookingPage = () => {
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
-    //console.log(selectedDate);
-    // Reset selected showtime when a new date is selected
     setSelectedShowtime(null);
   };
 
-  // Callback function to handle showtime selection
   const handleShowtimeSelect = (showtime) => {
     setSelectedShowtime(showtime);
   };
@@ -100,17 +97,18 @@ const BookingPage = () => {
         <Col>
           <Stack gap={3}>
             <h3>{!isLoading && loadedMovie && loadedMovie.title}</h3>
-            {/* <Col className="d-md-none">
-              <MovieImageCard size={10} />
-            </Col> */}
+            <Col className="d-md-none">
+              {!isLoading && loadedMovie && (
+                <MovieImageCard img={loadedMovie.poster_url} size={10} />
+              )}
+            </Col>
             <h4 className="my-3">Show Times</h4>
             <Stack gap={5}>
               {!isLoading && loadedShowtimes && (
                 <ShowTimes
                   setModalShow={setModalShow}
                   showTimes={filteredShowtimes}
-                  onSelect={handleShowtimeSelect} // Pass the callback function
-                  //selectedShowtime={selectedShowtime} // Pass the selected showtime
+                  onSelect={handleShowtimeSelect} 
                 />
               )}
             </Stack>

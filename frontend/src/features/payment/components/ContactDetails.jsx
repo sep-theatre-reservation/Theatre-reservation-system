@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 
 function ContactDetails() {
     return (
-        <Card style={{ width: '30rem' }}>
+        <Card className='w-75 mb-4'>
             <Card.Body>
                 <Card.Title>Contact Details</Card.Title>
                 <Form>

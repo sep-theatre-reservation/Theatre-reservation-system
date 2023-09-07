@@ -41,7 +41,7 @@ function UpcomingWeekSelect({ onDateSelect }) {
           style={{ width: "180px", marginLeft: "10px" }}
           onChange={handleDateChange}
         >
-          <option>Select a Date</option>
+          <option className={"d-none"} >Select a Date</option>
           {upcomingWeekDates.map((date, index) => (
             <option key={index} value={date.toISOString()}>
               {date.toDateString()}

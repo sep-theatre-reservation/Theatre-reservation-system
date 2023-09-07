@@ -1,9 +1,8 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 function OrderSummary() {
     return (
-        <Card style={{ width: '30rem' }}>
+        <Card  className='mb-3'>
             <Card.Body>
                 <Card.Title>Order Summary</Card.Title>
                 <Card.Text>
@@ -11,7 +10,9 @@ function OrderSummary() {
                 </Card.Text>
                 <hr />
             </Card.Body>
-            <Card.Footer>Amount Payable</Card.Footer>
+            <Card.Footer>
+                <h5>Amount Payable</h5>
+            </Card.Footer>
         </Card>
     )
 }
