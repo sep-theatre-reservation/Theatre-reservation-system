@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema({
   show: [{ type: mongoose.Types.ObjectId, required: true, ref: "Show" }],
-  seats: [{ type: mongoose.Types.ObjectId, required: true, ref: "Seat" }],
+  seatCount: [{ type: mongoose.Types.ObjectId, required: true, ref: "Seat" }],
   customer: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   status: {
     type: String,

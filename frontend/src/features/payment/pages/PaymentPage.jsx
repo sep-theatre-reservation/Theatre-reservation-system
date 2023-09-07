@@ -1,9 +1,11 @@
 import React from 'react'
 import OrderSummary from '../components/OrderSummary'
 import ContactDetails from '../components/ContactDetails'
-import CardDetails from '../components/CardDetails'
 import { Container, Stack, Col, Row } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+
 function PaymentPage() {
+  const { bookingId } = useParams()
   return (
     <Container className='pt-5  '>
       <Row >
@@ -13,7 +15,6 @@ function PaymentPage() {
               <OrderSummary />
             </div>
             <ContactDetails />
-            <CardDetails />
           </Stack>
         </Col>
         <Col md={6}>

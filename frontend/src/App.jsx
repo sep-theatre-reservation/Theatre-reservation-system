@@ -38,7 +38,6 @@ function App() {
           <Route path="promotions" element={<PromoManagerPage />}></Route>
           <Route path="carousel" element={<CarouselManagerPage />}></Route>
         </Route>
-        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
@@ -46,14 +45,14 @@ function App() {
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
         <Route path="booking/:movieId" element={<BookingPage />}></Route>
-        <Route path="payment" element={<PaymentPage />}></Route>
+        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
+        <Route path="payment/:bookingId" element={<PaymentPage />}></Route>
       </Routes>
     );
   } else {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="/movies/*" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
@@ -62,7 +61,8 @@ function App() {
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
         <Route path="booking/:movieId" element={<BookingPage />}></Route>
-        <Route path="payment" element={<PaymentPage />}></Route>
+        <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
+        <Route path="payment/:bookingId" element={<PaymentPage />}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );

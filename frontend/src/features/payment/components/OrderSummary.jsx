@@ -1,5 +1,5 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Paypal from './Paypal';
 
 function OrderSummary() {
     return (
@@ -12,6 +12,7 @@ function OrderSummary() {
                 <hr />
             </Card.Body>
             <Card.Footer>Amount Payable</Card.Footer>
+            <Paypal/>
         </Card>
     )
 }

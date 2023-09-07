@@ -8,15 +8,20 @@ import promotionRoutes from "./routes/promotions-routes.js";
 import connectDB from "./config/db.js";
 import usersRoutes from "./routes/users-routes.js";
 import showsRoutes from "./routes/shows-routes.js";
-
+import bookingRoutes from "./routes/booking-routes.js"
+import orders from "./routes/paypalPayment-routes.js"
 import { config } from "dotenv";
+import cors from "cors"
 config();
 
 const port = process.env.PORT || 3000;
 connectDB();
 
 const app = express();
-
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+// }));
+app.options('/orders/:orderID/capture', cors());
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -36,6 +41,8 @@ app.use("/api/promotions", promotionRoutes);
 app.use("/api/carousel", carouselRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/shows", showsRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/orders",orders)
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
