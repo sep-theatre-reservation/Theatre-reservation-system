@@ -1,4 +1,4 @@
-import Seat from "../components/Seat";
+//import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useContext, useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import GuestModal from "../components/GuestModal";
+import useSeatRows from "../../shared/hooks/seat-layout-hook";
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
@@ -117,45 +118,7 @@ const SeatSelection = () => {
     }
   };
 
-  let rowAr = [];
-  let Sid = 0;
-  let sec1 = Math.ceil(cols / 2);
-  let sec2 = Math.floor(cols / 2);
-
-  //putting seatId to rows
-  for (let row = 0; row < rows; row++) {
-    let secAr1 = [];
-    let secAr2 = [];
-
-    for (let i = 0; i < sec1; i++) {
-      secAr1.push(
-        <Seat
-          key={SEATS[Sid].id}
-          id={SEATS[Sid].id}
-          onSelect={handleSelect}
-          available={SEATS[Sid].availability}
-        />
-      );
-      Sid++;
-    }
-    for (let i = 0; i < sec2; i++) {
-      secAr2.push(
-        <Seat
-          key={SEATS[Sid].id}
-          id={SEATS[Sid].id}
-          onSelect={handleSelect}
-          available={SEATS[Sid].availability}
-        />
-      );
-      Sid++;
-    }
-    rowAr.push(
-      <tr key={row}>
-        <td key="sec1">{secAr1}</td>
-        <td key="sec2">{secAr2}</td>
-      </tr>
-    );
-  }
+  const rowAr = useSeatRows(cols, rows, SEATS, handleSelect);
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
