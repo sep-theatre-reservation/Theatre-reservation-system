@@ -8,8 +8,6 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const SeatSelection = () => {
-  const auth = useContext(AuthContext);
-  const { isLoading: isAddBookingLoading, sendRequest: sendAddBookingRequest } = useHttpClient();
   const [selected, setSelected] = useState([]);
   const { sendRequest } = useHttpClient();
   const [selectedShow, setSelectedShow] = useState();
@@ -18,10 +16,10 @@ const SeatSelection = () => {
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
 
-  const { showId, seatCount } = useParams()
-  const [selectedSeatCount, setSelectedSeatCount] = useState(0)
+  const { showId, seatCount } = useParams();
+  const [selectedSeatCount, setSelectedSeatCount] = useState(0);
   //const showId = "64f50afcb3c21042568e874d";
-  let bookingId=1;
+  let bookingId = 1;
   const createBooking = async () => {
     try {
       const responseData = await sendAddBookingRequest(
@@ -29,25 +27,25 @@ const SeatSelection = () => {
         "POST",
         JSON.stringify({
           show: showId,
-          seatCount:seatCount,
+          seatCount: seatCount,
           customer: auth.user,
-          status: "Pending"
+          status: "Pending",
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         }
       );
-      bookingId=responseData.id
+      bookingId = responseData.id;
     } catch (err) {
       /* */
     }
-  }
+  };
 
   useEffect(() => {
     const fetchShow = async () => {
       try {
-        console.log(`http://localhost:3000/api/shows/${showId}`)
+        console.log(`http://localhost:3000/api/shows/${showId}`);
         const responseData = await sendRequest(
           `http://localhost:3000/api/shows/${showId}`
         );
@@ -155,7 +153,7 @@ const SeatSelection = () => {
               Back
             </Button>
             {/* {selectedSeatCount == seatCount ? */}
-            {true?
+            {true ? (
               <Button
                 as={Link}
                 to={`/payment/${bookingId}`}
@@ -164,14 +162,11 @@ const SeatSelection = () => {
               >
                 Continue
               </Button>
-              :
-              <Button
-                disabled
-                variant="primary"
-              >
+            ) : (
+              <Button disabled variant="primary">
                 Continue
               </Button>
-            }
+            )}
           </Stack>
         </Stack>
       </Container>
