@@ -85,6 +85,7 @@ const GuestModal = ({ show, onHide, booking, reserve }) => {
               value={email}
               onChange={handleEmailChange}
               required
+              className="mb-3"
             />
           </Form.Group>
           <Button variant="primary" type="submit">
