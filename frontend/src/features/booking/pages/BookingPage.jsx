@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UpcomingWeekSelect from "../components/UpcomingWeekDropdown";
-import { Col, Container, Modal, Row, Stack } from "react-bootstrap";
+import { Col, Container, Row, Stack } from "react-bootstrap";
 import MovieImageCard from "../../movieShowcase/components/MovieImageCard";
 import SeatCountModal from "../components/SeatCountModal";
 import ShowTimes from "../components/ShowTimes";
@@ -97,18 +97,18 @@ const BookingPage = () => {
         <Col>
           <Stack gap={3}>
             <h3>{!isLoading && loadedMovie && loadedMovie.title}</h3>
-            <Col className="d-md-none">
+            {/* <Col className="d-md-none">
               {!isLoading && loadedMovie && (
                 <MovieImageCard img={loadedMovie.poster_url} size={10} />
               )}
-            </Col>
+            </Col> */}
             <h4 className="my-3">Show Times</h4>
             <Stack gap={5}>
               {!isLoading && loadedShowtimes && (
                 <ShowTimes
                   setModalShow={setModalShow}
                   showTimes={filteredShowtimes}
-                  onSelect={handleShowtimeSelect} 
+                  onSelect={handleShowtimeSelect}
                 />
               )}
             </Stack>
