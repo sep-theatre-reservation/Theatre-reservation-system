@@ -21,10 +21,7 @@ const port = process.env.PORT || 3000;
 connectDB();
 
 const app = express();
-// app.use(cors({
-//   origin: 'http://localhost:5173',
-// }));
-app.options('/orders/:orderID/capture', cors());
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {

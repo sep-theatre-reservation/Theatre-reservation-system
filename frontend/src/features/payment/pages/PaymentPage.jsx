@@ -12,6 +12,7 @@ function PaymentPage() {
   const { sendRequest: sendEmailRequest } = useHttpClient();
   const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState();
+  const{orderDetails,setOrderDetails}=useState();
 
   useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
 
@@ -22,6 +23,7 @@ function PaymentPage() {
       );
       setBooking(responseData.booking);
       console.log(booking)
+      setOrderDetails({id:booking.id, ticketPrice:booking.show.theatre.ticketPrice, ticketsCount:booking.seats.length})
     } catch (err) {
       /* */
     }
@@ -115,7 +117,7 @@ function PaymentPage() {
             <OrderSummary />
             <Stack direction='horizontal'>
               <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking} />
+              <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails}/>
             </Stack>
           </Stack>
         </Col>

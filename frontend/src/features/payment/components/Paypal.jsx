@@ -1,6 +1,6 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-export default function Paypal({ bookingId,onPaymentConfirm }) {
+export default function Paypal({ orderDetails,onPaymentConfirm }) {
 
     const initialOptions = {
         clientId: "Ab0srraMjiEqhu5-dfGj7oDKFouBx8TK2F5xM-3vrcAfl0zktcfDUHvlde9dPg6H-Rjvvh3kABbve8s5",
@@ -9,20 +9,19 @@ export default function Paypal({ bookingId,onPaymentConfirm }) {
     };
 
     const createOrder = async () => {
+
         try {
             const response = await fetch("http://localhost:3000/api/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                // use the "body" param to optionally pass additional order information
-                // like product ids and quantities
                 body: JSON.stringify({
                     orderData:
                         {
-                            id: bookingId,
-                            ticketPrice:50,
-                            ticketsCount:2,
+                            id: orderDetails.id,
+                            ticketPrice:orderDetails.ticketPrice,
+                            ticketsCount:orderDetails.ticketsCount,
                         },
                 }),
             });

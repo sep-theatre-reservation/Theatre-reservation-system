@@ -10,6 +10,7 @@ const app = express();
 
 // parse post params sent in body in json format
 app.use(express.json());
+
 const router = express.Router();
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.
