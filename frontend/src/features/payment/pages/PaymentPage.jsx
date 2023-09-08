@@ -105,7 +105,6 @@ function PaymentPage() {
     }
   };
 
-
   return (
     <Container className='pt-5'>
       <Row>
