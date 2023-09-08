@@ -86,6 +86,7 @@ export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
                     JSON.stringify(orderData, null, 2),
                 );
             }
+            onPaymentConfirm()
         } catch (error) {
             console.error(error);
             alert(

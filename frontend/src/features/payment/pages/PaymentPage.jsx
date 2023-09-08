@@ -8,14 +8,15 @@ import Paypal from '../components/Paypal'
 
 function PaymentPage() {
   const { bookingId } = useParams()
-  const { isLoading, sendRequest } = useHttpClient();
+  const { sendRequest : sendBookingRequest } = useHttpClient();
+  const {  sendRequest : sendEmailRequest } = useHttpClient();
   const [booking, setBooking] = useState();
 
-  useEffect(() => { fetchBooking(); }, [sendRequest]);
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
 
   const fetchBooking = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendBookingRequest(
         `http://localhost:3000/api/bookings/${bookingId}`
       );
       setBooking(responseData.booking);
@@ -24,9 +25,28 @@ function PaymentPage() {
     }
   };
 
+  const sendTicketEmail=async()=>{
+    try {
+      const responseData = await sendEmailRequest(
+        `http://localhost:3000/api/email`,
+        "POST",
+        JSON.stringify({
+          to: "ipjayawick@gmail.com",
+          subject:"movie tickets",
+          text:"here is the ticket"
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (err) {
+      /* */
+    }
+  }
+
   const confirmBooking = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendBookingRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -40,11 +60,12 @@ function PaymentPage() {
     } catch (err) {
       /* */
     }
+    sendTicketEmail()
   };
 
   const cancelBooking = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendBookingRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -72,7 +93,7 @@ function PaymentPage() {
             <OrderSummary/>
             <Stack direction='horizontal'>
               <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking}/>
+              <Paypal onPaymentConfirm={sendTicketEmail} bookingId={bookingId} onPaymentFail={cancelBooking}/>
             </Stack>
           </Stack>
         </Col>

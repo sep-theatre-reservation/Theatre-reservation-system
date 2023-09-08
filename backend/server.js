@@ -10,6 +10,9 @@ import usersRoutes from "./routes/users-routes.js";
 import showsRoutes from "./routes/shows-routes.js";
 import bookingRoutes from "./routes/booking-routes.js"
 import paypalPayment from "./routes/paypalPayment-routes.js"
+import emailRoutes from "./routes/email-routes.js"
+import ticketsRoutes from "./routes/tickets-routes.js"
+
 import { config } from "dotenv";
 import cors from "cors"
 config();
@@ -43,6 +46,8 @@ app.use("/api/users", usersRoutes);
 app.use("/api/shows", showsRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/orders",paypalPayment)
+app.use("/api/tickets",ticketsRoutes)
+app.use("/api/email",emailRoutes)
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
