@@ -32,7 +32,7 @@ function PaymentPage() {
         "POST",
         JSON.stringify({
           to: "ipjayawick@gmail.com",
-          subject:"movie tickets",
+          subject:"Movie Ticket",
           text:"here is the ticket"
         }),
         {
@@ -93,7 +93,7 @@ function PaymentPage() {
             <OrderSummary/>
             <Stack direction='horizontal'>
               <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={sendTicketEmail} bookingId={bookingId} onPaymentFail={cancelBooking}/>
+              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking}/>
             </Stack>
           </Stack>
         </Col>
