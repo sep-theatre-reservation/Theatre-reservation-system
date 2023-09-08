@@ -6,10 +6,12 @@ import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import GuestModal from "../components/GuestModal";
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
-  const { isLoading: isAddBookingLoading, sendRequest: sendAddBookingRequest } = useHttpClient();
+  const { sendRequest: sendAddBookingRequest } = useHttpClient();
+
   const [selected, setSelected] = useState([]);
   const { sendRequest } = useHttpClient();
   const [selectedShow, setSelectedShow] = useState();
@@ -18,10 +20,12 @@ const SeatSelection = () => {
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
 
-  const { showId, seatCount } = useParams()
-  const [selectedSeatCount, setSelectedSeatCount] = useState(0)
+  const [showGuestModal, setShowGuestModal] = useState(false);
+
+  const { showId, seatCount } = useParams();
   //const showId = "64f50afcb3c21042568e874d";
-  let bookingId=1;
+  let bookingId = null;
+
   const createBooking = async () => {
     try {
       const responseData = await sendAddBookingRequest(
@@ -29,25 +33,24 @@ const SeatSelection = () => {
         "POST",
         JSON.stringify({
           show: showId,
-          seatCount:seatCount,
-          customer: auth.user,
-          status: "Pending"
+          seats: selected,
+          user: auth.user,
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         }
       );
-      bookingId=responseData.id
+      bookingId = responseData.id;
     } catch (err) {
       /* */
     }
-  }
+  };
 
   useEffect(() => {
     const fetchShow = async () => {
       try {
-        console.log(`http://localhost:3000/api/shows/${showId}`)
+        console.log(`http://localhost:3000/api/shows/${showId}`);
         const responseData = await sendRequest(
           `http://localhost:3000/api/shows/${showId}`
         );
@@ -96,6 +99,11 @@ const SeatSelection = () => {
     } catch (err) {
       /* */
     }
+    if (auth.user) {
+      createBooking();
+    } else {
+      setShowGuestModal(true);
+    }
   };
 
   let rowAr = [];
@@ -138,8 +146,23 @@ const SeatSelection = () => {
     );
   }
 
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (selected.length == seatCount) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [selected, seatCount]);
+
   return (
     <>
+      <GuestModal
+        show={showGuestModal}
+        onHide={() => setShowGuestModal(false)}
+        booking={{ show: showId, seats: selected }}
+      />
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
@@ -154,24 +177,21 @@ const SeatSelection = () => {
             <Button as={Link} to="/booking" variant="secondary">
               Back
             </Button>
-            {/* {selectedSeatCount == seatCount ? */}
-            {true?
+
+            {isButtonEnabled ? (
               <Button
                 as={Link}
-                to={`/payment/${bookingId}`}
+                to={bookingId ? `/payment/${bookingId}` : "#"}
                 variant="primary"
                 onClick={btnContinueHandler}
               >
                 Continue
               </Button>
-              :
-              <Button
-                disabled
-                variant="primary"
-              >
+            ) : (
+              <Button disabled variant="primary">
                 Continue
               </Button>
-            }
+            )}
           </Stack>
         </Stack>
       </Container>
