@@ -1,6 +1,6 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
+export default function Paypal({ bookingId,onPaymentConfirm }) {
 
     const initialOptions = {
         clientId: "Ab0srraMjiEqhu5-dfGj7oDKFouBx8TK2F5xM-3vrcAfl0zktcfDUHvlde9dPg6H-Rjvvh3kABbve8s5",
@@ -18,12 +18,12 @@ export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
                 // use the "body" param to optionally pass additional order information
                 // like product ids and quantities
                 body: JSON.stringify({
-                    bookingData: [
+                    orderData:
                         {
                             id: bookingId,
-                            price:"150"
+                            ticketPrice:50,
+                            ticketsCount:2,
                         },
-                    ],
                 }),
             });
 
@@ -81,9 +81,9 @@ export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
                     `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`,
                 );
                 console.log(
-                    "Capture result",
-                    orderData,
-                    JSON.stringify(orderData, null, 2),
+                    // "Capture result",
+                    // orderData,
+                    // JSON.stringify(orderData,null,2),
                 );
             }
             onPaymentConfirm()
@@ -94,8 +94,6 @@ export default function Paypal({ bookingId,onPaymentConfirm,onPaymentFail }) {
             );
         }
     }
-
-
 
     return (
         <PayPalScriptProvider options={initialOptions} >

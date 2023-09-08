@@ -8,8 +8,9 @@ import Paypal from '../components/Paypal'
 
 function PaymentPage() {
   const { bookingId } = useParams()
-  const { sendRequest : sendBookingRequest } = useHttpClient();
-  const {  sendRequest : sendEmailRequest } = useHttpClient();
+  const { sendRequest: sendBookingRequest } = useHttpClient();
+  const { sendRequest: sendEmailRequest } = useHttpClient();
+  const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState();
 
   useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
@@ -17,23 +18,24 @@ function PaymentPage() {
   const fetchBooking = async () => {
     try {
       const responseData = await sendBookingRequest(
-        `http://localhost:3000/api/bookings/${bookingId}`
+        `http://localhost:3000/api/bookings/64fb6a5be31a1e22131d8ba0`
       );
       setBooking(responseData.booking);
+      console.log(booking)
     } catch (err) {
       /* */
     }
   };
 
-  const sendTicketEmail=async()=>{
+  const sendTicketEmail = async () => {
     try {
       const responseData = await sendEmailRequest(
         `http://localhost:3000/api/email`,
         "POST",
         JSON.stringify({
           to: "ipjayawick@gmail.com",
-          subject:"Movie Ticket",
-          text:"here is the ticket"
+          subject: "Movie Ticket",
+          text: "here is the ticket"
         }),
         {
           "Content-Type": "application/json",
@@ -44,6 +46,25 @@ function PaymentPage() {
     }
   }
 
+  const createPaymentData = async (dateTime,amount) => {
+    try {
+      const responseData = await sendCreatePaymentDataRequest(
+        `http://localhost:3000/api/payment`,
+        "POST",
+        JSON.stringify({
+          booking:bookingId,
+          dateTime:dateTime,
+          amount:amount
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (err) {
+      /* */
+    }
+  }
+  
   const confirmBooking = async () => {
     try {
       const responseData = await sendBookingRequest(
@@ -61,6 +82,7 @@ function PaymentPage() {
       /* */
     }
     sendTicketEmail()
+    createPaymentData()
   };
 
   const cancelBooking = async () => {
@@ -90,10 +112,10 @@ function PaymentPage() {
         </Col>
         <Col lg={6}>
           <Stack className='w-75'>
-            <OrderSummary/>
+            <OrderSummary />
             <Stack direction='horizontal'>
               <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking}/>
+              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking} />
             </Stack>
           </Stack>
         </Col>
