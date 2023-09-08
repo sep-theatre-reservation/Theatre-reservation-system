@@ -1,13 +1,16 @@
 import Seat from "../components/Seat";
 import "./SeatSelection.css";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
+//import { AuthContext } from "../../shared/context/auth-context";
 
 const SeatSelection = () => {
+  // const auth = useContext(AuthContext);
+  // const { isLoading: isAddBookingLoading, sendRequest: sendAddBookingRequest } = useHttpClient();
+
   const [selected, setSelected] = useState([]);
   const { sendRequest } = useHttpClient();
   const [selectedShow, setSelectedShow] = useState();
@@ -17,30 +20,29 @@ const SeatSelection = () => {
   const [SEATS, setSeats] = useState(null);
 
   const { showId, seatCount } = useParams();
-  const [selectedSeatCount, setSelectedSeatCount] = useState(0);
   //const showId = "64f50afcb3c21042568e874d";
   let bookingId = 1;
-  const createBooking = async () => {
-    try {
-      const responseData = await sendAddBookingRequest(
-        "http://localhost:3000/api/bookings",
-        "POST",
-        JSON.stringify({
-          show: showId,
-          seatCount: seatCount,
-          customer: auth.user,
-          status: "Pending",
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      bookingId = responseData.id;
-    } catch (err) {
-      /* */
-    }
-  };
+  // const createBooking = async () => {
+  //   try {
+  //     const responseData = await sendAddBookingRequest(
+  //       "http://localhost:3000/api/bookings",
+  //       "POST",
+  //       JSON.stringify({
+  //         show: showId,
+  //         seats: seatCount,
+  //         customer: auth.user,
+  //         status: "Pending",
+  //       }),
+  //       {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + auth.token,
+  //       }
+  //     );
+  //     bookingId = responseData.id;
+  //   } catch (err) {
+  //     /* */
+  //   }
+  // };
 
   useEffect(() => {
     const fetchShow = async () => {
@@ -136,6 +138,16 @@ const SeatSelection = () => {
     );
   }
 
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (selected.length == seatCount) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [selected, seatCount]);
+
   return (
     <>
       <Container className="pt-4">
@@ -152,8 +164,8 @@ const SeatSelection = () => {
             <Button as={Link} to="/booking" variant="secondary">
               Back
             </Button>
-            {/* {selectedSeatCount == seatCount ? */}
-            {true ? (
+
+            {isButtonEnabled ? (
               <Button
                 as={Link}
                 to={`/payment/${bookingId}`}
