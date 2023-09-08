@@ -15,6 +15,7 @@ function PaymentPage() {
   const{orderDetails,setOrderDetails}=useState();
 
   useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
 
   const fetchBooking = async () => {
     try {
