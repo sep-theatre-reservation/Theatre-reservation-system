@@ -1,15 +1,16 @@
 import Seat from "../components/Seat";
 import "./SeatSelection.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-//import { AuthContext } from "../../shared/context/auth-context";
+import { AuthContext } from "../../shared/context/auth-context";
+import GuestModal from "../components/GuestModal";
 
 const SeatSelection = () => {
-  // const auth = useContext(AuthContext);
-  // const { isLoading: isAddBookingLoading, sendRequest: sendAddBookingRequest } = useHttpClient();
+  const auth = useContext(AuthContext);
+  const { sendRequest: sendAddBookingRequest } = useHttpClient();
 
   const [selected, setSelected] = useState([]);
   const { sendRequest } = useHttpClient();
@@ -19,30 +20,32 @@ const SeatSelection = () => {
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
 
+  const [showGuestModal, setShowGuestModal] = useState(false);
+
   const { showId, seatCount } = useParams();
   //const showId = "64f50afcb3c21042568e874d";
-  let bookingId = 1;
-  // const createBooking = async () => {
-  //   try {
-  //     const responseData = await sendAddBookingRequest(
-  //       "http://localhost:3000/api/bookings",
-  //       "POST",
-  //       JSON.stringify({
-  //         show: showId,
-  //         seats: seatCount,
-  //         customer: auth.user,
-  //         status: "Pending",
-  //       }),
-  //       {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + auth.token,
-  //       }
-  //     );
-  //     bookingId = responseData.id;
-  //   } catch (err) {
-  //     /* */
-  //   }
-  // };
+  let bookingId = null;
+
+  const createBooking = async () => {
+    try {
+      const responseData = await sendAddBookingRequest(
+        "http://localhost:3000/api/bookings",
+        "POST",
+        JSON.stringify({
+          show: showId,
+          seats: selected,
+          user: auth.user,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      bookingId = responseData.id;
+    } catch (err) {
+      /* */
+    }
+  };
 
   useEffect(() => {
     const fetchShow = async () => {
@@ -95,6 +98,11 @@ const SeatSelection = () => {
       console.log(responseData);
     } catch (err) {
       /* */
+    }
+    if (auth.user) {
+      createBooking();
+    } else {
+      setShowGuestModal(true);
     }
   };
 
@@ -150,6 +158,11 @@ const SeatSelection = () => {
 
   return (
     <>
+      <GuestModal
+        show={showGuestModal}
+        onHide={() => setShowGuestModal(false)}
+        booking={{ show: showId, seats: selected }}
+      />
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
@@ -168,7 +181,7 @@ const SeatSelection = () => {
             {isButtonEnabled ? (
               <Button
                 as={Link}
-                to={`/payment/${bookingId}`}
+                to={bookingId ? `/payment/${bookingId}` : "#"}
                 variant="primary"
                 onClick={btnContinueHandler}
               >
