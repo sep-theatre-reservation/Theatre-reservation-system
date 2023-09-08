@@ -8,25 +8,69 @@ import Paypal from '../components/Paypal'
 
 function PaymentPage() {
   const { bookingId } = useParams()
-  const { isLoading, sendRequest } = useHttpClient();
+  const { sendRequest: sendBookingRequest } = useHttpClient();
+  const { sendRequest: sendEmailRequest } = useHttpClient();
+  const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState();
+  const{orderDetails,setOrderDetails}=useState();
 
-  useEffect(() => { fetchBooking(); }, [sendRequest]);
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
 
   const fetchBooking = async () => {
     try {
-      const responseData = await sendRequest(
-        `http://localhost:3000/api/bookings/${bookingId}`
+      const responseData = await sendBookingRequest(
+        `http://localhost:3000/api/bookings/64fb6a5be31a1e22131d8ba0`
       );
       setBooking(responseData.booking);
+      console.log(booking)
+      setOrderDetails({id:booking.id, ticketPrice:booking.show.theatre.ticketPrice, ticketsCount:booking.seats.length})
     } catch (err) {
       /* */
     }
   };
 
+  const sendTicketEmail = async () => {
+    try {
+      const responseData = await sendEmailRequest(
+        `http://localhost:3000/api/email`,
+        "POST",
+        JSON.stringify({
+          to: "ipjayawick@gmail.com",
+          subject: "Movie Ticket",
+          text: "here is the ticket"
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (err) {
+      /* */
+    }
+  }
+
+  const createPaymentData = async (dateTime,amount) => {
+    try {
+      const responseData = await sendCreatePaymentDataRequest(
+        `http://localhost:3000/api/payment`,
+        "POST",
+        JSON.stringify({
+          booking:bookingId,
+          dateTime:dateTime,
+          amount:amount
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (err) {
+      /* */
+    }
+  }
+  
   const confirmBooking = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendBookingRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -40,11 +84,13 @@ function PaymentPage() {
     } catch (err) {
       /* */
     }
+    sendTicketEmail()
+    createPaymentData()
   };
 
   const cancelBooking = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendBookingRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -60,7 +106,6 @@ function PaymentPage() {
     }
   };
 
-
   return (
     <Container className='pt-5'>
       <Row>
@@ -69,10 +114,10 @@ function PaymentPage() {
         </Col>
         <Col lg={6}>
           <Stack className='w-75'>
-            <OrderSummary/>
+            <OrderSummary />
             <Stack direction='horizontal'>
               <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={confirmBooking} bookingId={bookingId} onPaymentFail={cancelBooking}/>
+              <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails}/>
             </Stack>
           </Stack>
         </Col>
