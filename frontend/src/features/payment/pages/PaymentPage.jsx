@@ -16,18 +16,19 @@ function PaymentPage() {
   const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState();
   const { orderDetails, setOrderDetails } = useState();
-
-
-  useEffect(()=>{
-    if(!auth.isLoggedIn){
-      setShowGuestModal(true)
-    }
-  },[])
-  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
-  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
-  const [showGuestModal, setShowGuestModal] = useState(false);
+  const [showGuestModal, setShowGuestModal] = useState(true);
 
   
+  // useEffect(() => {
+  //   if (!auth.isLoggedIn) {
+  //     setShowGuestModal(true)
+  //   }
+  // }, [])
+
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
+  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
+
+
   const fetchBooking = async () => {
     try {
       const responseData = await sendBookingRequest(
@@ -120,6 +121,7 @@ function PaymentPage() {
   return (
     <>
       <GuestModal
+        bookingId={bookingId}
         show={showGuestModal}
         onHide={() => setShowGuestModal(false)}
       />
