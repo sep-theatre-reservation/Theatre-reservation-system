@@ -11,14 +11,16 @@ export const addGuest = async (req, res, next) => {
     );
   }
 
-  const { email } = req.body;
+  const { email,bookingId } = req.body;
 
   const addedGuest = new Guest({ email });
+
+  addedGuest.bookings.push(bookingId)
   try {
     await addedGuest.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, adding theatre failed",
+      "Something went wrong, adding guest failed",
       500
     );
     return next(error);

@@ -1,21 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import OrderSummary from '../components/OrderSummary'
 import ContactDetails from '../components/ContactDetails'
 import { Container, Stack, Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useHttpClient } from '../../shared/hooks/http-hook'
 import Paypal from '../components/Paypal'
+import GuestModal from '../../reservations/components/GuestModal'
+import { AuthContext } from "../../shared/context/auth-context";
 
 function PaymentPage() {
+  const auth = useContext(AuthContext);
   const { bookingId } = useParams()
   const { sendRequest: sendBookingRequest } = useHttpClient();
   const { sendRequest: sendEmailRequest } = useHttpClient();
   const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState();
-  const{orderDetails,setOrderDetails}=useState();
+  const { orderDetails, setOrderDetails } = useState();
+  const [showGuestModal, setShowGuestModal] = useState(true);
+
+  
+  // useEffect(() => {
+  //   if (!auth.isLoggedIn) {
+  //     setShowGuestModal(true)
+  //   }
+  // }, [])
 
   useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
   useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
+
 
   const fetchBooking = async () => {
     try {
@@ -24,7 +36,7 @@ function PaymentPage() {
       );
       setBooking(responseData.booking);
       console.log(booking)
-      setOrderDetails({id:booking.id, ticketPrice:booking.show.theatre.ticketPrice, ticketsCount:booking.seats.length})
+      setOrderDetails({ id: booking.id, ticketPrice: booking.show.theatre.ticketPrice, ticketsCount: booking.seats.length })
     } catch (err) {
       /* */
     }
@@ -49,15 +61,15 @@ function PaymentPage() {
     }
   }
 
-  const createPaymentData = async (dateTime,amount) => {
+  const createPaymentData = async (dateTime, amount) => {
     try {
       const responseData = await sendCreatePaymentDataRequest(
         `http://localhost:3000/api/payment`,
         "POST",
         JSON.stringify({
-          booking:bookingId,
-          dateTime:dateTime,
-          amount:amount
+          booking: bookingId,
+          dateTime: dateTime,
+          amount: amount
         }),
         {
           "Content-Type": "application/json",
@@ -67,7 +79,7 @@ function PaymentPage() {
       /* */
     }
   }
-  
+
   const confirmBooking = async () => {
     try {
       const responseData = await sendBookingRequest(
@@ -107,22 +119,29 @@ function PaymentPage() {
   };
 
   return (
-    <Container className='pt-5'>
-      <Row>
-        <Col lg={6}>
-          <ContactDetails />
-        </Col>
-        <Col lg={6}>
-          <Stack className='w-75'>
-            <OrderSummary />
-            <Stack direction='horizontal'>
-              <h5>Confirm Payment</h5>
-              <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails}/>
+    <>
+      <GuestModal
+        bookingId={bookingId}
+        show={showGuestModal}
+        onHide={() => setShowGuestModal(false)}
+      />
+      < Container className='pt-5' >
+        <Row>
+          {/* <Col lg={6}>
+            <ContactDetails />
+          </Col> */}
+          <Col lg={6}>
+            <Stack className='w-75'>
+              <OrderSummary />
+              <Stack direction='horizontal'>
+                <h5>Confirm Payment</h5>
+                <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails} />
+              </Stack>
             </Stack>
-          </Stack>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container >
+    </>
   )
 }
 

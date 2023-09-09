@@ -6,7 +6,6 @@ import { Button, Container } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import GuestModal from "../components/GuestModal";
 import useSeatRows from "../../shared/hooks/seat-layout-hook";
 
 const SeatSelection = () => {
@@ -20,8 +19,6 @@ const SeatSelection = () => {
   const [rows, setRows] = useState(null);
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
-
-  const [showGuestModal, setShowGuestModal] = useState(false);
   const [bookingId, setBookingId] = useState(null);
 
   const navigate = useNavigate();
@@ -48,7 +45,7 @@ const SeatSelection = () => {
       /* */
     }
   };
-
+  
   useEffect(() => {
     const fetchShow = async () => {
       try {
@@ -110,12 +107,8 @@ const SeatSelection = () => {
   }, [bookingId, navigate]);
 
   const btnContinueHandler = async () => {
-    if (auth.userId) {
-      createBooking();
-      reserveSeats();
-    } else {
-      setShowGuestModal(true);
-    }
+    createBooking();
+    reserveSeats();
   };
 
   const rowAr = useSeatRows(cols, rows, SEATS, handleSelect);
@@ -132,12 +125,6 @@ const SeatSelection = () => {
 
   return (
     <>
-      <GuestModal
-        show={showGuestModal}
-        onHide={() => setShowGuestModal(false)}
-        booking={{ show: showId, seats: selected }}
-        reserve={reserveSeats}
-      />
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
