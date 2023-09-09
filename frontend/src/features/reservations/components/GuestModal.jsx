@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import {  useState } from "react";
+import { Button, Col, Container, Form, Modal, Row ,Stack} from "react-bootstrap";
 
-const GuestModal = ({ show, onHide, booking, reserve }) => {
-  // State to store the email input value
+const GuestModal = ({ show, onHide }) => {
   const [email, setEmail] = useState("");
   const [guest, setGuest] = useState(null);
-  const { sendRequest: sendAddGuestReq } = useHttpClient();
-  const { sendRequest: sendAddBookingRequest } = useHttpClient();
-  const [bookingId, setBookingId] = useState(null);
-
-  const navigate = useNavigate();
-
-  // Function to handle email input change
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -34,74 +23,60 @@ const GuestModal = ({ show, onHide, booking, reserve }) => {
     }
   };
 
-  const createBooking = async () => {
-    try {
-      const responseData = await sendAddBookingRequest(
-        "http://localhost:3000/api/bookings",
-        "POST",
-        JSON.stringify({
-          ...booking,
-          guest: guest,
-        }),
-        {
-          "Content-Type": "application/json",
-        }
-      );
-      setBookingId(responseData.booking._id);
-    } catch (err) {
-      /* */
-    }
-  };
-
-  useEffect(() => {
-    if (guest !== null) {
-      createBooking(); // Create the booking once the guest is set
-    }
-  }, [guest]);
-
-  useEffect(() => {
-    if (bookingId !== null) {
-      navigate(`/payment/${bookingId}`);
-    }
-  }, [bookingId, navigate]);
-
-  const handleSubmit = async (e) => {
+  const handleGuestLogin = async (e) => {
     e.preventDefault();
     addGuest();
-    reserve();
+    onHide()
   };
-
+ 
+  const handleGoogleLogin=async(e)=>{
+    e.preventDefault();
+    
+    onHide()
+  }
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Email Subscription</Modal.Title>
+        <Modal.Title>But first, Login or Register</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Email:</Form.Label>
-            <Form.Control
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-              className="mb-3"
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Proceed
-          </Button>
-        </Form>
+        <Stack>
+          <Form onSubmit={handleGuestLogin}>
+            <Form.Group>
+              <Form.Label>Enter your Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                required
+                className="mb-3"
+                placeholder="name@example.com"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="float-end">
+              Continue as a Guest
+            </Button>
+          </Form>
+          <Container className="text-center">
+            <Row direction="horizontal">
+              <Col>
+              <hr></hr>
+              </Col>
+              <Col xs={1}>
+              <p className="fw-bold pt-1 m-0">OR</p>
+              </Col>
+              <Col>
+              <hr></hr>
+              </Col>
+            </Row>
+            <Button variant="primary" type="submit" onClick={handleGoogleLogin} >
+              Login with Google
+            </Button>
+          </Container>
+        </Stack>
       </Modal.Body>
     </Modal>
   );
-};
-
-GuestModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  onHide: PropTypes.func.isRequired,
-  booking: PropTypes.object.isRequired,
-  reserve: PropTypes.func.isRequired,
 };
 
 export default GuestModal;
