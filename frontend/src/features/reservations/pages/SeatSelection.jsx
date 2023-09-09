@@ -1,12 +1,13 @@
-import Seat from "../components/Seat";
+//import Seat from "../components/Seat";
 import "./SeatSelection.css";
 import { useContext, useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { Button, Container } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import GuestModal from "../components/GuestModal";
+import useSeatRows from "../../shared/hooks/seat-layout-hook";
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
@@ -21,10 +22,12 @@ const SeatSelection = () => {
   const [SEATS, setSeats] = useState(null);
 
   const [showGuestModal, setShowGuestModal] = useState(false);
+  const [bookingId, setBookingId] = useState(null);
+
+  const navigate = useNavigate();
 
   const { showId, seatCount } = useParams();
   //const showId = "64f50afcb3c21042568e874d";
-  let bookingId = null;
 
   const createBooking = async () => {
     try {
@@ -34,14 +37,13 @@ const SeatSelection = () => {
         JSON.stringify({
           show: showId,
           seats: selected,
-          user: auth.user,
+          user: auth.userId,
         }),
         {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
         }
       );
-      bookingId = responseData.id;
+      setBookingId(responseData.booking._id);
     } catch (err) {
       /* */
     }
@@ -83,7 +85,7 @@ const SeatSelection = () => {
     console.log(selected);
   }, [selected]);
 
-  const btnContinueHandler = async () => {
+  const reserveSeats = async () => {
     try {
       const responseData = await sendRequest(
         `http://localhost:3000/api/shows/${showId}`,
@@ -99,52 +101,24 @@ const SeatSelection = () => {
     } catch (err) {
       /* */
     }
-    if (auth.user) {
+  };
+
+  useEffect(() => {
+    if (bookingId !== null) {
+      navigate(`/payment/${bookingId}`);
+    }
+  }, [bookingId, navigate]);
+
+  const btnContinueHandler = async () => {
+    if (auth.userId) {
       createBooking();
+      reserveSeats();
     } else {
       setShowGuestModal(true);
     }
   };
 
-  let rowAr = [];
-  let Sid = 0;
-  let sec1 = Math.ceil(cols / 2);
-  let sec2 = Math.floor(cols / 2);
-
-  //putting seatId to rows
-  for (let row = 0; row < rows; row++) {
-    let secAr1 = [];
-    let secAr2 = [];
-
-    for (let i = 0; i < sec1; i++) {
-      secAr1.push(
-        <Seat
-          key={SEATS[Sid].id}
-          id={SEATS[Sid].id}
-          onSelect={handleSelect}
-          available={SEATS[Sid].availability}
-        />
-      );
-      Sid++;
-    }
-    for (let i = 0; i < sec2; i++) {
-      secAr2.push(
-        <Seat
-          key={SEATS[Sid].id}
-          id={SEATS[Sid].id}
-          onSelect={handleSelect}
-          available={SEATS[Sid].availability}
-        />
-      );
-      Sid++;
-    }
-    rowAr.push(
-      <tr key={row}>
-        <td key="sec1">{secAr1}</td>
-        <td key="sec2">{secAr2}</td>
-      </tr>
-    );
-  }
+  const rowAr = useSeatRows(cols, rows, SEATS, handleSelect);
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
@@ -162,6 +136,7 @@ const SeatSelection = () => {
         show={showGuestModal}
         onHide={() => setShowGuestModal(false)}
         booking={{ show: showId, seats: selected }}
+        reserve={reserveSeats}
       />
       <Container className="pt-4">
         <Stack>
@@ -179,12 +154,7 @@ const SeatSelection = () => {
             </Button>
 
             {isButtonEnabled ? (
-              <Button
-                as={Link}
-                to={bookingId ? `/payment/${bookingId}` : "#"}
-                variant="primary"
-                onClick={btnContinueHandler}
-              >
+              <Button variant="primary" onClick={btnContinueHandler}>
                 Continue
               </Button>
             ) : (

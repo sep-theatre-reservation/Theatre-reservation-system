@@ -8,20 +8,24 @@ import promotionRoutes from "./routes/promotions-routes.js";
 import connectDB from "./config/db.js";
 import usersRoutes from "./routes/users-routes.js";
 import showsRoutes from "./routes/shows-routes.js";
+import guestsRoutes from "./routes/guests-routes.js";
 import bookingRoutes from "./routes/booking-routes.js"
 import paypalPayment from "./routes/paypalPayment-routes.js"
 import emailRoutes from "./routes/email-routes.js"
 import ticketsRoutes from "./routes/tickets-routes.js"
 
 import { config } from "dotenv";
-import cors from "cors"
+import cors from "cors";
 config();
 
 const port = process.env.PORT || 3000;
 connectDB();
 
 const app = express();
-app.use(cors());
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+// }));
+app.options("/orders/:orderID/capture", cors());
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -42,6 +46,7 @@ app.use("/api/carousel", carouselRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/shows", showsRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/guests", guestsRoutes);
 app.use("/api/orders",paypalPayment)
 app.use("/api/tickets",ticketsRoutes)
 app.use("/api/email",emailRoutes)

@@ -25,7 +25,7 @@ import CarouselManagerPage from "./features/admin/pages/CarouselManagerPage";
 import { useAuth } from "./features/shared/hooks/auth-hook";
 
 function App() {
-  let { token, login, logout, user, isAdmin } = useAuth();
+  let { token, login, logout, user, isAdmin, userId } = useAuth();
   let routes;
   if (isAdmin) {
     routes = (
@@ -75,6 +75,7 @@ function App() {
         token: token,
         isAdmin: isAdmin,
         user: user,
+        userId: userId,
         login: login,
         logout: logout,
       }}
