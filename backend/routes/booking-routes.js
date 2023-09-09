@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", getBookings);
 router.get("/:bid", getBookingById);
-//router.use(checkAuth);
 router.post("/", createBooking);
+router.get("/:bid", getBookingById);
 
 export default router;

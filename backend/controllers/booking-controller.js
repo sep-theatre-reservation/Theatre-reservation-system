@@ -14,6 +14,7 @@ export const createBooking = async (req, res, next) => {
   const { show, seats, user, guest, status } = req.body;
 
   const addedBooking = new Booking({ show, seats, user, guest, status });
+  
   try {
     await addedBooking.save();
   } catch (err) {
@@ -26,6 +27,33 @@ export const createBooking = async (req, res, next) => {
   res.status(201).json({ booking: addedBooking });
 };
 
-export const getBookingById = () => {};
 
-export const getBookings = () => {};
+export const getBookingById = async (req, res, next) => {
+  const bookingId = req.params.bid;
+  console.log(bookingId)
+  let booking;
+  try {
+    booking = await Booking.findById(bookingId).populate({
+      path: 'show',
+      populate: {
+        path: 'theatre', 
+      }
+    })
+
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a booking",
+      500
+    );
+    return next(error);
+  }
+
+  if (!booking) {
+    const error = new HttpError("No booking exist for given id.", 404);
+    return next(error);
+  }
+
+  res.json({ booking: booking.toObject({ getters: true }) });
+}
+
+export const getBookings = () => { }

@@ -10,6 +10,7 @@ const app = express();
 
 // parse post params sent in body in json format
 app.use(express.json());
+
 const router = express.Router();
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.
@@ -42,11 +43,12 @@ const generateAccessToken = async () => {
  * Create an order to start the transaction.
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
  */
-const createOrder = async (bookingData) => {
+const createOrder = async (orderData) => {
   // console.log(
-  //   bookingData
+  //   orderData
   // );
-
+  const { id, ticketPrice, ticketsCount } = orderData
+  const total=ticketPrice*ticketsCount
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const payload = {
@@ -55,9 +57,25 @@ const createOrder = async (bookingData) => {
       {
         amount: {
           currency_code: "USD",
-          value: bookingData[0].price,
+          value: total,
+          breakdown: {
+            item_total: {
+              currency_code: "USD",
+              value: total,
+            },
+          },
         },
-      }
+        items: [
+          {
+            name: "Ticket(s)",
+            unit_amount: {
+              currency_code: "USD",
+              value:ticketPrice,
+            },
+            quantity:ticketsCount,
+          }
+        ]
+      },
     ],
   };
 
@@ -118,8 +136,8 @@ async function handleResponse(response) {
 export const handleCreateOrder = async (req, res) => {
   try {
     // use the cart information passed from the front-end to calculate the order amount detals
-    const { bookingData } = req.body;
-    const { jsonResponse, httpStatusCode } = await createOrder(bookingData);
+    const { orderData } = req.body;
+    const { jsonResponse, httpStatusCode } = await createOrder(orderData);
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {
     console.error("Failed to create order:", error);
@@ -127,7 +145,7 @@ export const handleCreateOrder = async (req, res) => {
   }
 }
 
-export const handleCaptureOrder=async (req, res) => {
+export const handleCaptureOrder = async (req, res) => {
   try {
     const { orderID } = req.params;
     const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
