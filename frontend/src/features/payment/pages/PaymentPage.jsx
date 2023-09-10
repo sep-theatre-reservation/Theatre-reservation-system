@@ -11,36 +11,41 @@ import { AuthContext } from "../../shared/context/auth-context";
 function PaymentPage() {
   const auth = useContext(AuthContext);
   const { bookingId } = useParams()
-  const { sendRequest: sendBookingRequest } = useHttpClient();
+  const { sendRequest: sendBookingFetchRequest } = useHttpClient();
+  const { sendRequest: sendBookingConfirmRequest } = useHttpClient();
+  const { sendRequest: sendBookingCancelRequest } = useHttpClient();
   const { sendRequest: sendEmailRequest } = useHttpClient();
   const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
-  const [booking, setBooking] = useState();
-  const { orderDetails, setOrderDetails } = useState();
+  const [booking, setBooking] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
   const [showGuestModal, setShowGuestModal] = useState(true);
 
-  
-  // useEffect(() => {
-  //   if (!auth.isLoggedIn) {
-  //     setShowGuestModal(true)
-  //   }
-  // }, [])
-
-  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
-  useEffect(() => { fetchBooking(); }, [sendBookingRequest]);
-
-
-  const fetchBooking = async () => {
-    try {
-      const responseData = await sendBookingRequest(
-        `http://localhost:3000/api/bookings/64fb6a5be31a1e22131d8ba0`
-      );
-      setBooking(responseData.booking);
+  useEffect(() => {
+    if (booking !== null) {
       console.log(booking)
-      setOrderDetails({ id: booking.id, ticketPrice: booking.show.theatre.ticketPrice, ticketsCount: booking.seats.length })
-    } catch (err) {
-      /* */
+      setOrderDetails({
+        id: booking.id,
+        ticketPrice: booking.show.theatre.ticketPrice,
+        ticketsCount: booking.seats.length
+      });
     }
-  };
+  }, [booking]);
+
+  useEffect(() => {
+    const fetchBooking = async () => {
+      try {
+        const responseData = await sendBookingFetchRequest(
+          `http://localhost:3000/api/bookings/${bookingId}`
+        );
+        setBooking(responseData.booking);
+      } catch (err) {
+        // Handle errors if needed
+        console.log(err);
+      }
+    };
+    fetchBooking();
+  }, []);
+
 
   const sendTicketEmail = async () => {
     try {
@@ -76,13 +81,13 @@ function PaymentPage() {
         }
       );
     } catch (err) {
-      /* */
+      console.log(err)
     }
   }
 
   const confirmBooking = async () => {
     try {
-      const responseData = await sendBookingRequest(
+      const responseData = await sendBookingConfirmRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -96,13 +101,13 @@ function PaymentPage() {
     } catch (err) {
       /* */
     }
-    sendTicketEmail()
-    createPaymentData()
+    // sendTicketEmail()
+    // createPaymentData()
   };
 
   const cancelBooking = async () => {
     try {
-      const responseData = await sendBookingRequest(
+      const responseData = await sendBookingCancelRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
@@ -120,11 +125,11 @@ function PaymentPage() {
 
   return (
     <>
-      <GuestModal
+      {/* <GuestModal
         bookingId={bookingId}
         show={showGuestModal}
         onHide={() => setShowGuestModal(false)}
-      />
+      /> */}
       < Container className='pt-5' >
         <Row>
           {/* <Col lg={6}>
@@ -135,7 +140,9 @@ function PaymentPage() {
               <OrderSummary />
               <Stack direction='horizontal'>
                 <h5>Confirm Payment</h5>
-                <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails} />
+                {orderDetails && (
+                  <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails} />
+                )}
               </Stack>
             </Stack>
           </Col>
