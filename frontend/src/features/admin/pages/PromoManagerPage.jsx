@@ -1,27 +1,32 @@
 import { Container, Stack, Col, Row } from 'react-bootstrap'
 import AddPromoComponent from '../components/Promotion/AddPromoComponent'
 import ShowPromoComponent from '../components/Promotion/ShowPromoComponent'
-import { useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import ErrorModal from '../../shared/components/ErrorModal';
 
 function PromoManagerPage() {
-  const [updateShowPromotions,setUpdateShowPromotions]=useState(false)
+  const auth =useContext(AuthContext)
+  const [updateShowPromotions, setUpdateShowPromotions] = useState(false)
   const [promotionList, setPromotionList] = useState([]);
-  const { isLoading: isAddPromoLoading, sendRequest: sendAddPromoRequest } = useHttpClient()
-  const { isLoading: isShowPromoLoading, sendRequest: sendShowPromoRequest } = useHttpClient();
-  const { isLoading: isDeletePromoLoading, error, sendRequest: sendDeletePromoRequest, clearError } = useHttpClient();
-  useEffect(()=>{getPromotions()},[ updateShowPromotions,sendShowPromoRequest])
-
-  const getPromotions = async () => {
+  const { isLoading: isAddPromoLoading, sendRequest: sendAddPromoRequest, error:addError, clearError:clearAddError  } = useHttpClient()
+  const { isLoading: isShowPromoLoading, sendRequest: sendShowPromoRequest, error:showError, clearError:clearShowError } = useHttpClient();
+  const { isLoading: isDeletePromoLoading, sendRequest: sendDeletePromoRequest, error:deleteError, clearError:clearDeleteError } = useHttpClient();
+  useEffect(() => { getPromotions() }, [updateShowPromotions, sendShowPromoRequest])
+  
+  
+  const getPromotions = useCallback( async () => {
     try {
       const responseData = await sendShowPromoRequest(
         "http://localhost:3000/api/promotions"
-      );
-      setPromotionList(responseData.promotions);
-    } catch (err) {
+        );
+        setPromotionList(responseData.promotions);
+      } catch (err) {
+      }
+      console.log(promotionList)
     }
-    console.log(promotionList)
-  }
+  )
 
   const addPromotion = async (formData) => {
     try {
@@ -29,15 +34,18 @@ function PromoManagerPage() {
         "http://localhost:3000/api/promotions",
         "POST",
         JSON.stringify({
-          promotionTitle:formData.title,
-          description:formData.description,
-          imageUrl:formData.imageUrl
+          promotionTitle: formData.title,
+          description: formData.description,
+          imageUrl: formData.imageUrl
 
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
-      setUpdateShowPromotions((prevValue)=>!prevValue)
+      setUpdateShowPromotions((prevValue) => !prevValue)
     } catch (err) {
     }
   }
@@ -50,12 +58,18 @@ function PromoManagerPage() {
     try {
       await sendDeletePromoRequest(
         `http://localhost:3000/api/promotions/${deletedPromotionId}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {Authorization: "Bearer " + auth.token}
       );
     } catch (err) {
     }
   };
   return (
+    <>
+    <ErrorModal error={addError} onClear={clearAddError} />
+    {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
+    <ErrorModal error={deleteError} onClear={clearDeleteError} />
     <Container className='pt-5  '>
       <Row >
         <Col lg={6}>
@@ -66,6 +80,7 @@ function PromoManagerPage() {
         </Col>
       </Row>
     </Container>
+    </>
   )
 }
 

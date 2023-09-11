@@ -6,7 +6,7 @@ import { FaChartArea, FaSynagogue, FaFilm, FaTicketAlt,FaRegImages } from "react
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function DrawerMenu({ show, handleClose }) {
+function AdminDrawerMenu({ show, handleClose }) {
   return (
     <>
       <Offcanvas show={show} onHide={handleClose} id="offcanvas">
@@ -74,9 +74,9 @@ function DrawerMenu({ show, handleClose }) {
   );
 }
 
-DrawerMenu.propTypes = {
+AdminDrawerMenu.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 
-export default DrawerMenu;
+export default AdminDrawerMenu;

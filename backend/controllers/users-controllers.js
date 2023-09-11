@@ -40,5 +40,5 @@ export const findUserByEmail = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError("Authentication failed.", 500));
   }
-  res.json({ isAdmin: isAdmin, token: token });
+  res.json({ isAdmin: isAdmin, token: token, userId: registeredUser.id });
 };

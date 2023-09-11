@@ -13,7 +13,6 @@ function generateArray(rows, columns) {
       result.push(`${letter}${j}`);
     }
   }
-
   return result;
 }
 
@@ -56,7 +55,8 @@ export const createShow = async (req, res, next) => {
     );
     return next(error);
   }
-
+  console.log("test")
+  console.log(createShow)
   res.status(201).json({ show: createdShow });
 };
 
@@ -65,7 +65,7 @@ export const getShowsByMovieId = async (req, res, next) => {
   let shows;
 
   try {
-    shows = await Show.find({ movie: movieId });
+    shows = await Show.find({ movie: movieId }).populate("theatre");
   } catch (err) {
     const error = new HttpError("Fetching shows failed, try again", 500);
     return next(error);

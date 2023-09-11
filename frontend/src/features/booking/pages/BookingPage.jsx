@@ -10,9 +10,11 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 const BookingPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedShowtime, setSelectedShowtime] = useState(null);
   const { isLoading, sendRequest } = useHttpClient();
   const [loadedMovie, setLoadedMovie] = useState();
   const [loadedShowtimes, setLoadedShowtimes] = useState();
+  const [filteredShowtimes, setFilteredShowtimes] = useState([]); // New state for filtered showtimes
 
   const movieId = useParams().movieId;
 
@@ -47,14 +49,46 @@ const BookingPage = () => {
     //console.log(loadedShowtimes);
   }, [sendRequest, movieId]);
 
+  useEffect(() => {
+    if (loadedShowtimes) {
+      // Filter the showtimes based on selectedDate
+      if (selectedDate) {
+        //console.log(selectedDate);
+        const selectedDateObject = new Date(selectedDate);
+        const formattedSelectedDate = selectedDateObject
+          .toISOString()
+          .split("T")[0];
+        const filtered = loadedShowtimes.filter((showtime) => {
+          const formattedShowtime = new Date(showtime.showtime)
+            .toISOString()
+            .split("T")[0];
+          return formattedShowtime === formattedSelectedDate;
+        });
+        setFilteredShowtimes(filtered);
+      } else {
+        setFilteredShowtimes([]);
+      }
+    }
+  }, [selectedDate, loadedShowtimes]);
+
   const handleDateSelect = (date) => {
     setSelectedDate(date);
-    //console.log(selectedDate);
+    setSelectedShowtime(null);
+  };
+
+  const handleShowtimeSelect = (showtime) => {
+    setSelectedShowtime(showtime);
   };
 
   return (
     <Container>
-      <SeatCountModal show={modalShow} onHide={() => setModalShow(false)} />
+      {selectedShowtime && (
+        <SeatCountModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          showId={selectedShowtime.id}
+        />
+      )}
       <Stack gap={4} direction="horizontal" className="mt-5">
         <h2>Buy Tickets</h2>
         <UpcomingWeekSelect onDateSelect={handleDateSelect} />
@@ -63,15 +97,18 @@ const BookingPage = () => {
         <Col>
           <Stack gap={3}>
             <h3>{!isLoading && loadedMovie && loadedMovie.title}</h3>
-            <Col className="d-md-none">
-              <MovieImageCard size={10} />
-            </Col>
+            {/* <Col className="d-md-none">
+              {!isLoading && loadedMovie && (
+                <MovieImageCard img={loadedMovie.poster_url} size={10} />
+              )}
+            </Col> */}
             <h4 className="my-3">Show Times</h4>
             <Stack gap={5}>
               {!isLoading && loadedShowtimes && (
                 <ShowTimes
                   setModalShow={setModalShow}
-                  showTimes={loadedShowtimes}
+                  showTimes={filteredShowtimes}
+                  onSelect={handleShowtimeSelect}
                 />
               )}
             </Stack>
