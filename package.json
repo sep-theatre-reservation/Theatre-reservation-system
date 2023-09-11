@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "vite": "^4.4.9"
   }
 }
