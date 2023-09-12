@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Container, Form, Modal, Row, Stack } from "react-bootstrap";
 import { useHttpClient } from '../../shared/hooks/http-hook'
+import { AuthContext } from "../../shared/context/auth-context";
 
-const GuestModal = ({ show, onHide, bookingId,googleLoginButton }) => {
+const GuestModal = ({ show, onHide, bookingId }) => {
+  const auth=useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [guest, setGuest] = useState(null);
   const { sendRequest: sendAddGuestReqest } = useHttpClient()
@@ -22,26 +24,21 @@ const GuestModal = ({ show, onHide, bookingId,googleLoginButton }) => {
       console.log(responseData);
       setGuest(responseData.guest._id);
     } catch (error) {
-      console.log(error)
+      console.log(error)   
     }
   };
 
   const handleGuestLogin = async (e) => {
     e.preventDefault();
+    auth.guestEmail=email;
     addGuest();
     onHide()
   };
 
-  const handleGoogleLogin = async (e) => {
-    e.preventDefault();
-
-    onHide()
-  }
 
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-
+    <Modal show={show} onHide={onHide} backdrop="static" keyboard={false}>
+      <Modal.Header closeButton={false}>
         <Modal.Title>But first, Login or Register</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -75,7 +72,7 @@ const GuestModal = ({ show, onHide, bookingId,googleLoginButton }) => {
               </Col>
             </Row>
             <Container>
-              {<div id="signUpDiv2" className="d-flex justify-content-around"></div>}
+              {<div id="signUpDiv2" className="d-flex justify-content-around" ></div>}
             </Container>
           </Container>
         </Stack>

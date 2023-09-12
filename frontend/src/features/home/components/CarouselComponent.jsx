@@ -30,11 +30,13 @@ const CarouselComponent = () => {
           loadedSlides &&
           loadedSlides.map((slide, index) => (
             <Carousel.Item key={slide.id}>
-              <img
-                className="d-block w-100"
-                src={slide.imgUrl}
-                alt={`Slide ${index + 1}`}
-              />
+              <div style={{ width: '100%', maxHeight: '700px', overflow: 'hidden' }}>
+                <img
+                  src={slide.imgUrl}
+                  alt={`Slide ${index + 1}`}
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </div>
               <Carousel.Caption>
                 <h3>{`Slide ${index + 1}`}</h3>
                 <p>This is the caption for the slide.</p>

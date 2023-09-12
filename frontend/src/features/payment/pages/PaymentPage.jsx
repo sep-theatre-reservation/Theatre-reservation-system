@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import OrderSummary from '../components/OrderSummary'
-import ContactDetails from '../components/ContactDetails'
 import { Container, Stack, Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useHttpClient } from '../../shared/hooks/http-hook'
@@ -46,16 +45,19 @@ function PaymentPage() {
     fetchBooking();
   }, []);
 
-
   const sendTicketEmail = async () => {
+    console.log(auth.isLoggedIn)  
+    const email = auth.isLoggedIn ? auth.user.email : auth.guestEmail;
+    console.log(auth.user.email)
+    console.log(auth.guestEmail)
     try {
       const responseData = await sendEmailRequest(
         `http://localhost:3000/api/email`,
         "POST",
         JSON.stringify({
-          to: "ipjayawick@gmail.com",
-          subject: "Movie Ticket",
-          text: "here is the ticket"
+          to: email,
+          subject: "Movie ticket",
+          text: "heres the ticket"
         }),
         {
           "Content-Type": "application/json",
@@ -66,26 +68,27 @@ function PaymentPage() {
     }
   }
 
-  const createPaymentData = async (dateTime, amount) => {
+  const createPaymentData = async (paymentData) => {
     try {
+      // console.log(paymentData)
       const responseData = await sendCreatePaymentDataRequest(
         `http://localhost:3000/api/payment`,
         "POST",
         JSON.stringify({
           booking: bookingId,
-          dateTime: dateTime,
-          amount: amount
+          paypalPayment: paymentData
         }),
         {
           "Content-Type": "application/json",
         }
       );
+      console.log(responseData)
     } catch (err) {
       console.log(err)
     }
   }
 
-  const confirmBooking = async () => {
+  const confirmBooking = async (paymentData) => {
     try {
       const responseData = await sendBookingConfirmRequest(
         `http://localhost:3000/api/bookings/${bookingId}`,
@@ -101,8 +104,8 @@ function PaymentPage() {
     } catch (err) {
       /* */
     }
-    // sendTicketEmail()
-    // createPaymentData()
+    createPaymentData(paymentData)
+    sendTicketEmail()
   };
 
   const cancelBooking = async () => {
@@ -125,16 +128,15 @@ function PaymentPage() {
 
   return (
     <>
-      {/* <GuestModal
-        bookingId={bookingId}
-        show={showGuestModal}
-        onHide={() => setShowGuestModal(false)}
-      /> */}
+      {!auth.isLoggedIn && (
+        <GuestModal
+          bookingId={bookingId}
+          show={showGuestModal}
+          onHide={() => {setShowGuestModal(false)}}
+          />
+      )}
       < Container className='pt-5' >
         <Row>
-          {/* <Col lg={6}>
-            <ContactDetails />
-          </Col> */}
           <Col lg={6}>
             <Stack className='w-75'>
               <OrderSummary />
