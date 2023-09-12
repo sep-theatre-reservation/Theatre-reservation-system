@@ -29,9 +29,12 @@ function NowShowing() {
       <Container
         fluid
         className="bg-light"
-        style={{ paddingLeft: "100px", paddingRight: "100px" }}
+        style={{
+          paddingLeft: "100px",
+          paddingRight: "100px",
+          paddingTop: "50px",
+        }}
       >
-        <h2 className="py-5">Movies(Now Showing)</h2>
         <MoviesGrid movieList={movieList} />
       </Container>
     </React.Fragment>
