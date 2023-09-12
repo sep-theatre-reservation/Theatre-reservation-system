@@ -1,6 +1,6 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-export default function Paypal({ orderDetails,onPaymentConfirm }) {
+export default function Paypal({ orderDetails, onPaymentConfirm }) {
 
     const initialOptions = {
         clientId: "Ab0srraMjiEqhu5-dfGj7oDKFouBx8TK2F5xM-3vrcAfl0zktcfDUHvlde9dPg6H-Rjvvh3kABbve8s5",
@@ -9,7 +9,10 @@ export default function Paypal({ orderDetails,onPaymentConfirm }) {
     };
 
     const createOrder = async () => {
-
+        console.log(orderDetails)
+        if (orderDetails == null) {
+            return
+        }
         try {
             const response = await fetch("http://localhost:3000/api/orders", {
                 method: "POST",
@@ -18,11 +21,11 @@ export default function Paypal({ orderDetails,onPaymentConfirm }) {
                 },
                 body: JSON.stringify({
                     orderData:
-                        {
-                            id: orderDetails.id,
-                            ticketPrice:orderDetails.ticketPrice,
-                            ticketsCount:orderDetails.ticketsCount,
-                        },
+                    {
+                        id: orderDetails.id,
+                        ticketPrice: orderDetails.ticketPrice,
+                        ticketsCount: orderDetails.ticketsCount,
+                    },
                 }),
             });
 
@@ -85,7 +88,7 @@ export default function Paypal({ orderDetails,onPaymentConfirm }) {
                     // JSON.stringify(orderData,null,2),
                 );
             }
-            onPaymentConfirm()
+            onPaymentConfirm(orderData)
         } catch (error) {
             console.error(error);
             alert(
