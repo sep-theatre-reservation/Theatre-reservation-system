@@ -13,7 +13,7 @@ import bookingRoutes from "./routes/booking-routes.js"
 import paypalPayment from "./routes/paypalPayment-routes.js"
 import emailRoutes from "./routes/email-routes.js"
 import ticketsRoutes from "./routes/tickets-routes.js"
-
+import paymentRoutes from './routes/payment-routes.js'
 import { config } from "dotenv";
 import cors from "cors";
 config();
@@ -50,6 +50,7 @@ app.use("/api/guests", guestsRoutes);
 app.use("/api/orders",paypalPayment)
 app.use("/api/tickets",ticketsRoutes)
 app.use("/api/email",emailRoutes)
+app.use("/api/payment",paymentRoutes)
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

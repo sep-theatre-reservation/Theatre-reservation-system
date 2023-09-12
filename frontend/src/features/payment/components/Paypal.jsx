@@ -85,10 +85,10 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
                 console.log(
                     // "Capture result",
                     // orderData,
-                    JSON.stringify(orderData,null,2),
+                    // JSON.stringify(orderData,null,2),
                 );
             }
-            onPaymentConfirm()
+            onPaymentConfirm(orderData)
         } catch (error) {
             console.error(error);
             alert(
