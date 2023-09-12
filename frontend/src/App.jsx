@@ -38,7 +38,7 @@ function App() {
           <Route path="promotions" element={<PromoManagerPage />}></Route>
           <Route path="carousel" element={<CarouselManagerPage />}></Route>
         </Route>
-        <Route path="/movies/*" element={<MoviesPage />}>
+        <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
           <Route path="commingsoon" element={<CommingSoon />}></Route>
@@ -53,11 +53,10 @@ function App() {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/movies/*" element={<MoviesPage />}>
+        <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
-          <Route path="promotions" element={<PromoManagerPage />}></Route>
-          <Route path="carousel" element={<CarouselManagerPage />}></Route>
+          <Route path="commingsoon" element={<CommingSoon />}></Route>
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
         <Route path="booking/:movieId" element={<BookingPage />}></Route>

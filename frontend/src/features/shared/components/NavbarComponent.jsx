@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -12,25 +12,26 @@ import { FaThList } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import useGoogleAuth from "../hooks/google-auth-hook";
 
-
 function NavbarComponent() {
-
   const auth = useContext(AuthContext);
-  
+
   const [showAdminDrawerMenu, setShowAdminDrawerMenu] = useState(false);
-  
+
   const handleAdminDrawerMenuClose = () => setShowAdminDrawerMenu(false);
   const handleAdminDrawerMenuShow = () => setShowAdminDrawerMenu(true);
-  
+
   const [showLogin, setShowLogin] = useState(false);
-  
+
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
   useGoogleAuth(handleLoginClose);
 
   return (
     <>
-      <AdminDrawerMenu show={showAdminDrawerMenu} handleClose={handleAdminDrawerMenuClose} />
+      <AdminDrawerMenu
+        show={showAdminDrawerMenu}
+        handleClose={handleAdminDrawerMenuClose}
+      />
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
@@ -50,7 +51,10 @@ function NavbarComponent() {
 
           <div className="d-lg-none ms-auto me-3">
             {!auth.isLoggedIn && (
-              <Button className={"mx-3"} onClick={handleLoginShow}><FaUserCircle size={20} className="me-2 mb-1" />Login</Button>
+              <Button className={"mx-3"} onClick={handleLoginShow}>
+                <FaUserCircle size={20} className="me-2 mb-1" />
+                Login
+              </Button>
             )}
             {auth.isLoggedIn && (
               <Dropdown>
@@ -72,7 +76,6 @@ function NavbarComponent() {
             )}
           </div>
 
-
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" className="pb-lg-0 pb-3">
             <Nav
@@ -81,11 +84,15 @@ function NavbarComponent() {
               navbarScroll
             >
               {auth.isLoggedIn && auth.isAdmin && (
-                <Nav.Link as={Link} to="/admin" className="navLink text-danger d-lg-none">
-                    Admin Page
+                <Nav.Link
+                  as={Link}
+                  to="/admin"
+                  className="navLink text-danger d-lg-none"
+                >
+                  Admin Page
                 </Nav.Link>
               )}
-              <Nav.Link as={Link} to="/movies" className="navLink">
+              <Nav.Link as={Link} to="/movies/nowshowing" className="navLink">
                 Movies
               </Nav.Link>
               <Nav.Link as={Link} to="/contactus" className="navLink">
@@ -119,7 +126,10 @@ function NavbarComponent() {
 
             <div className="d-none d-lg-block">
               {!auth.isLoggedIn && (
-                <Button className={"mx-3"} onClick={handleLoginShow}><FaUserCircle size={20} className="me-2 mb-1" />Login</Button>
+                <Button className={"mx-3"} onClick={handleLoginShow}>
+                  <FaUserCircle size={20} className="me-2 mb-1" />
+                  Login
+                </Button>
               )}
               {auth.isLoggedIn && (
                 <Dropdown>
@@ -140,7 +150,6 @@ function NavbarComponent() {
                 </Dropdown>
               )}
             </div>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>
