@@ -13,9 +13,10 @@ function MovieDetails({ movie }) {
         </Col>
         <Col lg={9}>
           <Stack gap={5}>
-            <h1>{movie.title}</h1>
             <Stack direction="horizontal" gap={3}>
-              <div>
+            <h1>{movie.title}</h1>
+
+              {/* <div>
                 <Stack gap={2}>
                   <h4>Now Showing At</h4>
                   <Stack direction="horizontal">
@@ -24,7 +25,9 @@ function MovieDetails({ movie }) {
                     <p className="lead me-4">Scope cinema</p>
                   </Stack>
                 </Stack>
-              </div>
+              </div> */}
+
+
               <Button
                 as={Link}
                 to={`/booking/${movie.id}`}
@@ -33,6 +36,7 @@ function MovieDetails({ movie }) {
               >
                 Book Tickets
               </Button>
+
             </Stack>
             <Row>
               <Col md={7}>
@@ -42,14 +46,14 @@ function MovieDetails({ movie }) {
                 </div>
               </Col>
               <Col lg={5}>
-                <div>
+                {/* <div>
                   <h3>Genress</h3>
                   <Stack direction="horizontal" gap={3}>
                     <p className="lead">action</p>
                     <p className="lead">action</p>
                     <p className="lead">action</p>
                   </Stack>
-                </div>
+                </div> */}
               </Col>
             </Row>
             <Stack>
@@ -59,7 +63,6 @@ function MovieDetails({ movie }) {
                   <CharacterIcon
                     key={character.name}
                     title={character.name}
-                    subtitle="J. Robert"
                     imgUrl={character.imageUrl}
                   />
                 ))}
