@@ -33,7 +33,7 @@ function MoviesPage() {
             })}
             to="/movies/commingsoon"
           >
-            Comming Soon
+            Coming Soon
           </NavLink>
         </Stack>
       </Stack>
