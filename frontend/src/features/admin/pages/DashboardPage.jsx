@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
+import CarouselManager from "../components/CarouselManager";
 
 function DashboardPage() {
   return (
     <>
-      <Outlet />
+      <CarouselManager />
     </>
   );
 }
