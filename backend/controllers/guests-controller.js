@@ -11,19 +11,33 @@ export const addGuest = async (req, res, next) => {
     );
   }
 
-  const { email } = req.body;
+  const { email, bookingId } = req.body;
 
-  const addedGuest = new Guest({ email });
+  let guest;
   try {
-    await addedGuest.save();
+    guest = await Guest.findOne({ email }).populate("bookings");
+  } catch (error) {
+    console.error("Error fetching guest by email:", error);
+    throw error;
+  }
+
+  if (!guest) {
+    guest = new Guest({ email });
+  }
+  guest.bookings.push(bookingId)
+  
+  try {
+    await guest.save();
   } catch (err) {
+    console.log(err)
     const error = new HttpError(
-      "Something went wrong, adding theatre failed",
+      "Something went wrong, adding guest failed",
       500
     );
     return next(error);
   }
-  res.status(201).json({ guest: addedGuest });
+  res.status(201).json({ guest: guest });
+
 };
 
 export const findGuestById = async (req, res, next) => {

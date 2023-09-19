@@ -119,6 +119,7 @@ const SeatSelection = () => {
         }}
       />
 
+
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>

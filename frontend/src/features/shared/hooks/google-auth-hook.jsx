@@ -34,7 +34,7 @@ function useGoogleAuth(handleLoginClose) {
     //auth.login(userObject, response.credential);
     handleLoginClose();
   }
-
+  
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
@@ -47,6 +47,14 @@ function useGoogleAuth(handleLoginClose) {
       theme: "outline",
       size: "large",
       width: "200",
+      logo_alignment: "center",
+      text: "continue_with",
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signUpDiv2"), {
+      theme: "outline",
+      size: "large",
+      width: "300",
       logo_alignment: "center",
       text: "continue_with",
     });
