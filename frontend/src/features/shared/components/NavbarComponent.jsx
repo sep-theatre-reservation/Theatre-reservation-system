@@ -143,7 +143,9 @@ function NavbarComponent() {
                     />
                   </Dropdown.Toggle>
                   <Dropdown.Menu align="end" className="dropdown-menu-right">
-                    <Dropdown.Item>{auth.user.name}</Dropdown.Item>
+                    <Dropdown.Item as={Link} to={`/profile/${auth.userId}`}>
+                      {auth.user.name}
+                    </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={auth.logout}>Logout</Dropdown.Item>
                   </Dropdown.Menu>

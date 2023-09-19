@@ -7,50 +7,35 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import useSeatRows from "../../shared/hooks/seat-layout-hook";
+import ErrorModal from "../../shared/components/ErrorModal";
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
-  const { sendRequest: sendAddBookingRequest } = useHttpClient();
+  const { sendRequest: sendShowRequest } = useHttpClient();
+  const {
+    error: reserveError,
+    sendRequest: sendReserveRequest,
+    clearError: clearReserveError,
+  } = useHttpClient();
 
   const [selected, setSelected] = useState([]);
-  const { sendRequest } = useHttpClient();
   const [selectedShow, setSelectedShow] = useState();
 
   const [rows, setRows] = useState(null);
   const [cols, setCols] = useState(null);
   const [SEATS, setSeats] = useState(null);
+
   const [bookingId, setBookingId] = useState(null);
 
   const navigate = useNavigate();
 
   const { showId, seatCount } = useParams();
-  //const showId = "64f50afcb3c21042568e874d";
 
-  const createBooking = async () => {
-    try {
-      const responseData = await sendAddBookingRequest(
-        "http://localhost:3000/api/bookings",
-        "POST",
-        JSON.stringify({
-          show: showId,
-          seats: selected,
-          user: auth.userId,
-        }),
-        {
-          "Content-Type": "application/json",
-        }
-      );
-      setBookingId(responseData.booking._id);
-    } catch (err) {
-      /* */
-    }
-  };
-  
   useEffect(() => {
     const fetchShow = async () => {
       try {
         console.log(`http://localhost:3000/api/shows/${showId}`);
-        const responseData = await sendRequest(
+        const responseData = await sendShowRequest(
           `http://localhost:3000/api/shows/${showId}`
         );
         setSelectedShow(responseData.show);
@@ -65,7 +50,7 @@ const SeatSelection = () => {
     fetchShow();
 
     //console.log(loadedShowtimes);
-  }, [sendRequest, showId]);
+  }, [sendShowRequest, showId]);
 
   const handleSelect = (selectedId, remove) => {
     if (!remove) {
@@ -84,17 +69,19 @@ const SeatSelection = () => {
 
   const reserveSeats = async () => {
     try {
-      const responseData = await sendRequest(
+      const responseData = await sendReserveRequest(
         `http://localhost:3000/api/shows/${showId}`,
         "PATCH",
         JSON.stringify({
           selectedSeats: selected,
+          user: auth.userId,
         }),
         {
           "Content-Type": "application/json",
         }
       );
       console.log(responseData);
+      setBookingId(responseData.bookingId);
     } catch (err) {
       /* */
     }
@@ -107,7 +94,6 @@ const SeatSelection = () => {
   }, [bookingId, navigate]);
 
   const btnContinueHandler = async () => {
-    createBooking();
     reserveSeats();
   };
 
@@ -125,6 +111,15 @@ const SeatSelection = () => {
 
   return (
     <>
+      <ErrorModal
+        error={reserveError}
+        onClear={() => {
+          clearReserveError();
+          window.location.reload();
+        }}
+      />
+
+
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
