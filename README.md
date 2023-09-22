@@ -35,7 +35,7 @@ To run the Theatre Reservation System locally, follow these steps:
 2. Navigate to the project directory: `cd theatre-reservation-system`
 3. Install the required dependencies: `npm install`
 4. Configure the backend server by providing environment variables.
-5. Start the development server: `npm start`
+5. Start the development server: `npm run dev`
 
 ## Usage
 
@@ -53,17 +53,8 @@ To run the Theatre Reservation System locally, follow these steps:
 - Express.js
 - MongoDB
 - Bootstrap
-- Axios
-- Other dependencies (list them here)
 
 ## Contributing
-
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them.
-4. Push to your fork and submit a pull request.
 
 ## License
 
