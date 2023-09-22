@@ -3,7 +3,7 @@ import "./SeatSelection.css";
 import { useContext, useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { Button, Container } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import useSeatRows from "../../shared/hooks/seat-layout-hook";
@@ -89,7 +89,7 @@ const SeatSelection = () => {
 
   useEffect(() => {
     if (bookingId !== null) {
-      navigate(`/payment/${bookingId}`);
+      navigate(`/payment/${bookingId}`, { replace: true });
     }
   }, [bookingId, navigate]);
 
@@ -119,7 +119,6 @@ const SeatSelection = () => {
         }}
       />
 
-
       <Container className="pt-4">
         <Stack>
           <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
@@ -131,7 +130,7 @@ const SeatSelection = () => {
           <div className="screen mb-4">screen</div>
           <hr className="container" />
           <Stack direction="horizontal" gap={3} className="m-auto">
-            <Button as={Link} to="/booking" variant="secondary">
+            <Button onClick={() => navigate(-1)} variant="secondary">
               Back
             </Button>
 

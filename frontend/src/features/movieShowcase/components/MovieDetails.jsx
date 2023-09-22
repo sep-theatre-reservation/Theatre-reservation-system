@@ -25,14 +25,16 @@ function MovieDetails({ movie }) {
                   </Stack>
                 </Stack>
               </div>
-              <Button
-                as={Link}
-                to={`/booking/${movie.id}`}
-                variant="primary"
-                className=" m-auto"
-              >
-                Book Tickets
-              </Button>
+              {movie.status == "nowShowing" && (
+                <Button
+                  as={Link}
+                  to={`/booking/${movie.id}`}
+                  variant="primary"
+                  className=" m-auto"
+                >
+                  Book Tickets
+                </Button>
+              )}
             </Stack>
             <Row>
               <Col md={7}>
