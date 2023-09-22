@@ -12,7 +12,7 @@ function NowShowing() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/movies"
+          "http://localhost:3000/api/movies/nowShowing"
         );
         setMovieList(responseData.movies);
       } catch (err) {

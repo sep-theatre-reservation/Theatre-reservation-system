@@ -3,6 +3,7 @@ import HttpError from "../models/http-error.js";
 import Show from "../models/show.js";
 import Theatre from "../models/theatre.js";
 import Booking from "../models/booking.js";
+import User from "../models/user.js";
 import mongoose from "mongoose";
 
 function generateArray(rows, columns) {
@@ -101,6 +102,15 @@ export const getShowById = async (req, res, next) => {
 export const reserveSelectedseats = async (req, res, next) => {
   const { selectedSeats, user } = req.body;
 
+  let userObj;
+  if (user) {
+    try {
+      userObj = await User.findById(user);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   const showId = req.params.sid;
 
   let session;
@@ -153,6 +163,10 @@ export const reserveSelectedseats = async (req, res, next) => {
     });
 
     await newBooking.save({ session });
+    if (user) {
+      userObj.bookings.push(newBooking);
+      await userObj.save();
+    }
 
     // Commit the transaction
     await session.commitTransaction();

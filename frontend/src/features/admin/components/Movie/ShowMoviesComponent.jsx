@@ -14,7 +14,8 @@ function ShowMoviesComponent({ moviesList, isLoading, showSchedule }) {
           <Card.Text>
             <Stack gap={2}>
               {!isLoading && moviesList && (
-                <MovieList movies={moviesList} showSchedule={showSchedule} />
+                <MovieList showSchedule={showSchedule} />
+                // movies={moviesList}
               )}
             </Stack>
           </Card.Text>
