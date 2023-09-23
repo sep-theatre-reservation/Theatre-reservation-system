@@ -72,7 +72,7 @@ function TheatreManagePage() {
       <ErrorModal error={addError} onClear={clearAddError} />
       {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
       <ErrorModal error={deleteError} onClear={clearDeleteError} />
-      <Container className="pt-5  ">
+      <Container className="py-5" style={{minHeight:"62vh"}}>
         <Row>
           <Col lg={6}>
             <AddTheaterComponent
