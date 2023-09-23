@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 function MoviesPage() {
   return (
     <div className="custom-background">
-      <Container className="py-4 custom-background px-0">
+      <Container fluid className="py-4 custom-background" style={{padding:"100px"}}>
         <Stack>
           <div>
             <h3 style={{ fontSize: '3rem', fontWeight: 'bold', color:'white' }}>Movies</h3>

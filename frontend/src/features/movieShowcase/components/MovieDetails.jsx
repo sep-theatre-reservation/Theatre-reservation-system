@@ -6,18 +6,25 @@ import PropTypes from "prop-types";
 
 function MovieDetails({ movie }) {
   return (
-    <Container fluid className="p-5">
+    <Container fluid className="p-5 custom-background2">
+      <style>
+        {`
+          h3 {
+            font-weight: bold;
+          }
+        `}
+      </style>
       <Row>
         <Col lg={3} className="d-none d-xl-block">
           <MovieImageCard img={movie.poster_url} />
         </Col>
         <Col lg={9}>
           <Stack gap={5}>
-            <h1>{movie.title}</h1>
+            <h1 style={{fontSize:"3.5rem", fontWeight:'bold'}}>{movie.title}</h1>
             <Stack direction="horizontal" gap={3}>
               <div>
                 <Stack gap={2}>
-                  <h4>Now Showing At</h4>
+                  <h3>Now Showing At</h3>
                   <Stack direction="horizontal">
                     <p className="lead me-4">Scope cinema</p>
                     <p className="lead me-4">Scope cinema</p>
@@ -43,7 +50,7 @@ function MovieDetails({ movie }) {
                   <p>{movie.description}</p>
                 </div>
               </Col>
-              <Col lg={5}>
+              {/* <Col lg={5}>
                 <div>
                   <h3>Genress</h3>
                   <Stack direction="horizontal" gap={3}>
@@ -52,7 +59,7 @@ function MovieDetails({ movie }) {
                     <p className="lead">action</p>
                   </Stack>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
             <Stack>
               <h3>Cast</h3>
@@ -61,7 +68,7 @@ function MovieDetails({ movie }) {
                   <CharacterIcon
                     key={character.name}
                     title={character.name}
-                    subtitle="J. Robert"
+                    // subtitle="J. Robert"
                     imgUrl={character.imageUrl}
                   />
                 ))}

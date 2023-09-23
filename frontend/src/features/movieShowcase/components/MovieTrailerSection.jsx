@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 function MovieTrailerSection({ movie }) {
   return (
-      <div>
+      <div style={{ height: "60vh" }}>
         <iframe
           title="YouTube Video"
           className="ratio ratio-4x3"
           src={movie.trailerLink}
           allowFullScreen
-          style={{ height: "60vh" }}
+          style={{ height: "100%" }}
         ></iframe>
       </div>
   );

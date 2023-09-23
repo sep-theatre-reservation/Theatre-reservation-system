@@ -25,11 +25,11 @@ function MovieShowcasePage() {
   }, [sendRequest, movieId]);
 
   return (
-    <React.Fragment>
+    <>
       {isLoading && <LoadingOverlay asOverlay />}
       {!isLoading && loadedMovie && <MovieTrailerSection movie={loadedMovie} />}
       {!isLoading && loadedMovie && <MovieDetails movie={loadedMovie} />}
-    </React.Fragment>
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ function MovieCard({ movie }) {
             <Card className="bg-black text-light">
               <Card.Img variant="top" src={movie.poster_url} />
               <Card.Body>
-                <Card.Title>{movie.title}</Card.Title>
+                <Card.Title style={{fontWeight:'bold'}}>{movie.title}</Card.Title>
               </Card.Body>
             </Card>
           </Link>
