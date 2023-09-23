@@ -20,7 +20,7 @@ import SeatSelection from "./features/reservations/pages/SeatSelection";
 import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 import PromoManagerPage from "./features/admin/pages/PromoManagerPage";
 import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
-import CarouselManagerPage from "./features/admin/pages/CarouselManagerPage";
+import CustomerProfile from "./features/customer/CustomerProfile";
 
 import { useAuth } from "./features/shared/hooks/auth-hook";
 
@@ -31,13 +31,13 @@ function App() {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/admin/*" element={<DashboardPage />}>
-          <Route index element={<DashboardPage />}></Route>
-          <Route path="movies" element={<MovieManagerPage />}></Route>
-          <Route path="theatres" element={<TheatreManagePage />}></Route>
-          <Route path="promotions" element={<PromoManagerPage />}></Route>
-          <Route path="carousel" element={<CarouselManagerPage />}></Route>
-        </Route>
+        <Route path="/profile/:uid" element={<CustomerProfile />}></Route>
+        {/* Admin Routes */}
+        <Route path="admin/dashboard" element={<DashboardPage />}></Route>
+        <Route path="admin/movies" element={<MovieManagerPage />}></Route>
+        <Route path="admin/theatres" element={<TheatreManagePage />}></Route>
+        <Route path="admin/promotions" element={<PromoManagerPage />}></Route>
+
         <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
@@ -53,6 +53,9 @@ function App() {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
+        {!!token && (
+          <Route path="/profile/:uid" element={<CustomerProfile />}></Route>
+        )}
         <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
