@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function MovieImageCard({ className, size, img }) {
   return (
-    <Card style={{ width: `${size || 18}rem` }} className={className}>
+    <Card style={{ width: `${size || 18}rem`, backgroundColor:'none', border:'none', boxShadow:'0 8px 16px rgba(0, 0, 0, 0.5)' }} className={className}>
       <Card.Img variant="" src={img} alt="Movie Poster" />
     </Card>
   );

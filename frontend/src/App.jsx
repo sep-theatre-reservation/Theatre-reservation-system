@@ -84,7 +84,7 @@ function App() {
     >
       <Router>
         <NavbarComponent />
-        <main style={{ minHeight: "80vh" }}>{routes}</main>
+        <main >{routes}</main>
         <Footer />
       </Router>
     </AuthContext.Provider>

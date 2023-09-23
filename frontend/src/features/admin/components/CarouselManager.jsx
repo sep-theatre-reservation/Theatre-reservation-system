@@ -18,6 +18,7 @@ function CarouselManager() {
   const [avatars, setAvatars] = useState([]);
   const [showAddSlide, setShowAddSlide] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
+  const [title, setTitle] = useState("");
 
   const { isLoading, sendRequest } = useHttpClient();
 
@@ -30,6 +31,9 @@ function CarouselManager() {
 
   const handleChange = (event) => {
     setImgUrl(event.target.value);
+  };
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
   };
 
   useEffect(() => {
@@ -54,6 +58,7 @@ function CarouselManager() {
         "http://localhost:3000/api/carousel",
         "POST",
         JSON.stringify({
+          title:title,
           imgUrl: imgUrl,
         }),
         {
@@ -94,6 +99,14 @@ function CarouselManager() {
         <Modal.Body>
           <Form onSubmit={addAvatar}>
             <Form.Group controlId="cardName" className="mb-2">
+              <Form.Label>Movie Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={title}
+                placeholder="Enter Movie Title"
+                onChange={handleTitleChange}
+              />
               <Form.Label>Slide Image URL</Form.Label>
               <Form.Control
                 type="text"
