@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const carouselSchema = new Schema({
+  title:{type:String,required:true},
   imgUrl: { type: String, required: true },
 });
 
