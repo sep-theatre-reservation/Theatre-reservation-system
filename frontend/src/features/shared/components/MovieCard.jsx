@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function MovieCard({ movie }) {
   return (
           <Link to={`/movies/${movie.id}`}>
-            <Card>
+            <Card className="bg-black text-light">
               <Card.Img variant="top" src={movie.poster_url} />
               <Card.Body>
                 <Card.Title>{movie.title}</Card.Title>
