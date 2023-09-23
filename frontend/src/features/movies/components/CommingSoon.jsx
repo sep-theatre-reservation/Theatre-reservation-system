@@ -27,12 +27,12 @@ function CommingSoon() {
 
       <Container
         fluid
-        className="bg-light"
-        style={{
-          paddingLeft: "100px",
-          paddingRight: "100px",
-          paddingTop: "50px",
-        }}
+        // className="bg-light"
+        // style={{
+        //   paddingLeft: "100px",
+        //   paddingRight: "100px",
+        //   paddingTop: "50px",
+        // }}
       >
         <MoviesGrid movieList={movieList} />
       </Container>
