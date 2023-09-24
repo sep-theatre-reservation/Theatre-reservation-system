@@ -45,6 +45,15 @@ const MovieList = ({ showSchedule }) => {
     }
   }, [selectedFilter, movies]);
 
+  // Callback function to update status in the movies array
+  const handleStatusChange = (movieId, newStatus) => {
+    setMovies((prevMovies) =>
+      prevMovies.map((movie) =>
+        movie.id === movieId ? { ...movie, status: newStatus } : movie
+      )
+    );
+  };
+
   return (
     <React.Fragment>
       {/* Filter dropdown */}
@@ -62,6 +71,7 @@ const MovieList = ({ showSchedule }) => {
           id={movie.id}
           movie={movie}
           showSchedule={showSchedule}
+          onStatusChange={handleStatusChange} // Pass the callback function
         ></MovieItem>
       ))}
     </React.Fragment>
