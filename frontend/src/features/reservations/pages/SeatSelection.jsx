@@ -121,7 +121,7 @@ const SeatSelection = () => {
       />
       <div className="custom-background4">
       </div>
-      <Container  style={{paddingBottom:'150px', paddingTop:'100px'}}>
+      <Container  style={{paddingBottom:'150px', paddingTop:'50px'}}>
         <Stack>
           <Stack direction="horizontal">
             <FaMapMarkerAlt size={30} className="me-2 mb-2" />
@@ -141,11 +141,11 @@ const SeatSelection = () => {
               Back
             </Button>
             {isButtonEnabled ? (
-              <Button variant="primary" onClick={btnContinueHandler}>
+              <Button variant="success" onClick={btnContinueHandler}>
                 Continue
               </Button>
             ) : (
-              <Button disabled variant="primary">
+              <Button disabled variant="success">
                 Continue
               </Button>
             )}

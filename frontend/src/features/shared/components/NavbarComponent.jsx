@@ -32,7 +32,7 @@ function NavbarComponent() {
         show={showAdminDrawerMenu}
         handleClose={handleAdminDrawerMenuClose}
       />
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark">
+      <Navbar expand="lg" data-bs-theme="dark" style={{backgroundColor:'#0c0342'}}> 
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
             <Button
@@ -100,14 +100,14 @@ function NavbarComponent() {
               </Nav.Link>
             </Nav>
 
-            <Form className="d-flex">
+            <Form className="d-flex" data-bs-theme="light">
               <Form.Control
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button variant="dark" className="text-light">Search</Button>
             </Form>
 
             <Modal show={showLogin} onHide={handleLoginClose}>
@@ -126,7 +126,7 @@ function NavbarComponent() {
 
             <div className="d-none d-lg-block">
               {!auth.isLoggedIn && (
-                <Button className={"mx-3"} onClick={handleLoginShow}>
+                <Button className="mx-3 text-light" onClick={handleLoginShow} variant="dark">
                   <FaUserCircle size={20} className="me-2 mb-1" />
                   Login
                 </Button>
