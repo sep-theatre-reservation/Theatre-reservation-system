@@ -28,7 +28,7 @@ function PromoSection() {
                 <h2 className="py-5">Deals and Exclusive</h2>
                 <Row md={1} lg={3} className="g-4">
                     {pormotionList.map((promotion, idx) => (
-                        <Col key={idx}>
+                        <Col key={idx} style={{height:'250px'}}>
                             <PromotionCard key={promotion.id} promotion={promotion}/>
                         </Col>
                     ))}
