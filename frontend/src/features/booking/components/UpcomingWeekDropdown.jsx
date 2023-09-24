@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Form, Stack } from "react-bootstrap";
+import {  Form, Stack } from "react-bootstrap";
 import { FaCalendarAlt } from "react-icons/fa";
 
 function UpcomingWeekSelect({ onDateSelect }) {
@@ -38,16 +37,17 @@ function UpcomingWeekSelect({ onDateSelect }) {
         <FaCalendarAlt size={30} />
         <Form.Select
           aria-label="Select a Date"
-          style={{ width: "180px", marginLeft: "10px" }}
           onChange={handleDateChange}
+          style={{ backgroundColor:"gray", color:"black", width: "180px", marginLeft: "10px"}} 
         >
           <option className={"d-none"} >Select a Date</option>
           {upcomingWeekDates.map((date, index) => (
-            <option key={index} value={date.toISOString()}>
+            <option key={index} value={date.toISOString()}  >
               {date.toDateString()}
             </option>
           ))}
         </Form.Select>
+
       </Stack>
     </div>
   );

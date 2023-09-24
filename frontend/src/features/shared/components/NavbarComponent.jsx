@@ -11,7 +11,7 @@ import AdminDrawerMenu from "../../admin/components/AdminDrawerMenu";
 import { FaThList } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import useGoogleAuth from "../hooks/google-auth-hook";
-
+import logo from "../../../assets/logo.png"
 function NavbarComponent() {
   const auth = useContext(AuthContext);
 
@@ -32,7 +32,7 @@ function NavbarComponent() {
         show={showAdminDrawerMenu}
         handleClose={handleAdminDrawerMenuClose}
       />
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark">
+      <Navbar expand="lg" data-bs-theme="dark" style={{ backgroundColor: '#0c0342' }}>
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
             <Button
@@ -46,6 +46,7 @@ function NavbarComponent() {
             </Button>
           )}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
+            <img src={logo} style={{height:'60px', color:'black', paddingBottom:'5px', marginRight:'3px', filter: 'grayscale(0%) invert(100%)'}} />
             Booking.Lk
           </Navbar.Brand>
 
@@ -100,14 +101,14 @@ function NavbarComponent() {
               </Nav.Link>
             </Nav>
 
-            <Form className="d-flex">
+            <Form className="d-flex" data-bs-theme="light">
               <Form.Control
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button variant="dark" className="text-light">Search</Button>
             </Form>
 
             <Modal show={showLogin} onHide={handleLoginClose}>
@@ -126,7 +127,7 @@ function NavbarComponent() {
 
             <div className="d-none d-lg-block">
               {!auth.isLoggedIn && (
-                <Button className={"mx-3"} onClick={handleLoginShow}>
+                <Button className="mx-3 text-light" onClick={handleLoginShow} variant="dark">
                   <FaUserCircle size={20} className="me-2 mb-1" />
                   Login
                 </Button>
