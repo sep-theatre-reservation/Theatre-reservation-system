@@ -32,13 +32,8 @@ const data = {
 };
 
 function App() {
-  const cardStyle = {
-    width: "25%",
-    height: "25%",
-  };
-
   return (
-    <Card style={cardStyle}>
+    <Card>
       <Card.Body>
         <Card.Title>Pie Chart</Card.Title>
         <Pie data={data} />

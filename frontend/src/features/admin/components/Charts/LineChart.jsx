@@ -56,13 +56,8 @@ const data = {
 };
 
 function ChartCard() {
-  const cardStyle = {
-    width: "50%",
-    height: "50%",
-  };
-
   return (
-    <Card style={cardStyle}>
+    <Card>
       <Card.Body>
         <Card.Title>Line Chart</Card.Title>
         <Line options={options} data={data} />
