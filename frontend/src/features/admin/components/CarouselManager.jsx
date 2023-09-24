@@ -117,6 +117,7 @@ function CarouselManager() {
       {isLoading && <LoadingOverlay asOverlay />}
 
       <Container>
+        <h4>Home Page Slides</h4>
         <Row className="align-items-center">
           {!isLoading &&
             avatars &&

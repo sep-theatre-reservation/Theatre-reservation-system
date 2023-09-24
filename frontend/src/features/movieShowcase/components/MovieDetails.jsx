@@ -3,8 +3,33 @@ import { Link } from "react-router-dom";
 import MovieImageCard from "./MovieImageCard";
 import CharacterIcon from "./CharacterIcon";
 import PropTypes from "prop-types";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useEffect, useState } from "react";
 
 function MovieDetails({ movie }) {
+  const [loadedTheatres, setLoadedTheatres] = useState();
+  const { isLoading, sendRequest } = useHttpClient();
+
+  useEffect(() => {
+    const fetchShows = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:3000/api/shows/movie/${movie.id}`
+        );
+
+        setLoadedTheatres([
+          ...new Set(
+            responseData.shows.map((show) => show.theatre.theatreName)
+          ),
+        ]);
+      } catch (err) {
+        /* */
+      }
+    };
+
+    fetchShows();
+  }, [sendRequest, movie.id]);
+
   return (
     <Container fluid className="p-5">
       <Row>
@@ -19,9 +44,13 @@ function MovieDetails({ movie }) {
                 <Stack gap={2}>
                   <h4>Now Showing At</h4>
                   <Stack direction="horizontal">
-                    <p className="lead me-4">Scope cinema</p>
-                    <p className="lead me-4">Scope cinema</p>
-                    <p className="lead me-4">Scope cinema</p>
+                    {!isLoading &&
+                      loadedTheatres &&
+                      loadedTheatres.map((theatre) => (
+                        <p key={theatre} className="lead me-4">
+                          {theatre}
+                        </p>
+                      ))}
                   </Stack>
                 </Stack>
               </div>
