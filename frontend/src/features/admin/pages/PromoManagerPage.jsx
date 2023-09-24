@@ -70,7 +70,7 @@ function PromoManagerPage() {
     <ErrorModal error={addError} onClear={clearAddError} />
     {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
     <ErrorModal error={deleteError} onClear={clearDeleteError} />
-    <Container  className="py-5" style={{minHeight:"62vh"}}>
+    <Container  className="py-5" style={{minHeight:"70vh"}}>
       <Row >
         <Col lg={6}>
           <AddPromoComponent onAddPromotion={addPromotion} isLoading={isAddPromoLoading} />

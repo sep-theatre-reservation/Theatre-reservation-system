@@ -129,8 +129,8 @@ function CarouselManager() {
       </Modal>
       {isLoading && <LoadingOverlay asOverlay />}
 
-      <Container>
-        <h4>Home Page Slides</h4>
+      <Container className="py-4">
+        <h4 className="lead fw-bold">Edit Carousel Movies</h4>
         <Row className="align-items-center">
           {!isLoading &&
             avatars &&
