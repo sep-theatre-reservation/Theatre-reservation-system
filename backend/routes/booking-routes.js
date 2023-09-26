@@ -2,15 +2,15 @@ import express from "express";
 import {
   getBookingById,
   createBooking,
-  getBookings,
-  updateBookingStatus
+  getBookingsByUser,
+  updateBookingStatus,
 } from "../controllers/booking-controller.js";
 import checkAuth from "../middleware/check-auth.js";
 
 const router = express.Router();
 
-router.get("/", getBookings);
-router.post("/", createBooking);
 router.get("/:bid", getBookingById);
-router.patch("/:bid",updateBookingStatus)
+router.get("/user/:uid", getBookingsByUser);
+router.post("/", createBooking);
+router.patch("/:bid", updateBookingStatus);
 export default router;
