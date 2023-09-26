@@ -58,8 +58,8 @@ export const createShow = async (req, res, next) => {
     );
     return next(error);
   }
-  console.log("test");
-  console.log(createShow);
+  // console.log("test");
+  // console.log(createShow);
   res.status(201).json({ show: createdShow });
 };
 
