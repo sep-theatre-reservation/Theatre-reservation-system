@@ -20,7 +20,7 @@ import SeatSelection from "./features/reservations/pages/SeatSelection";
 import TheatreManagePage from "./features/admin/pages/TheatreManagePage";
 import PromoManagerPage from "./features/admin/pages/PromoManagerPage";
 import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
-import CustomerProfile from "./features/customer/CustomerProfile";
+import CustomerProfile from "./features/customer/pages/CustomerProfile";
 
 import { useAuth } from "./features/shared/hooks/auth-hook";
 

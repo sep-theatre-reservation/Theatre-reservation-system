@@ -7,15 +7,18 @@ import {
   Button,
   Stack,
 } from "react-bootstrap";
-import { AuthContext } from "../shared/context/auth-context";
+import { AuthContext } from "../../shared/context/auth-context";
 import React, { useContext, useEffect, useState } from "react";
-import { useHttpClient } from "../shared/hooks/http-hook";
-import LoadingOverlay from "../shared/components/LoadingOverlay";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import LoadingOverlay from "../../shared/components/LoadingOverlay";
+import BookingDetailsModal from "../components/BookingDetailsModal";
 
 const UserProfilePage = () => {
   const auth = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const { isLoading, sendRequest } = useHttpClient();
+  const [showModal, setShowModal] = useState(false);
+  const [viewedBooking, setViewedBooking] = useState(null);
 
   useEffect(() => {
     const getBookings = async () => {
@@ -31,12 +34,30 @@ const UserProfilePage = () => {
     getBookings();
   }, [auth.userId, sendRequest]);
 
+  const handleShowModal = (booking) => {
+    setViewedBooking(booking);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setViewedBooking(null);
+    setShowModal(false);
+  };
+
   // Get the current date and time in ISO format
   const currentDateTime = new Date().toISOString();
 
   return (
     <React.Fragment>
       {isLoading && <LoadingOverlay asOverlay />}
+      {viewedBooking && (
+        <BookingDetailsModal
+          show={showModal}
+          onHide={handleCloseModal}
+          booking={viewedBooking}
+        />
+      )}
+
       <Container className="mt-5">
         <Row>
           <Col md={4}>
@@ -74,7 +95,14 @@ const UserProfilePage = () => {
                               )}
                             </>
                           )}
-                          <Button variant="info">View Details</Button>
+                          <Button
+                            variant="info"
+                            onClick={() => {
+                              handleShowModal(booking);
+                            }}
+                          >
+                            View Details
+                          </Button>
                         </Stack>
                       </Col>
                     </Row>

@@ -89,7 +89,10 @@ export const getBookingsByUser = async (req, res, next) => {
   try {
     bookings = await Booking.find({ user: userId }).populate({
       path: "show",
-      populate: { path: "movie", model: "Movie" },
+      populate: [
+        { path: "movie", model: "Movie" },
+        { path: "theatre", model: "Theatre", select: "theatreName" },
+      ],
     });
 
     // Manually sort by showtime in descending order (ISO string format)
@@ -104,6 +107,8 @@ export const getBookingsByUser = async (req, res, next) => {
       status: booking.status,
       date: booking.show.showtime,
       movie: booking.show.movie.title,
+      seats: booking.seats,
+      theatre: booking.show.theatre.theatreName,
     }));
 
     res.json({ bookings: formattedBookings });
