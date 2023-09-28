@@ -31,15 +31,22 @@ const data = {
   ],
 };
 
-function App() {
+const options = {
+  responsive: true,
+  maintainAspectRatio: false, // Set this to false to adjust the size freely
+  width: 400, // Set the width of the chart
+  height: 400, // Set the height of the chart
+};
+
+function PieChart() {
   return (
     <Card>
       <Card.Body>
         <Card.Title>Pie Chart</Card.Title>
-        <Pie data={data} />
+        <Pie data={data} options={options} />
       </Card.Body>
     </Card>
   );
 }
 
-export default App;
+export default PieChart;
