@@ -21,8 +21,11 @@ const bookingSchema = new Schema({
     default: "Pending",
     required: true,
   },
+  bookingTime: {
+    type: Date, // Date and time of booking
+    default: Date.now, // Default to the current date and time when the booking is created
+  },
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 export default Booking;
-

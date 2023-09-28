@@ -12,22 +12,36 @@ function TheatreManagePage() {
   const [updateShowTheatres, setUpdateShowTheatres] = useState(false);
   const [theatreList, setTheatreList] = useState();
 
-  const { isLoading: isAddTheatreLoading, sendRequest: sendAddTheatreRequest, error:addError, clearError:clearAddError } =useHttpClient();
-  const {isLoading: isShowTheatreLoading,sendRequest: sendShowTheatreRequest, error:showError, clearError:clearShowError} = useHttpClient();
-  const {isLoading: isDeleteTheatreLoading, sendRequest: sendDeleteTheatreRequest, error:deleteError, clearError:clearDeleteError} = useHttpClient();
+  const {
+    isLoading: isAddTheatreLoading,
+    sendRequest: sendAddTheatreRequest,
+    error: addError,
+    clearError: clearAddError,
+  } = useHttpClient();
+  const {
+    isLoading: isShowTheatreLoading,
+    sendRequest: sendShowTheatreRequest,
+  } = useHttpClient();
+  const {
+    isLoading: isDeleteTheatreLoading,
+    sendRequest: sendDeleteTheatreRequest,
+    error: deleteError,
+    clearError: clearDeleteError,
+  } = useHttpClient();
 
   useEffect(() => {
+    const getTheatres = async () => {
+      try {
+        const responseData = await sendShowTheatreRequest(
+          "http://localhost:3000/api/theatres"
+        );
+        setTheatreList(responseData.theatres);
+      } catch (err) {
+        /* */
+      }
+    };
     getTheatres();
   }, [updateShowTheatres, sendShowTheatreRequest]);
-
-  const getTheatres = async () => {
-    try {
-      const responseData = await sendShowTheatreRequest(
-        "http://localhost:3000/api/theatres"
-      );
-      setTheatreList(responseData.theatres);
-    } catch (err) { }
-  };
 
   const addTheatre = async (formData) => {
     try {
@@ -38,6 +52,7 @@ function TheatreManagePage() {
           theatreName: formData.theatreName,
           rows: parseInt(formData.rows),
           cols: parseInt(formData.cols),
+          ticketPrice: parseFloat(formData.ticketPrice),
         }),
         {
           "Content-Type": "application/json",
@@ -64,7 +79,9 @@ function TheatreManagePage() {
         null,
         { Authorization: "Bearer " + auth.token }
       );
-    } catch (err) { }
+    } catch (err) {
+      /* */
+    }
   };
 
   return (

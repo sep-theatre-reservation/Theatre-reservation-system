@@ -32,7 +32,7 @@ function NavbarComponent() {
         show={showAdminDrawerMenu}
         handleClose={handleAdminDrawerMenuClose}
       />
-      <Navbar expand="lg" data-bs-theme="dark" style={{ backgroundColor: '#0c0342' }}>
+      <Navbar expand="lg" data-bs-theme="dark" sticky="top" style={{ backgroundColor: '#0c0342' }}>
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
             <Button
