@@ -81,46 +81,49 @@ const BookingPage = () => {
   };
 
   return (
-    <Container>
-      {selectedShowtime && (
-        <SeatCountModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          showId={selectedShowtime.id}
-        />
-      )}
-      <Stack gap={4} direction="horizontal" className="mt-5">
-        <h2>Buy Tickets</h2>
-        <UpcomingWeekSelect onDateSelect={handleDateSelect} />
-      </Stack>
-      <Row className="pt-5">
-        <Col>
-          <Stack gap={3}>
-            <h3>{!isLoading && loadedMovie && loadedMovie.title}</h3>
-            {/* <Col className="d-md-none">
-              {!isLoading && loadedMovie && (
-                <MovieImageCard img={loadedMovie.poster_url} size={10} />
-              )}
-            </Col> */}
-            <h4 className="my-3">Show Times</h4>
-            <Stack gap={5}>
-              {!isLoading && loadedShowtimes && (
-                <ShowTimes
-                  setModalShow={setModalShow}
-                  showTimes={filteredShowtimes}
-                  onSelect={handleShowtimeSelect}
-                />
-              )}
+    <div className=" custom-background2">
+
+      <Container className="py-5">
+        {selectedShowtime && (
+          <SeatCountModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            showId={selectedShowtime.id}
+          />
+        )}
+        <Stack gap={4} direction="horizontal">
+          <h2 style={{ fontWeight: "bold" }}>Buy Tickets</h2>
+          <UpcomingWeekSelect onDateSelect={handleDateSelect} />
+        </Stack>
+        <Row className="py-5">
+          <Col>
+            <Stack gap={3}>
+              <h2 style={{ fontWeight: 'bolder', textTransform: 'uppercase' }}>{!isLoading && loadedMovie && loadedMovie.title}</h2>
+              <Col className="d-md-none">
+                {!isLoading && loadedMovie && (
+                  <MovieImageCard img={loadedMovie.poster_url} size={10} />
+                )}
+              </Col>
+              <h4 className="my-3" style={{ fontWeight: 'bold' }}>Show Times</h4>
+              <Stack gap={5}>
+                {!isLoading && loadedShowtimes && (
+                  <ShowTimes
+                    setModalShow={setModalShow}
+                    showTimes={filteredShowtimes}
+                    onSelect={handleShowtimeSelect}
+                  />
+                )}
+              </Stack>
             </Stack>
-          </Stack>
-        </Col>
-        <Col className="d-none d-md-block">
-          {!isLoading && loadedMovie && (
-            <MovieImageCard img={loadedMovie.poster_url} className="m-auto" />
-          )}
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+          <Col className="d-none d-md-block">
+            {!isLoading && loadedMovie && (
+              <MovieImageCard img={loadedMovie.poster_url} className="m-auto" />
+            )}
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

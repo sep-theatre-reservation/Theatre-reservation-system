@@ -27,6 +27,7 @@ import { useAuth } from "./features/shared/hooks/auth-hook";
 function App() {
   let { token, login, logout, user, isAdmin, userId } = useAuth();
   let routes;
+  
   if (isAdmin) {
     routes = (
       <Routes>
@@ -84,7 +85,7 @@ function App() {
     >
       <Router>
         <NavbarComponent />
-        <main style={{ minHeight: "80vh" }}>{routes}</main>
+        <main >{routes}</main>
         <Footer />
       </Router>
     </AuthContext.Provider>

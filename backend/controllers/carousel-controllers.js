@@ -19,9 +19,10 @@ export const getSlides = async (req, res, next) => {
 };
 
 export const createSlide = async (req, res, next) => {
-  const { imgUrl } = req.body;
+  const { title,imgUrl } = req.body;
 
   const createdSlide = new Carousel({
+    title,
     imgUrl,
   });
   try {

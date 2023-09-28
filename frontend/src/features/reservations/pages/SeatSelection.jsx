@@ -8,6 +8,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import useSeatRows from "../../shared/hooks/seat-layout-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
+import { FaRegClock, FaMapMarkerAlt } from 'react-icons/fa'
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
@@ -118,11 +119,17 @@ const SeatSelection = () => {
           window.location.reload();
         }}
       />
-
-      <Container className="pt-4">
+      <div className="custom-background4">
+      </div>
+      <Container  style={{paddingBottom:'150px', paddingTop:'50px'}}>
         <Stack>
-          <h1>{selectedShow && selectedShow.theatre.theatreName}</h1>
-          <div className="m-auto mt-3 py-5">
+          <Stack direction="horizontal">
+            <FaMapMarkerAlt size={30} className="me-2 mb-2" />
+            <h2 style={{ fontWeight: "bold", textTransform: "uppercase", marginRight: "50px" }}>{selectedShow && selectedShow.theatre.theatreName}</h2>
+            <FaRegClock size={30} className="me-2 mb-2" />
+            {selectedShow && <h2 style={{ fontWeight: "bold"}}>{new Date(selectedShow.showtime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true })}</h2>}
+          </Stack>
+          <div className="m-auto mt-5 py-5">
             <table>
               <tbody>{rowAr}</tbody>
             </table>
@@ -130,16 +137,15 @@ const SeatSelection = () => {
           <div className="screen mb-4">screen</div>
           <hr className="container" />
           <Stack direction="horizontal" gap={3} className="m-auto">
-            <Button onClick={() => navigate(-1)} variant="secondary">
+            <Button onClick={() => navigate(-1)} variant="dark">
               Back
             </Button>
-
             {isButtonEnabled ? (
-              <Button variant="primary" onClick={btnContinueHandler}>
+              <Button variant="success" onClick={btnContinueHandler}>
                 Continue
               </Button>
             ) : (
-              <Button disabled variant="primary">
+              <Button disabled variant="success">
                 Continue
               </Button>
             )}

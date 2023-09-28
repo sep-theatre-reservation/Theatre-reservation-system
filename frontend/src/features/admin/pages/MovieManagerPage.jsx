@@ -119,7 +119,7 @@ function MovieManagerPage() {
           theatres={theatreList}
         />
       )}
-      <Container className="pt-5  ">
+      <Container className="py-5">
         <Row>
           <Col lg={6}>
             <AddMovieComponent
