@@ -44,7 +44,7 @@ function NavbarComponent() {
   const fetchSearchResults = async (searchQuery) => {
     try {
       const responseData = await sendShowMoviesRequest(
-        `http://localhost:3000/api/movies/search?query=${searchQuery}`
+        `/movies/search?query=${searchQuery}`
       );
       setResults(responseData.movies.slice(0, 5));
       setShowSearchResults(true);
