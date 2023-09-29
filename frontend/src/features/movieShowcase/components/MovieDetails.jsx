@@ -14,7 +14,7 @@ function MovieDetails({ movie }) {
     const fetchShows = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/shows/movie/${movie.id}`
+          `/shows/movie/${movie.id}`
         );
 
         setLoadedTheatres([

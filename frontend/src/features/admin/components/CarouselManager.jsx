@@ -40,7 +40,7 @@ function CarouselManager() {
     const fetchSlides = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/carousel"
+          "/carousel"
         );
         setAvatars(responseData.slides);
       } catch (err) {
@@ -55,7 +55,7 @@ function CarouselManager() {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        "http://localhost:3000/api/carousel",
+        "/carousel",
         "POST",
         JSON.stringify({
           title:title,
@@ -77,7 +77,7 @@ function CarouselManager() {
   const removeAvatar = async (avatarId) => {
     try {
       await sendRequest(
-        `http://localhost:3000/api/carousel/${avatarId}`,
+        `/carousel/${avatarId}`,
         "DELETE",
         null,
         {

@@ -4,13 +4,14 @@ export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const activeHttpRequests = useRef([]);
+
   const sendRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
       try {
-        const response = await fetch(url, {
+        const response = await fetch("http://localhost:3000/api"+url, {
           method,
           body,
           headers,

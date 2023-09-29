@@ -18,7 +18,7 @@ const MovieItem = ({ movie, showSchedule }) => {
     const updateMovieStatus = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/movies/${movie.id}`,
+          `/movies/${movie.id}`,
           "PATCH",
           JSON.stringify({
             status: selectedStatus,

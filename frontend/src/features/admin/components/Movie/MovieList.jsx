@@ -22,7 +22,7 @@ const MovieList = ({ showSchedule }) => {
     const getMovies = async () => {
       try {
         const responseData = await sendShowMoviesRequest(
-          "http://localhost:3000/api/movies"
+          "/movies"
         );
         setMovies(responseData.movies);
       } catch (err) {

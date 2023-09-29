@@ -11,7 +11,7 @@ function CommingSoon() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/movies/comingSoon"
+          "/movies/comingSoon"
         );
         setMovieList(responseData.movies);
       } catch (err) {

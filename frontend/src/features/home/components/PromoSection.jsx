@@ -14,7 +14,7 @@ function PromoSection() {
     const fetchPromotions = async () => {
         try {
             const responseData = await sendRequest(
-                "http://localhost:3000/api/promotions"
+                "/promotions"
             )
             setPromotionList(responseData.promotions)
         } catch (error) {
@@ -24,8 +24,8 @@ function PromoSection() {
 
     return (
         <div>
-            <Container fluid className="bg-light pb-5" style={{ paddingLeft: "100px", paddingRight: "100px" }}>
-                <h2 className="py-5">Deals and Exclusive</h2>
+            <Container fluid className="bg-light pb-5 mb-5" style={{ paddingLeft: "100px", paddingRight: "100px" }}>
+                <h2 className="py-5" style={{fontWeight:'bold', fontSize:'2.5rem'}}>Deals and Exclusive</h2>
                 <Row md={1} lg={3} className="g-4">
                     {pormotionList.map((promotion, idx) => (
                         <Col key={idx} style={{height:'250px'}}>
