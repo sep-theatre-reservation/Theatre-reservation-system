@@ -19,9 +19,9 @@ export const addTheatre = async (req, res, next) => {
     return next(error);
   }
 
-  const { theatreName, rows, cols } = req.body;
+  const { theatreName, rows, cols, ticketPrice } = req.body;
 
-  const addedTheatre = new Theatre({ theatreName, rows, cols });
+  const addedTheatre = new Theatre({ theatreName, rows, cols, ticketPrice });
   try {
     await addedTheatre.save();
   } catch (err) {

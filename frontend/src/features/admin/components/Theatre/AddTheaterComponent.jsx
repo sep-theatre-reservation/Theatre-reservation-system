@@ -11,6 +11,7 @@ function AddTheaterComponent({ onAddTheatre, isLoading }) {
     theatreName: "",
     rows: "",
     cols: "",
+    ticketPrice: "",
   });
 
   const handleChange = (event) => {
@@ -26,6 +27,7 @@ function AddTheaterComponent({ onAddTheatre, isLoading }) {
       theatreName: "",
       rows: "",
       cols: "",
+      ticketPrice: "",
     });
   };
 
@@ -84,6 +86,16 @@ function AddTheaterComponent({ onAddTheatre, isLoading }) {
                   {generateIntegerOptions()}
                 </Form.Select>
               </Form.Group>
+              <Form.Group controlId="ticketPrice" className="mb-2">
+                <Form.Label>Ticket Price(Rs.)</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="ticketPrice"
+                  value={formData.ticketPrice}
+                  placeholder="Enter Ticket Price"
+                  onChange={handleChange}
+                />
+              </Form.Group>
             </Stack>
             <Button
               variant="primary"
@@ -101,6 +113,7 @@ function AddTheaterComponent({ onAddTheatre, isLoading }) {
 
 AddTheaterComponent.propTypes = {
   onAddTheatre: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default AddTheaterComponent;
