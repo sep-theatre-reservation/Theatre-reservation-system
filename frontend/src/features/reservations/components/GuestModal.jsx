@@ -16,7 +16,7 @@ const GuestModal = ({ show, onHide, bookingId }) => {
   const addGuest = async () => {
     try {
       const responseData = await sendAddGuestReqest(
-        "http://localhost:3000/api/guests",
+        "/guests",
         "POST",
         JSON.stringify({ email, bookingId }),
         { "Content-Type": "application/json" }

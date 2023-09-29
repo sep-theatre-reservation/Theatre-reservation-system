@@ -9,7 +9,7 @@ const rowStyle = {
 
 function DashboardPage() {
   return (
-    <Container>
+    <Container className="pb-5">
       <Row style={rowStyle}>
         <Col>
           <CarouselManager />

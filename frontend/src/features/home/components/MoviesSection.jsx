@@ -13,7 +13,7 @@ function MoviesSection() {
   const fetchMovies = async () => {
     try {
       const responseData = await sendRequest(
-        "http://localhost:3000/api/movies"
+        "/movies"
       );
       setMovieList(responseData.movies);
     } catch (err) {

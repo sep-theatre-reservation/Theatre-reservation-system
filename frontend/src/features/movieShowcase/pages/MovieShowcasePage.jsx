@@ -14,7 +14,7 @@ function MovieShowcasePage() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/movies/${movieId}`
+          `/movies/${movieId}`
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {

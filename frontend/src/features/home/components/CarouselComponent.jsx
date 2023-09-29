@@ -11,7 +11,7 @@ const CarouselComponent = () => {
     const fetchSlides = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/carousel"
+          "/carousel"
         );
         setLoadedSlides(responseData.slides);
       } catch (err) {

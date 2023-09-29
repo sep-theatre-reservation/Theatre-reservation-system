@@ -22,7 +22,7 @@ const BookingPage = () => {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/movies/${movieId}`
+          `/movies/${movieId}`
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {
@@ -37,7 +37,7 @@ const BookingPage = () => {
     const fetchShows = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/shows/movie/${movieId}`
+          `/shows/movie/${movieId}`
         );
         setLoadedShowtimes(responseData.shows);
       } catch (err) {

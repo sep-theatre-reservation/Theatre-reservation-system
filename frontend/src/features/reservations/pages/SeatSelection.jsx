@@ -35,9 +35,9 @@ const SeatSelection = () => {
   useEffect(() => {
     const fetchShow = async () => {
       try {
-        console.log(`http://localhost:3000/api/shows/${showId}`);
+        console.log(`/shows/${showId}`);
         const responseData = await sendShowRequest(
-          `http://localhost:3000/api/shows/${showId}`
+          `/shows/${showId}`
         );
         setSelectedShow(responseData.show);
         setRows(responseData.show.theatre.rows);
@@ -71,7 +71,7 @@ const SeatSelection = () => {
   const reserveSeats = async () => {
     try {
       const responseData = await sendReserveRequest(
-        `http://localhost:3000/api/shows/${showId}`,
+        `/shows/${showId}`,
         "PATCH",
         JSON.stringify({
           selectedSeats: selected,

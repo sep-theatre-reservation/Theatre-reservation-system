@@ -36,7 +36,7 @@ function MovieManagerPage() {
     const getMovies = async () => {
       try {
         const responseData = await sendShowMoviesRequest(
-          "http://localhost:3000/api/movies"
+          "/movies"
         );
         setMoviesList(responseData.movies);
       } catch (err) {
@@ -50,7 +50,7 @@ function MovieManagerPage() {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
-          "http://localhost:3000/api/theatres"
+          "/theatres"
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -63,7 +63,7 @@ function MovieManagerPage() {
   const addMovie = async (formData) => {
     try {
       const responseData = await sendAddMovieRequest(
-        "http://localhost:3000/api/movies",
+        "/movies",
         "POST",
         JSON.stringify({
           title: formData.title,
@@ -93,7 +93,7 @@ function MovieManagerPage() {
     try {
       console.log(date);
       const responseData = await sendAddShowRequest(
-        "http://localhost:3000/api/shows",
+        "/shows",
         "POST",
         JSON.stringify({
           movie: scheduleMovieId,
