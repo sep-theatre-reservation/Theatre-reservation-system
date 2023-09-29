@@ -1,4 +1,5 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import config from "../../../config";
 
 export default function Paypal({ orderDetails, onPaymentConfirm }) {
 
@@ -14,7 +15,7 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
             return
         }
         try {
-            const response = await fetch("http://localhost:3000/api/orders", {
+            const response = await fetch(`${config.apiUrl}/orders`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
 
     const onApprove = async (data, actions) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/orders/${data.orderID}/capture`, {
+            const response = await fetch(`${config.apiUrl}/orders/${data.orderID}/capture`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

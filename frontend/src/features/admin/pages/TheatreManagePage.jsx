@@ -33,7 +33,7 @@ function TheatreManagePage() {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
-          "http://localhost:3000/api/theatres"
+          "/theatres"
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -46,7 +46,7 @@ function TheatreManagePage() {
   const addTheatre = async (formData) => {
     try {
       const responseData = await sendAddTheatreRequest(
-        "http://localhost:3000/api/theatres",
+        "/theatres",
         "POST",
         JSON.stringify({
           theatreName: formData.theatreName,
@@ -74,7 +74,7 @@ function TheatreManagePage() {
 
     try {
       await sendDeleteTheatreRequest(
-        `http://localhost:3000/api/theatres/${deletedTheatreId}`,
+        `/theatres/${deletedTheatreId}`,
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }

@@ -35,7 +35,7 @@ function PaymentPage() {
     const fetchBooking = async () => {
       try {
         const responseData = await sendBookingFetchRequest(
-          `http://localhost:3000/api/bookings/${bookingId}`
+          `/bookings/${bookingId}`
         );
         setBooking(responseData.booking);
       } catch (err) {
@@ -53,7 +53,7 @@ function PaymentPage() {
     console.log(auth.guestEmail)
     try {
       const responseData = await sendEmailRequest(
-        `http://localhost:3000/api/email`,
+        `/email`,
         "POST",
         JSON.stringify({
           to: email,
@@ -73,7 +73,7 @@ function PaymentPage() {
     try {
       // console.log(paymentData)
       const responseData = await sendCreatePaymentDataRequest(
-        `http://localhost:3000/api/payment`,
+        `/payment`,
         "POST",
         JSON.stringify({
           booking: bookingId,
@@ -92,7 +92,7 @@ function PaymentPage() {
   const confirmBooking = async (paymentData) => {
     try {
       const responseData = await sendBookingConfirmRequest(
-        `http://localhost:3000/api/bookings/${bookingId}`,
+        `/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
           status: "Confirmed",
@@ -112,7 +112,7 @@ function PaymentPage() {
   const cancelBooking = async () => {
     try {
       const responseData = await sendBookingCancelRequest(
-        `http://localhost:3000/api/bookings/${bookingId}`,
+        `/bookings/${bookingId}`,
         "PATCH",
         JSON.stringify({
           status: "Cancelled",

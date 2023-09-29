@@ -19,7 +19,7 @@ function PromoManagerPage() {
   const getPromotions = useCallback( async () => {
     try {
       const responseData = await sendShowPromoRequest(
-        "http://localhost:3000/api/promotions"
+        "/promotions"
         );
         setPromotionList(responseData.promotions);
       } catch (err) {
@@ -31,7 +31,7 @@ function PromoManagerPage() {
   const addPromotion = async (formData) => {
     try {
       const responseData = await sendAddPromoRequest(
-        "http://localhost:3000/api/promotions",
+        "/promotions",
         "POST",
         JSON.stringify({
           promotionTitle: formData.title,
@@ -57,7 +57,7 @@ function PromoManagerPage() {
 
     try {
       await sendDeletePromoRequest(
-        `http://localhost:3000/api/promotions/${deletedPromotionId}`,
+        `/promotions/${deletedPromotionId}`,
         "DELETE",
         null,
         {Authorization: "Bearer " + auth.token}
