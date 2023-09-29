@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Stack } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { FaFilm } from "react-icons/fa";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
+import { AuthContext } from "../../../shared/context/auth-context";
 
 const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
+  const auth = useContext(AuthContext);
+
   // State to manage the selected status
   const [selectedStatus, setSelectedStatus] = useState(movie.status);
   const { sendRequest } = useHttpClient();
@@ -25,6 +28,7 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
           }),
           {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
           }
         );
         console.log(responseData);
@@ -38,7 +42,14 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
     if (selectedStatus !== movie.status) {
       updateMovieStatus();
     }
-  }, [selectedStatus, movie.status, movie.id, sendRequest, onStatusChange]);
+  }, [
+    selectedStatus,
+    movie.status,
+    movie.id,
+    sendRequest,
+    onStatusChange,
+    auth.token,
+  ]);
 
   // Function to handle status change
   const handleStatusChange = (newStatus) => {
