@@ -19,6 +19,25 @@ export const getMovies = async (req, res, next) => {
   });
 };
 
+export const searchMovies = async (req, res, next) => {
+  const query = req.query.query;
+
+  let movies;
+  try {
+    movies = await Movie.find({ title: { $regex: query, $options: "i" } });
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching movies failed, please try again later",
+      500
+    );
+    return next(error);
+  }
+  //console.log(movies.length);
+  res.json({
+    movies: movies.map((movie) => movie.toObject({ getters: true })),
+  });
+};
+
 export const getShowingMovies = async (req, res, next) => {
   let movies;
   try {

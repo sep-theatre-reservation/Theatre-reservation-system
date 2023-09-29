@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get("/movie/:mid", getShowsByMovieId);
 router.get("/:sid", getShowById);
+router.patch("/:sid", reserveSelectedseats);
 
 router.post("/", createShow);
-router.patch("/:sid", reserveSelectedseats);
 
 export default router;
