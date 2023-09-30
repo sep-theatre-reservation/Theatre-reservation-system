@@ -157,7 +157,7 @@ function NavbarComponent() {
                   aria-label="Search"
                   value={query}
                   onChange={handleInputChange}
-                  style={{ width: "400px" }}
+                  style={{ width: "300px" }}
                 />
                 {showSearchResults && (
                   <div
