@@ -34,12 +34,11 @@ function useGoogleAuth(handleLoginClose) {
     //auth.login(userObject, response.credential);
     handleLoginClose();
   }
-  
+
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id:
-        "617303979694-o7829b777qio68qnn79ehd44hcnpfhgt.apps.googleusercontent.com",
+      client_id: import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY,
       callback: handleCallbackResponse,
     });
 
