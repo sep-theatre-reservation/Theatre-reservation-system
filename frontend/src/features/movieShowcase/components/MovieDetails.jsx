@@ -14,7 +14,7 @@ function MovieDetails({ movie }) {
     const fetchShows = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/shows/movie/${movie.id}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/movie/${movie.id}`
         );
 
         setLoadedTheatres([
@@ -45,7 +45,9 @@ function MovieDetails({ movie }) {
         </Col>
         <Col lg={9}>
           <Stack gap={5}>
-            <h1 style={{fontSize:"3.5rem", fontWeight:'bold'}}>{movie.title}</h1>
+            <h1 style={{ fontSize: "3.5rem", fontWeight: "bold" }}>
+              {movie.title}
+            </h1>
             <Stack direction="horizontal" gap={3}>
               <div>
                 <Stack gap={2}>

@@ -12,7 +12,7 @@ function NowShowing() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/movies/nowShowing"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/movies/nowShowing"
         );
         setMovieList(responseData.movies);
       } catch (err) {

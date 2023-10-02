@@ -24,7 +24,8 @@ const UserProfilePage = () => {
     const getBookings = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/bookings/user/${auth.userId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL +
+            `/bookings/user/${auth.userId}`
         );
         setBookings(responseData.bookings);
       } catch (err) {

@@ -40,7 +40,7 @@ function CarouselManager() {
     const fetchSlides = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/carousel"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel"
         );
         setAvatars(responseData.slides);
       } catch (err) {
@@ -55,10 +55,10 @@ function CarouselManager() {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        "http://localhost:3000/api/carousel",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel",
         "POST",
         JSON.stringify({
-          title:title,
+          title: title,
           imgUrl: imgUrl,
         }),
         {
@@ -77,7 +77,7 @@ function CarouselManager() {
   const removeAvatar = async (avatarId) => {
     try {
       await sendRequest(
-        `http://localhost:3000/api/carousel/${avatarId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/carousel/${avatarId}`,
         "DELETE",
         null,
         {

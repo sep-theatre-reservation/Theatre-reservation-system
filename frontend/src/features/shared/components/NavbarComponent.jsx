@@ -44,7 +44,8 @@ function NavbarComponent() {
   const fetchSearchResults = async (searchQuery) => {
     try {
       const responseData = await sendShowMoviesRequest(
-        `http://localhost:3000/api/movies/search?query=${searchQuery}`
+        import.meta.env.VITE_REACT_APP_BASE_URL +
+          `/movies/search?query=${searchQuery}`
       );
       setResults(responseData.movies.slice(0, 5));
       setShowSearchResults(true);
