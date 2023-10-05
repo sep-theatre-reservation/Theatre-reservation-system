@@ -71,7 +71,7 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
       <Card style={{ width: "30rem" }}>
         {isLoading && <LoadingOverlay asOverlay />}
         <Card.Body>
-          <Card.Title>Add Movie</Card.Title>
+          <Card.Title style={{fontWeight:"bold"}}>Add Movie</Card.Title>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="title" className="mb-2">
               <Form.Label>Movie Title</Form.Label>

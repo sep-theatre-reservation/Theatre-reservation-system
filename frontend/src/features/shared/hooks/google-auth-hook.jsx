@@ -10,7 +10,7 @@ function useGoogleAuth(handleLoginClose) {
   const authenticationHandler = async (email, user) => {
     try {
       const responseData = await sendRequest(
-        "http://localhost:3000/api/users",
+        "/users",
         "POST",
         JSON.stringify({ email: email }),
         { "Content-Type": "application/json" }

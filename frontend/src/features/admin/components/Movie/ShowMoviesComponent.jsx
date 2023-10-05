@@ -10,11 +10,12 @@ function ShowMoviesComponent({ moviesList, isLoading, showSchedule }) {
       {isLoading && <LoadingOverlay asOverlay />}
       <Card style={{ width: "30rem" }}>
         <Card.Body>
-          <Card.Title>Movies List</Card.Title>
+          <Card.Title style={{fontWeight:"bold"}}>Movies List</Card.Title>
           <Card.Text>
             <Stack gap={2}>
               {!isLoading && moviesList && (
-                <MovieList movies={moviesList} showSchedule={showSchedule} />
+                <MovieList showSchedule={showSchedule} />
+                // movies={moviesList}
               )}
             </Stack>
           </Card.Text>

@@ -5,12 +5,14 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AuthContext } from "../context/auth-context";
-import { Dropdown, Modal } from "react-bootstrap";
+import { Dropdown, Image, ListGroup, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AdminDrawerMenu from "../../admin/components/AdminDrawerMenu";
 import { FaThList } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import useGoogleAuth from "../hooks/google-auth-hook";
+import logo from "../../../assets/logo.png";
+import { useHttpClient } from "../hooks/http-hook";
 
 function NavbarComponent() {
   const auth = useContext(AuthContext);
@@ -22,6 +24,37 @@ function NavbarComponent() {
 
   const [showLogin, setShowLogin] = useState(false);
 
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false); // Add a state for search loading
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const { isLoading: isShowMoviesLoading, sendRequest: sendShowMoviesRequest } =
+    useHttpClient();
+
+  const handleInputChange = (e) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+
+    setIsSearching(true);
+
+    // Call a function to fetch search results from the backend
+    fetchSearchResults(newQuery);
+  };
+
+  const fetchSearchResults = async (searchQuery) => {
+    try {
+      const responseData = await sendShowMoviesRequest(
+        `http://localhost:3000/api/movies/search?query=${searchQuery}`
+      );
+      setResults(responseData.movies.slice(0, 5));
+      setShowSearchResults(true);
+    } catch (err) {
+      /* */
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
   useGoogleAuth(handleLoginClose);
@@ -32,7 +65,12 @@ function NavbarComponent() {
         show={showAdminDrawerMenu}
         handleClose={handleAdminDrawerMenuClose}
       />
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark">
+      <Navbar
+        expand="lg"
+        data-bs-theme="dark"
+        sticky="top"
+        style={{ backgroundColor: "#0c0342" }}
+      >
         <Container fluid>
           {auth.isLoggedIn && auth.isAdmin && (
             <Button
@@ -46,6 +84,16 @@ function NavbarComponent() {
             </Button>
           )}
           <Navbar.Brand as={Link} to="/" id="navBarBrand">
+            <img
+              src={logo}
+              style={{
+                height: "60px",
+                color: "black",
+                paddingBottom: "5px",
+                marginRight: "3px",
+                filter: "grayscale(0%) invert(100%)",
+              }}
+            />
             Booking.Lk
           </Navbar.Brand>
 
@@ -101,13 +149,53 @@ function NavbarComponent() {
             </Nav>
 
             <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
+              <div style={{ position: "relative" }}>
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  value={query}
+                  onChange={handleInputChange}
+                  style={{ width: "400px" }}
+                />
+                {showSearchResults && (
+                  <div
+                    className="search-results"
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      left: "0",
+                      width: "100%", // Adjust this as needed
+                      backgroundColor: "#fff", // Background color for results
+                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      zIndex: 1000, // Adjust the z-index as needed
+                      borderRadius: "4px",
+                    }}
+                  >
+                    {!isShowMoviesLoading && query && !isSearching && (
+                      <ListGroup>
+                        {results.map((result) => (
+                          <ListGroup.Item
+                            key={result._id}
+                            as={Link}
+                            to={`/movies/${result.id}`}
+                            onClick={() => setQuery("")}
+                          >
+                            <Image
+                              src={result.poster_url}
+                              alt={result.title}
+                              thumbnail
+                              style={{ maxWidth: "100px", maxHeight: "50px" }}
+                            />
+                            {result.title}
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    )}
+                  </div>
+                )}
+              </div>
             </Form>
 
             <Modal show={showLogin} onHide={handleLoginClose}>
@@ -126,7 +214,11 @@ function NavbarComponent() {
 
             <div className="d-none d-lg-block">
               {!auth.isLoggedIn && (
-                <Button className={"mx-3"} onClick={handleLoginShow}>
+                <Button
+                  className="mx-3 text-light"
+                  onClick={handleLoginShow}
+                  variant="dark"
+                >
                   <FaUserCircle size={20} className="me-2 mb-1" />
                   Login
                 </Button>
@@ -143,7 +235,9 @@ function NavbarComponent() {
                     />
                   </Dropdown.Toggle>
                   <Dropdown.Menu align="end" className="dropdown-menu-right">
-                    <Dropdown.Item>{auth.user.name}</Dropdown.Item>
+                    <Dropdown.Item as={Link} to={`/profile/${auth.userId}`}>
+                      {auth.user.name}
+                    </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={auth.logout}>Logout</Dropdown.Item>
                   </Dropdown.Menu>

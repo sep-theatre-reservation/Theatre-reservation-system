@@ -27,19 +27,16 @@ export const createBooking = async (req, res, next) => {
   res.status(201).json({ booking: addedBooking });
 };
 
-
 export const getBookingById = async (req, res, next) => {
   const bookingId = req.params.bid;
-  console.log(bookingId)
   let booking;
   try {
     booking = await Booking.findById(bookingId).populate({
-      path: 'show',
+      path: "show",
       populate: {
-        path: 'theatre',
-      }
-    })
-
+        path: "theatre",
+      },
+    });
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a booking",
@@ -53,12 +50,11 @@ export const getBookingById = async (req, res, next) => {
     return next(error);
   }
   res.json({ booking: booking.toObject({ getters: true }) });
-}
+};
 
 export const updateBookingStatus = async (req, res, next) => {
-  const bookingId=req.params.bid
+  const bookingId = req.params.bid;
   const { status } = req.body;
-
 
   let booking;
 
@@ -72,7 +68,7 @@ export const updateBookingStatus = async (req, res, next) => {
     return next(error);
   }
 
-  booking.status=status
+  booking.status = status;
 
   try {
     await booking.save();
@@ -84,7 +80,43 @@ export const updateBookingStatus = async (req, res, next) => {
     return next(error);
   }
   res.status(200).json({ booking: booking.toObject({ getters: true }) });
+};
 
-}
+export const getBookingsByUser = async (req, res, next) => {
+  const userId = req.params.uid;
 
-export const getBookings = () => { }
+  let bookings;
+  try {
+    bookings = await Booking.find({ user: userId }).populate({
+      path: "show",
+      populate: [
+        { path: "movie", model: "Movie" },
+        { path: "theatre", model: "Theatre", select: "theatreName" },
+      ],
+    });
+
+    // Manually sort by showtime in descending order (ISO string format)
+    bookings.sort((a, b) => {
+      const dateA = Date.parse(a.show.showtime);
+      const dateB = Date.parse(b.show.showtime);
+      return dateB - dateA;
+    });
+
+    const formattedBookings = bookings.map((booking) => ({
+      id: booking._id,
+      status: booking.status,
+      date: booking.show.showtime,
+      movie: booking.show.movie.title,
+      seats: booking.seats,
+      theatre: booking.show.theatre.theatreName,
+    }));
+
+    res.json({ bookings: formattedBookings });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a bookings",
+      500
+    );
+    return next(error);
+  }
+};

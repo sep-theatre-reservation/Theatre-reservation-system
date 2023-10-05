@@ -6,6 +6,7 @@ function formatDateToTime(inputDateStr) {
   const inputDate = new Date(inputDateStr);
   const options = { hour: "2-digit", minute: "2-digit", hour12: true };
   return inputDate.toLocaleTimeString([], options);
+  
 }
 
 function ShowTimes({ setModalShow, showTimes, onSelect }) {

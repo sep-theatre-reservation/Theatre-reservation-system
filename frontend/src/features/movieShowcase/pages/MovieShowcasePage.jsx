@@ -14,7 +14,7 @@ function MovieShowcasePage() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/movies/${movieId}`
+          `/movies/${movieId}`
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {
@@ -25,11 +25,11 @@ function MovieShowcasePage() {
   }, [sendRequest, movieId]);
 
   return (
-    <React.Fragment>
+    <>
       {isLoading && <LoadingOverlay asOverlay />}
       {!isLoading && loadedMovie && <MovieTrailerSection movie={loadedMovie} />}
       {!isLoading && loadedMovie && <MovieDetails movie={loadedMovie} />}
-    </React.Fragment>
+    </>
   );
 }
 

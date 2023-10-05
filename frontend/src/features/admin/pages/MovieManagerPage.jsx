@@ -1,12 +1,15 @@
 import { Container, Col, Row } from "react-bootstrap";
 import AddMovieComponent from "../components/Movie/AddMovieComponent";
 import ShowMoviesComponent from "../components/Movie/ShowMoviesComponent";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
 import ScheduleMovieModal from "../components/Movie/ScheduleMovieModal";
+import { AuthContext } from "../../shared/context/auth-context";
 
 function MovieManagerPage() {
+  const auth = useContext(AuthContext);
+
   const [moviesList, setMoviesList] = useState();
 
   const [updateShowMovies, setUpdateShowMovies] = useState(false);
@@ -30,25 +33,24 @@ function MovieManagerPage() {
   const [theatreList, setTheatreList] = useState();
 
   useEffect(() => {
+    const getMovies = async () => {
+      try {
+        const responseData = await sendShowMoviesRequest(
+          "/movies"
+        );
+        setMoviesList(responseData.movies);
+      } catch (err) {
+        /* */
+      }
+    };
     getMovies();
   }, [updateShowMovies, sendShowMoviesRequest]);
-
-  const getMovies = async () => {
-    try {
-      const responseData = await sendShowMoviesRequest(
-        "http://localhost:3000/api/movies"
-      );
-      setMoviesList(responseData.movies);
-    } catch (err) {
-      /* */
-    }
-  };
 
   useEffect(() => {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
-          "http://localhost:3000/api/theatres"
+          "/theatres"
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -61,7 +63,7 @@ function MovieManagerPage() {
   const addMovie = async (formData) => {
     try {
       const responseData = await sendAddMovieRequest(
-        "http://localhost:3000/api/movies",
+        "/movies",
         "POST",
         JSON.stringify({
           title: formData.title,
@@ -75,7 +77,10 @@ function MovieManagerPage() {
           },
           cast: formData.cast,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
       setUpdateShowMovies((prevValue) => !prevValue);
@@ -88,14 +93,17 @@ function MovieManagerPage() {
     try {
       console.log(date);
       const responseData = await sendAddShowRequest(
-        "http://localhost:3000/api/shows",
+        "/shows",
         "POST",
         JSON.stringify({
           movie: scheduleMovieId,
           theatre: theatreId,
           showtime: date,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
     } catch (error) {
@@ -119,7 +127,7 @@ function MovieManagerPage() {
           theatres={theatreList}
         />
       )}
-      <Container className="pt-5  ">
+      <Container className="py-5">
         <Row>
           <Col lg={6}>
             <AddMovieComponent

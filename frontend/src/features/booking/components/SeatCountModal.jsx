@@ -9,13 +9,13 @@ const SeatCountModal = ({ show, onHide, showId }) => {
   const [seatCount, setSeatCount] = useState()
   return (
     <Modal
-    show={show}
-    onHide={onHide}
-    size="md"
-    aria-labelledby="contained-modal-title-vcenter"
-    centered
-    backdrop="static"
-    data-bs-theme="dark"
+      show={show}
+      onHide={onHide}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      data-bs-theme="dark"
     >
       <Modal.Header closeButton className="bg-dark ">
         <Modal.Title id="contained-modal-title-vcenter" className="text-white">
@@ -25,11 +25,18 @@ const SeatCountModal = ({ show, onHide, showId }) => {
 
       <Modal.Body>
         <Stack>
-          <SeatCountSelector setCount={(count)=>setSeatCount(count)}/>
+          <SeatCountSelector setCount={(count) => setSeatCount(count)} />
           <div className="ms-auto p-2">
-            <Button as={Link} to={`/seats/${showId}/${seatCount}`} onClick={onHide}>
-              Select Seats
-            </Button>
+            {seatCount == "0" ? (
+              (<Button disabled variant="outline-primary">
+                Select Seats
+              </Button>)
+            ) :
+              <Button as={Link} to={`/seats/${showId}/${seatCount}`} onClick={onHide} variant="outline-primary">
+                Select Seats
+              </Button>
+            }
+
           </div>
         </Stack>
       </Modal.Body>

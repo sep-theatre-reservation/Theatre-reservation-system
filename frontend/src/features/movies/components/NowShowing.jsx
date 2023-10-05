@@ -12,7 +12,7 @@ function NowShowing() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/movies"
+          "/movies/nowShowing"
         );
         setMovieList(responseData.movies);
       } catch (err) {
@@ -28,12 +28,12 @@ function NowShowing() {
       {isLoading && <LoadingOverlay asOverlay />}
       <Container
         fluid
-        className="bg-light"
-        style={{
-          paddingLeft: "100px",
-          paddingRight: "100px",
-          paddingTop: "50px",
-        }}
+        // className="bg-light"
+        // style={{
+        //   paddingLeft: "100px",
+        //   paddingRight: "100px",
+        //   paddingTop: "50px",
+        // }}
       >
         <MoviesGrid movieList={movieList} />
       </Container>
