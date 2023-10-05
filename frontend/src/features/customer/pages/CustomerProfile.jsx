@@ -1,17 +1,10 @@
-import {
-  Container,
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Button,
-  Stack,
-} from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import { AuthContext } from "../../shared/context/auth-context";
 import React, { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
 import BookingDetailsModal from "../components/BookingDetailsModal";
+import BookingHistory from "../components/BookingHistory";
 
 const UserProfilePage = () => {
   const auth = useContext(AuthContext);
@@ -24,7 +17,8 @@ const UserProfilePage = () => {
     const getBookings = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:3000/api/bookings/user/${auth.userId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL +
+            `/bookings/user/${auth.userId}`
         );
         setBookings(responseData.bookings);
       } catch (err) {
@@ -44,8 +38,14 @@ const UserProfilePage = () => {
     setShowModal(false);
   };
 
-  // Get the current date and time in ISO format
-  const currentDateTime = new Date().toISOString();
+  // Callback function to update status in the movies array
+  const handleCancellation = (bookingId) => {
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking.id === bookingId ? { ...booking, status: "Cancelled" } : booking
+      )
+    );
+  };
 
   return (
     <React.Fragment>
@@ -73,42 +73,11 @@ const UserProfilePage = () => {
           <Col>
             <h3>Booking History</h3>
             {!isLoading && bookings && (
-              <ListGroup>
-                {bookings.map((booking) => (
-                  <ListGroup.Item key={booking.id}>
-                    <Row>
-                      <Col md={6}>
-                        <p>Date: {new Date(booking.date).toLocaleString()}</p>
-                        <p>Movie: {booking.movie}</p>
-                      </Col>
-                      <Col md={6}>
-                        <p>Status: {booking.status}</p>
-                        <Stack direction="horizontal" gap={3}>
-                          {new Date(booking.date) >
-                            new Date(currentDateTime) && (
-                            <>
-                              {booking.status === "Pending" && (
-                                <Button variant="success">Confirm</Button>
-                              )}
-                              {booking.status !== "Cancelled" && (
-                                <Button variant="danger">Cancel</Button>
-                              )}
-                            </>
-                          )}
-                          <Button
-                            variant="info"
-                            onClick={() => {
-                              handleShowModal(booking);
-                            }}
-                          >
-                            View Details
-                          </Button>
-                        </Stack>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
+              <BookingHistory
+                userBookings={bookings}
+                handleShowModal={handleShowModal}
+                onCancellation={handleCancellation}
+              />
             )}
           </Col>
         </Row>
