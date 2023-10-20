@@ -22,7 +22,8 @@ const MovieList = ({ showSchedule }) => {
     const getMovies = async () => {
       try {
         const responseData = await sendShowMoviesRequest(
-          "/movies"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/movies"
+
         );
         setMovies(responseData.movies);
       } catch (err) {

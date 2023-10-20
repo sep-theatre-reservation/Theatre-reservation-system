@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import MovieDetails from "../components/MovieDetails";
 import MovieTrailerSection from "../components/MovieTrailerSection";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingOverlay from "../../shared/components/LoadingOverlay";
 
 function MovieShowcasePage() {
@@ -14,7 +14,8 @@ function MovieShowcasePage() {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          `/movies/${movieId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/movies/${movieId}`
+
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {

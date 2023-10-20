@@ -10,7 +10,7 @@ export default (req, res, next) => {
     if (!token) {
       throw new Error("You do not have permission to perform this action");
     }
-    const decodedToken = jwt.verify(token, "SEP_theatre_reservation");
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.userData = { isAdmin: decodedToken.role === "Admin" };
     next();
   } catch (err) {

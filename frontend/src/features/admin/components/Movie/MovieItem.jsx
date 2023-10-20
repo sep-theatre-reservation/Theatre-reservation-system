@@ -21,7 +21,8 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
     const updateMovieStatus = async () => {
       try {
         const responseData = await sendRequest(
-          `/movies/${movie.id}`,
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/movies/${movie.id}`,
+
           "PATCH",
           JSON.stringify({
             status: selectedStatus,
@@ -77,18 +78,22 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
             }}
             id="dropdown-basic"
           >
-            {selectedStatus}
+            {selectedStatus === "finished"
+              ? "Finished"
+              : selectedStatus === "nowShowing"
+              ? "Now Showing"
+              : "Coming Soon"}
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => handleStatusChange("nowShowing")}>
-              nowShowing
+              Now Showing
             </Dropdown.Item>
             <Dropdown.Item onClick={() => handleStatusChange("comingSoon")}>
-              comingSoon
+              Coming Soon
             </Dropdown.Item>
             <Dropdown.Item onClick={() => handleStatusChange("finished")}>
-              finished
+              Finished
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

@@ -7,8 +7,7 @@ import React, { useState } from "react";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import PropTypes from "prop-types";
 
-function AddMovieComponent({ onAddMovie,isLoading }) {
-  
+function AddMovieComponent({ onAddMovie, isLoading }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -42,10 +41,10 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
   };
 
   const handleSubmit = async (event) => {
-    console.log(formData)
+    console.log(formData);
     event.preventDefault();
     try {
-      onAddMovie(formData)
+      onAddMovie(formData);
       setFormData({
         title: "",
         description: "",
@@ -71,7 +70,7 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
       <Card style={{ width: "30rem" }}>
         {isLoading && <LoadingOverlay asOverlay />}
         <Card.Body>
-          <Card.Title style={{fontWeight:"bold"}}>Add Movie</Card.Title>
+          <Card.Title style={{ fontWeight: "bold" }}>Add Movie</Card.Title>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="title" className="mb-2">
               <Form.Label>Movie Title</Form.Label>
@@ -175,8 +174,9 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
               variant="primary"
               type="submit"
               className="mt-2 float-end me-3"
+              disabled={isLoading}
             >
-              Add
+              {isLoading ? "Adding..." : "Add"}
             </Button>
           </Form>
         </Card.Body>
@@ -187,6 +187,7 @@ function AddMovieComponent({ onAddMovie,isLoading }) {
 
 AddMovieComponent.propTypes = {
   onAddMovie: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default AddMovieComponent;

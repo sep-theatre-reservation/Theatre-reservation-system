@@ -1,13 +1,21 @@
 import { useContext, useState } from "react";
-import { Button, Col, Container, Form, Modal, Row, Stack } from "react-bootstrap";
-import { useHttpClient } from '../../shared/hooks/http-hook'
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Row,
+  Stack,
+} from "react-bootstrap";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const GuestModal = ({ show, onHide, bookingId }) => {
-  const auth=useContext(AuthContext);
+  const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [guest, setGuest] = useState(null);
-  const { sendRequest: sendAddGuestReqest } = useHttpClient()
+  const { sendRequest: sendAddGuestReqest } = useHttpClient();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,7 +24,8 @@ const GuestModal = ({ show, onHide, bookingId }) => {
   const addGuest = async () => {
     try {
       const responseData = await sendAddGuestReqest(
-        "/guests",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/guests",
+
         "POST",
         JSON.stringify({ email, bookingId }),
         { "Content-Type": "application/json" }
@@ -24,17 +33,16 @@ const GuestModal = ({ show, onHide, bookingId }) => {
       console.log(responseData);
       setGuest(responseData.guest._id);
     } catch (error) {
-      console.log(error)   
+      console.log(error);
     }
   };
 
   const handleGuestLogin = async (e) => {
     e.preventDefault();
-    auth.guestEmail=email;
+    auth.guestEmail = email;
     addGuest();
-    onHide()
+    onHide();
   };
-
 
   return (
     <Modal show={show} onHide={onHide} backdrop="static" keyboard={false}>
@@ -72,7 +80,12 @@ const GuestModal = ({ show, onHide, bookingId }) => {
               </Col>
             </Row>
             <Container>
-              {<div id="signUpDiv2" className="d-flex justify-content-around" ></div>}
+              {
+                <div
+                  id="signUpDiv2"
+                  className="d-flex justify-content-around"
+                ></div>
+              }
             </Container>
           </Container>
         </Stack>

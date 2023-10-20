@@ -36,7 +36,8 @@ function MovieManagerPage() {
     const getMovies = async () => {
       try {
         const responseData = await sendShowMoviesRequest(
-          "/movies"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/movies"
+
         );
         setMoviesList(responseData.movies);
       } catch (err) {
@@ -50,7 +51,8 @@ function MovieManagerPage() {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
-          "/theatres"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
+
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -63,7 +65,8 @@ function MovieManagerPage() {
   const addMovie = async (formData) => {
     try {
       const responseData = await sendAddMovieRequest(
-        "/movies",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/movies",
+
         "POST",
         JSON.stringify({
           title: formData.title,
@@ -93,7 +96,8 @@ function MovieManagerPage() {
     try {
       console.log(date);
       const responseData = await sendAddShowRequest(
-        "/shows",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/shows",
+
         "POST",
         JSON.stringify({
           movie: scheduleMovieId,
