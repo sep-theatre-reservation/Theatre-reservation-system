@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import config from "../../../config";
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +11,7 @@ export const useHttpClient = () => {
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
       try {
-        const response = await fetch(config.apiUrl+url, {
+        const response = await fetch(url, {
           method,
           body,
           headers,

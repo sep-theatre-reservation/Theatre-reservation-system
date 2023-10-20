@@ -1,5 +1,4 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import config from "../../../config";
 
 export default function Paypal({ orderDetails, onPaymentConfirm }) {
   const initialOptions = {
