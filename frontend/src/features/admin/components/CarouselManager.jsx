@@ -41,6 +41,7 @@ function CarouselManager() {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel"
+
         );
         setAvatars(responseData.slides);
       } catch (err) {
@@ -56,6 +57,7 @@ function CarouselManager() {
     try {
       const responseData = await sendRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel",
+
         "POST",
         JSON.stringify({
           title: title,
@@ -78,6 +80,7 @@ function CarouselManager() {
     try {
       await sendRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/carousel/${avatarId}`,
+
         "DELETE",
         null,
         {
@@ -130,8 +133,8 @@ function CarouselManager() {
       </Modal>
       {isLoading && <LoadingOverlay asOverlay />}
 
-      <Container>
-        <h4>Home Page Slides</h4>
+      <Container className="py-4">
+        <h4 className="lead fw-bold">Edit Carousel Movies</h4>
         <Row className="align-items-center">
           {!isLoading &&
             avatars &&

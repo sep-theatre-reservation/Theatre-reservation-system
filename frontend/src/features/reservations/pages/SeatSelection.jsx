@@ -38,6 +38,7 @@ const SeatSelection = () => {
         //console.log(import.meta.env.VITE_REACT_APP_BASE_URL +`/shows/${showId}`);
         const responseData = await sendShowRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/${showId}`
+
         );
         setSelectedShow(responseData.show);
         setRows(responseData.show.theatre.rows);
@@ -72,6 +73,7 @@ const SeatSelection = () => {
     try {
       const responseData = await sendReserveRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/${showId}`,
+
         "PATCH",
         JSON.stringify({
           selectedSeats: selected,

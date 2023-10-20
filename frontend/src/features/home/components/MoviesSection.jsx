@@ -22,6 +22,7 @@ function MoviesSection() {
     fetchMovies();
   }, [sendRequest]);
 
+
   return (
     <>
       {isLoading && <LoadingOverlay asOverlay />}

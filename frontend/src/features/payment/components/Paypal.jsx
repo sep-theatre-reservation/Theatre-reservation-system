@@ -31,6 +31,7 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
         }
       );
 
+
       const orderData = await response.json();
       if (orderData.id) {
         return orderData.id;
@@ -60,6 +61,7 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
           },
         }
       );
+
 
       const orderData = await response.json();
 

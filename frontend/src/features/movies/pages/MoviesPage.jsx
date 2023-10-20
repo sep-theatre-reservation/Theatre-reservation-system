@@ -33,7 +33,7 @@ function MoviesPage() {
                 color: isActive ? "#fff" : "#545e6f",
                 background: isActive ? "#0e08a6" : "#f0f0f0",
               })}
-              to="/movies/commingsoon"
+              to="/movies/comingsoon"
             >
               Coming Soon
             </NavLink>

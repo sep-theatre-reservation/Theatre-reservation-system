@@ -38,11 +38,10 @@ function App() {
         <Route path="admin/movies" element={<MovieManagerPage />}></Route>
         <Route path="admin/theatres" element={<TheatreManagePage />}></Route>
         <Route path="admin/promotions" element={<PromoManagerPage />}></Route>
-
         <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
-          <Route path="commingsoon" element={<CommingSoon />}></Route>
+          <Route path="comingsoon" element={<CommingSoon />}></Route>
         </Route>
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
         <Route path="booking/:movieId" element={<BookingPage />}></Route>

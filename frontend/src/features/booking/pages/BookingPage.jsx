@@ -23,6 +23,7 @@ const BookingPage = () => {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/movies/${movieId}`
+
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {
@@ -38,6 +39,7 @@ const BookingPage = () => {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/movie/${movieId}`
+
         );
         setLoadedShowtimes(responseData.shows);
       } catch (err) {

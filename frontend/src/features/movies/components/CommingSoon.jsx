@@ -12,6 +12,7 @@ function CommingSoon() {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/movies/comingSoon"
+
         );
         setMovieList(responseData.movies);
       } catch (err) {

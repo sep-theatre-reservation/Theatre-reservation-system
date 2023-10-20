@@ -15,6 +15,7 @@ function MovieDetails({ movie }) {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/movie/${movie.id}`
+
         );
 
         setLoadedTheatres([
