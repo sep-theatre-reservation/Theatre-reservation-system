@@ -53,6 +53,7 @@ To run the Theatre Reservation System locally, follow these steps:
 - Express.js
 - MongoDB
 - Bootstrap
+- AWS
 
 ## Contributing
 
