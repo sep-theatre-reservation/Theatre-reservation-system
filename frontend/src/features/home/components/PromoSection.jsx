@@ -41,6 +41,7 @@ function PromoSection() {
       </Container>
     </div>
   );
+
 }
 
 export default PromoSection;

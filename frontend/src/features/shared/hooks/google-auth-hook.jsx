@@ -11,6 +11,7 @@ function useGoogleAuth(handleLoginClose) {
     try {
       const responseData = await sendRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/users",
+
         "POST",
         JSON.stringify({ email: email }),
         { "Content-Type": "application/json" }

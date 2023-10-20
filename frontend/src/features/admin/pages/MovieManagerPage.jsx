@@ -37,6 +37,7 @@ function MovieManagerPage() {
       try {
         const responseData = await sendShowMoviesRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/movies"
+
         );
         setMoviesList(responseData.movies);
       } catch (err) {
@@ -51,6 +52,7 @@ function MovieManagerPage() {
       try {
         const responseData = await sendShowTheatreRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
+
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -64,6 +66,7 @@ function MovieManagerPage() {
     try {
       const responseData = await sendAddMovieRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/movies",
+
         "POST",
         JSON.stringify({
           title: formData.title,
@@ -94,6 +97,7 @@ function MovieManagerPage() {
       console.log(date);
       const responseData = await sendAddShowRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/shows",
+
         "POST",
         JSON.stringify({
           movie: scheduleMovieId,

@@ -12,6 +12,7 @@ const CarouselComponent = () => {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel"
+
         );
         setLoadedSlides(responseData.slides);
       } catch (err) {

@@ -22,6 +22,7 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/movies/${movie.id}`,
+
           "PATCH",
           JSON.stringify({
             status: selectedStatus,

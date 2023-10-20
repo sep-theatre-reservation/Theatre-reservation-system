@@ -34,6 +34,7 @@ function TheatreManagePage() {
       try {
         const responseData = await sendShowTheatreRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
+
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -47,6 +48,7 @@ function TheatreManagePage() {
     try {
       const responseData = await sendAddTheatreRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres",
+
         "POST",
         JSON.stringify({
           theatreName: formData.theatreName,
@@ -76,6 +78,7 @@ function TheatreManagePage() {
       await sendDeleteTheatreRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL +
           `/theatres/${deletedTheatreId}`,
+
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }
@@ -91,6 +94,7 @@ function TheatreManagePage() {
       {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
       <ErrorModal error={deleteError} onClear={clearDeleteError} />
       <Container className="py-5" style={{ minHeight: "62vh" }}>
+
         <Row>
           <Col lg={6}>
             <AddTheaterComponent

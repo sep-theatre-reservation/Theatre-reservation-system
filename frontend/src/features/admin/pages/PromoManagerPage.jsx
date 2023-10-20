@@ -36,6 +36,7 @@ function PromoManagerPage() {
       setPromotionList(responseData.promotions);
     } catch (err) {
       /* */
+
     }
     console.log(promotionList);
   });
@@ -44,6 +45,7 @@ function PromoManagerPage() {
     try {
       const responseData = await sendAddPromoRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/promotions",
+
         "POST",
         JSON.stringify({
           promotionTitle: formData.title,
@@ -71,6 +73,7 @@ function PromoManagerPage() {
       await sendDeletePromoRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL +
           `/promotions/${deletedPromotionId}`,
+
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }
@@ -102,6 +105,7 @@ function PromoManagerPage() {
           </Col>
         </Row>
       </Container>
+
     </>
   );
 }

@@ -25,6 +25,7 @@ const GuestModal = ({ show, onHide, bookingId }) => {
     try {
       const responseData = await sendAddGuestReqest(
         import.meta.env.VITE_REACT_APP_BASE_URL + "/guests",
+
         "POST",
         JSON.stringify({ email, bookingId }),
         { "Content-Type": "application/json" }

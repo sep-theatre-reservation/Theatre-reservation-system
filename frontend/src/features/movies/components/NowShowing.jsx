@@ -13,6 +13,7 @@ function NowShowing() {
       try {
         const responseData = await sendRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/movies/nowShowing"
+
         );
         setMovieList(responseData.movies);
       } catch (err) {

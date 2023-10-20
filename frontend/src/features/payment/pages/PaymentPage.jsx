@@ -36,6 +36,7 @@ function PaymentPage() {
       try {
         const responseData = await sendBookingFetchRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`
+
         );
         setBooking(responseData.booking);
       } catch (err) {
@@ -54,6 +55,7 @@ function PaymentPage() {
     try {
       const responseData = await sendEmailRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/email`,
+
         "POST",
         JSON.stringify({
           to: email,
@@ -75,6 +77,7 @@ function PaymentPage() {
       // console.log(paymentData)
       const responseData = await sendCreatePaymentDataRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/payment`,
+
         "POST",
         JSON.stringify({
           booking: bookingId,
@@ -94,6 +97,7 @@ function PaymentPage() {
     try {
       const responseData = await sendBookingConfirmRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`,
+
         "PATCH",
         JSON.stringify({
           status: "Confirmed",
@@ -114,6 +118,7 @@ function PaymentPage() {
     try {
       const responseData = await sendBookingCancelRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`,
+
         "PATCH",
         JSON.stringify({
           status: "Cancelled",
