@@ -1,43 +1,56 @@
-import { Container, Stack, Col, Row } from 'react-bootstrap'
-import AddPromoComponent from '../components/Promotion/AddPromoComponent'
-import ShowPromoComponent from '../components/Promotion/ShowPromoComponent'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { AuthContext } from '../../shared/context/auth-context';
-import ErrorModal from '../../shared/components/ErrorModal';
+import { Container, Col, Row } from "react-bootstrap";
+import AddPromoComponent from "../components/Promotion/AddPromoComponent";
+import ShowPromoComponent from "../components/Promotion/ShowPromoComponent";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
+import ErrorModal from "../../shared/components/ErrorModal";
 
 function PromoManagerPage() {
-  const auth =useContext(AuthContext)
-  const [updateShowPromotions, setUpdateShowPromotions] = useState(false)
+  const auth = useContext(AuthContext);
+  const [updateShowPromotions, setUpdateShowPromotions] = useState(false);
   const [promotionList, setPromotionList] = useState([]);
-  const { isLoading: isAddPromoLoading, sendRequest: sendAddPromoRequest, error:addError, clearError:clearAddError  } = useHttpClient()
-  const { isLoading: isShowPromoLoading, sendRequest: sendShowPromoRequest, error:showError, clearError:clearShowError } = useHttpClient();
-  const { isLoading: isDeletePromoLoading, sendRequest: sendDeletePromoRequest, error:deleteError, clearError:clearDeleteError } = useHttpClient();
-  useEffect(() => { getPromotions() }, [updateShowPromotions, sendShowPromoRequest])
-  
-  
-  const getPromotions = useCallback( async () => {
+  const {
+    isLoading: isAddPromoLoading,
+    sendRequest: sendAddPromoRequest,
+    error: addError,
+    clearError: clearAddError,
+  } = useHttpClient();
+  const { isLoading: isShowPromoLoading, sendRequest: sendShowPromoRequest } =
+    useHttpClient();
+  const {
+    isLoading: isDeletePromoLoading,
+    sendRequest: sendDeletePromoRequest,
+    error: deleteError,
+    clearError: clearDeleteError,
+  } = useHttpClient();
+  useEffect(() => {
+    getPromotions();
+  }, [updateShowPromotions, sendShowPromoRequest]);
+
+  const getPromotions = useCallback(async () => {
     try {
       const responseData = await sendShowPromoRequest(
-        "/promotions"
-        );
-        setPromotionList(responseData.promotions);
-      } catch (err) {
-      }
-      console.log(promotionList)
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/promotions"
+      );
+      setPromotionList(responseData.promotions);
+    } catch (err) {
+      /* */
+
     }
-  )
+    console.log(promotionList);
+  });
 
   const addPromotion = async (formData) => {
     try {
       const responseData = await sendAddPromoRequest(
-        "/promotions",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/promotions",
+
         "POST",
         JSON.stringify({
           promotionTitle: formData.title,
           description: formData.description,
-          imageUrl: formData.imageUrl
-
+          imageUrl: formData.imageUrl,
         }),
         {
           "Content-Type": "application/json",
@@ -45,10 +58,11 @@ function PromoManagerPage() {
         }
       );
       console.log(responseData);
-      setUpdateShowPromotions((prevValue) => !prevValue)
+      setUpdateShowPromotions((prevValue) => !prevValue);
     } catch (err) {
+      /* */
     }
-  }
+  };
 
   const deletePromotion = async (deletedPromotionId) => {
     setPromotionList((prevPromotions) =>
@@ -57,31 +71,43 @@ function PromoManagerPage() {
 
     try {
       await sendDeletePromoRequest(
-        `/promotions/${deletedPromotionId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL +
+          `/promotions/${deletedPromotionId}`,
+
         "DELETE",
         null,
-        {Authorization: "Bearer " + auth.token}
+        { Authorization: "Bearer " + auth.token }
       );
     } catch (err) {
+      /* */
     }
   };
   return (
     <>
-    <ErrorModal error={addError} onClear={clearAddError} />
-    {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
-    <ErrorModal error={deleteError} onClear={clearDeleteError} />
-    <Container  className="py-5" style={{minHeight:"70vh"}}>
-      <Row >
-        <Col lg={6}>
-          <AddPromoComponent onAddPromotion={addPromotion} isLoading={isAddPromoLoading} />
-        </Col>
-        <Col lg={6}>
-          <ShowPromoComponent promotionList={promotionList} onDeletePromotion={deletePromotion} isDeletePromoLoading={isDeletePromoLoading} isShowPromoLoading={isShowPromoLoading} />
-        </Col>
-      </Row>
-    </Container>
+      <ErrorModal error={addError} onClear={clearAddError} />
+      {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
+      <ErrorModal error={deleteError} onClear={clearDeleteError} />
+      <Container className="py-5" style={{ minHeight: "62vh" }}>
+        <Row>
+          <Col lg={6}>
+            <AddPromoComponent
+              onAddPromotion={addPromotion}
+              isLoading={isAddPromoLoading}
+            />
+          </Col>
+          <Col lg={6}>
+            <ShowPromoComponent
+              promotionList={promotionList}
+              onDeletePromotion={deletePromotion}
+              isDeletePromoLoading={isDeletePromoLoading}
+              isShowPromoLoading={isShowPromoLoading}
+            />
+          </Col>
+        </Row>
+      </Container>
+
     </>
-  )
+  );
 }
 
-export default PromoManagerPage
+export default PromoManagerPage;

@@ -34,7 +34,7 @@ export const findUserByEmail = async (req, res, next) => {
   try {
     token = jwt.sign(
       { email: registeredUser.email, role: registeredUser.role },
-      "SEP_theatre_reservation",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
   } catch (err) {

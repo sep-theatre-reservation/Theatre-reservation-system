@@ -40,7 +40,8 @@ function CarouselManager() {
     const fetchSlides = async () => {
       try {
         const responseData = await sendRequest(
-          "/carousel"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel"
+
         );
         setAvatars(responseData.slides);
       } catch (err) {
@@ -55,10 +56,11 @@ function CarouselManager() {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        "/carousel",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/carousel",
+
         "POST",
         JSON.stringify({
-          title:title,
+          title: title,
           imgUrl: imgUrl,
         }),
         {
@@ -77,7 +79,8 @@ function CarouselManager() {
   const removeAvatar = async (avatarId) => {
     try {
       await sendRequest(
-        `/carousel/${avatarId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/carousel/${avatarId}`,
+
         "DELETE",
         null,
         {
@@ -119,9 +122,10 @@ function CarouselManager() {
                 variant="primary"
                 type="submit"
                 className="mt-2 float-end me-3"
+                disabled={isLoading}
                 onClick={addAvatar}
               >
-                Add
+                {isLoading ? "Adding..." : "Add"}
               </Button>
             </Form.Group>
           </Form>

@@ -8,7 +8,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import useSeatRows from "../../shared/hooks/seat-layout-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
-import { FaRegClock, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaRegClock, FaMapMarkerAlt } from "react-icons/fa";
 
 const SeatSelection = () => {
   const auth = useContext(AuthContext);
@@ -35,9 +35,10 @@ const SeatSelection = () => {
   useEffect(() => {
     const fetchShow = async () => {
       try {
-        console.log(`/shows/${showId}`);
+        //console.log(import.meta.env.VITE_REACT_APP_BASE_URL +`/shows/${showId}`);
         const responseData = await sendShowRequest(
-          `/shows/${showId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/${showId}`
+
         );
         setSelectedShow(responseData.show);
         setRows(responseData.show.theatre.rows);
@@ -71,7 +72,8 @@ const SeatSelection = () => {
   const reserveSeats = async () => {
     try {
       const responseData = await sendReserveRequest(
-        `/shows/${showId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/${showId}`,
+
         "PATCH",
         JSON.stringify({
           selectedSeats: selected,
@@ -119,15 +121,30 @@ const SeatSelection = () => {
           window.location.reload();
         }}
       />
-      <div className="custom-background4">
-      </div>
-      <Container  style={{paddingBottom:'150px', paddingTop:'50px'}}>
+      <div className="custom-background4"></div>
+      <Container style={{ paddingBottom: "150px", paddingTop: "50px" }}>
         <Stack>
           <Stack direction="horizontal">
             <FaMapMarkerAlt size={30} className="me-2 mb-2" />
-            <h2 style={{ fontWeight: "bold", textTransform: "uppercase", marginRight: "50px" }}>{selectedShow && selectedShow.theatre.theatreName}</h2>
+            <h2
+              style={{
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                marginRight: "50px",
+              }}
+            >
+              {selectedShow && selectedShow.theatre.theatreName}
+            </h2>
             <FaRegClock size={30} className="me-2 mb-2" />
-            {selectedShow && <h2 style={{ fontWeight: "bold"}}>{new Date(selectedShow.showtime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true })}</h2>}
+            {selectedShow && (
+              <h2 style={{ fontWeight: "bold" }}>
+                {new Date(selectedShow.showtime).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </h2>
+            )}
           </Stack>
           <div className="m-auto mt-5 py-5">
             <table>

@@ -1,15 +1,14 @@
 {
-  "name": "se-project",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -23,9 +22,5 @@
     "mongoose": "^7.4.2",
     "nodemailer": "^6.9.5",
     "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.0",
-    "nodemon": "^3.0.1"
   }
 }

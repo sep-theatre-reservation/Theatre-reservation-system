@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import OrderSummary from '../components/OrderSummary'
-import { Container, Stack, Col, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
-import { useHttpClient } from '../../shared/hooks/http-hook'
-import Paypal from '../components/Paypal'
-import GuestModal from '../../reservations/components/GuestModal'
+import { useContext, useEffect, useState } from "react";
+import OrderSummary from "../components/OrderSummary";
+import { Container, Stack, Col, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import Paypal from "../components/Paypal";
+import GuestModal from "../../reservations/components/GuestModal";
 import { AuthContext } from "../../shared/context/auth-context";
-import { FaCalendarAlt, FaMapMarker, FaMapMarkerAlt, FaRegClock } from 'react-icons/fa'
+import { FaCalendarAlt, FaMapMarkerAlt, FaRegClock } from "react-icons/fa";
 
 function PaymentPage() {
   const auth = useContext(AuthContext);
-  const { bookingId } = useParams()
+  const { bookingId } = useParams();
   const { sendRequest: sendBookingFetchRequest } = useHttpClient();
   const { sendRequest: sendBookingConfirmRequest } = useHttpClient();
   const { sendRequest: sendBookingCancelRequest } = useHttpClient();
@@ -22,11 +22,11 @@ function PaymentPage() {
 
   useEffect(() => {
     if (booking !== null) {
-      console.log(booking)
+      console.log(booking);
       setOrderDetails({
         id: booking.id,
         ticketPrice: booking.show.theatre.ticketPrice,
-        ticketsCount: booking.seats.length
+        ticketsCount: booking.seats.length,
       });
     }
   }, [booking]);
@@ -35,7 +35,8 @@ function PaymentPage() {
     const fetchBooking = async () => {
       try {
         const responseData = await sendBookingFetchRequest(
-          `/bookings/${bookingId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`
+
         );
         setBooking(responseData.booking);
       } catch (err) {
@@ -47,52 +48,56 @@ function PaymentPage() {
   }, []);
 
   const sendTicketEmail = async () => {
-    console.log(auth.isLoggedIn)
+    console.log(auth.isLoggedIn);
     const email = auth.isLoggedIn ? auth.user.email : auth.guestEmail;
-    console.log(auth.user.email)
-    console.log(auth.guestEmail)
+    console.log(auth.user.email);
+    console.log(auth.guestEmail);
     try {
       const responseData = await sendEmailRequest(
-        `/email`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/email`,
+
         "POST",
         JSON.stringify({
           to: email,
           subject: "Movie ticket",
-          text: "heres the ticket"
+          text: "heres the ticket",
         }),
         {
           "Content-Type": "application/json",
         }
       );
+      console.log(responseData);
     } catch (err) {
       /* */
     }
-  }
+  };
 
   const createPaymentData = async (paymentData) => {
     try {
       // console.log(paymentData)
       const responseData = await sendCreatePaymentDataRequest(
-        `/payment`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/payment`,
+
         "POST",
         JSON.stringify({
           booking: bookingId,
-          paypalPayment: paymentData
+          paypalPayment: paymentData,
         }),
         {
           "Content-Type": "application/json",
         }
       );
-      console.log(responseData)
+      console.log(responseData);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const confirmBooking = async (paymentData) => {
     try {
       const responseData = await sendBookingConfirmRequest(
-        `/bookings/${bookingId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`,
+
         "PATCH",
         JSON.stringify({
           status: "Confirmed",
@@ -105,14 +110,15 @@ function PaymentPage() {
     } catch (err) {
       /* */
     }
-    createPaymentData(paymentData)
-    sendTicketEmail()
+    createPaymentData(paymentData);
+    sendTicketEmail();
   };
 
   const cancelBooking = async () => {
     try {
       const responseData = await sendBookingCancelRequest(
-        `/bookings/${bookingId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`,
+
         "PATCH",
         JSON.stringify({
           status: "Cancelled",
@@ -133,16 +139,27 @@ function PaymentPage() {
         <GuestModal
           bookingId={bookingId}
           show={showGuestModal}
-          onHide={() => { setShowGuestModal(false) }}
+          onHide={() => {
+            setShowGuestModal(false);
+          }}
         />
       )}
-      < Container className='py-5' style={{ minHeight: '80vh' }}>
+      <Container className="py-5" style={{ minHeight: "80vh" }}>
         <Row>
-          <h1 style={{ fontWeight: "bold", textTransform: "uppercase", marginRight: "50px", marginBottom:'0px' }}>THE NUN II</h1>
-          <div className='w-50'>
+          <h1
+            style={{
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              marginRight: "50px",
+              marginBottom: "0px",
+            }}
+          >
+            THE NUN II
+          </h1>
+          <div className="w-50">
             <hr />
           </div>
-          <Stack direction="horizontal" gap={4} className='mb-5'>
+          <Stack direction="horizontal" gap={4} className="mb-5">
             {/* {console.log(booking.show)} */}
             <div>
               <FaMapMarkerAlt size={20} className="me-2 mb-2" />
@@ -158,20 +175,23 @@ function PaymentPage() {
             </div>
           </Stack>
           <Col lg={6}>
-            <Stack className='w-75'>
+            <Stack className="w-75">
               <OrderSummary />
-              <Stack direction='horizontal'>
-                <h5 style={{fontWeight:'bold'}}>Confirm Payment</h5>
+              <Stack direction="horizontal">
+                <h5 style={{ fontWeight: "bold" }}>Confirm Payment</h5>
                 {orderDetails && (
-                  <Paypal onPaymentConfirm={confirmBooking} orderDetails={orderDetails} />
+                  <Paypal
+                    onPaymentConfirm={confirmBooking}
+                    orderDetails={orderDetails}
+                  />
                 )}
               </Stack>
             </Stack>
           </Col>
         </Row>
-      </Container >
+      </Container>
     </>
-  )
+  );
 }
 
-export default PaymentPage
+export default PaymentPage;

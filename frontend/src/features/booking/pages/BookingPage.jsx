@@ -22,7 +22,8 @@ const BookingPage = () => {
     const fetchMovies = async () => {
       try {
         const responseData = await sendRequest(
-          `/movies/${movieId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/movies/${movieId}`
+
         );
         setLoadedMovie(responseData.movie);
       } catch (err) {
@@ -37,7 +38,8 @@ const BookingPage = () => {
     const fetchShows = async () => {
       try {
         const responseData = await sendRequest(
-          `/shows/movie/${movieId}`
+          import.meta.env.VITE_REACT_APP_BASE_URL + `/shows/movie/${movieId}`
+
         );
         setLoadedShowtimes(responseData.shows);
       } catch (err) {
@@ -82,7 +84,6 @@ const BookingPage = () => {
 
   return (
     <div className=" custom-background2">
-
       <Container className="py-5">
         {selectedShowtime && (
           <SeatCountModal
@@ -98,13 +99,17 @@ const BookingPage = () => {
         <Row className="py-5">
           <Col>
             <Stack gap={3}>
-              <h2 style={{ fontWeight: 'bolder', textTransform: 'uppercase' }}>{!isLoading && loadedMovie && loadedMovie.title}</h2>
+              <h2 style={{ fontWeight: "bolder", textTransform: "uppercase" }}>
+                {!isLoading && loadedMovie && loadedMovie.title}
+              </h2>
               <Col className="d-md-none">
                 {!isLoading && loadedMovie && (
                   <MovieImageCard img={loadedMovie.poster_url} size={10} />
                 )}
               </Col>
-              <h4 className="my-3" style={{ fontWeight: 'bold' }}>Show Times</h4>
+              <h4 className="my-3" style={{ fontWeight: "bold" }}>
+                Show Times
+              </h4>
               <Stack gap={5}>
                 {!isLoading && loadedShowtimes && (
                   <ShowTimes

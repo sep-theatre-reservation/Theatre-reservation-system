@@ -33,7 +33,8 @@ function TheatreManagePage() {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
-          "/theatres"
+          import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
+
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -46,7 +47,8 @@ function TheatreManagePage() {
   const addTheatre = async (formData) => {
     try {
       const responseData = await sendAddTheatreRequest(
-        "/theatres",
+        import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres",
+
         "POST",
         JSON.stringify({
           theatreName: formData.theatreName,
@@ -74,7 +76,9 @@ function TheatreManagePage() {
 
     try {
       await sendDeleteTheatreRequest(
-        `/theatres/${deletedTheatreId}`,
+        import.meta.env.VITE_REACT_APP_BASE_URL +
+          `/theatres/${deletedTheatreId}`,
+
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }
@@ -89,7 +93,8 @@ function TheatreManagePage() {
       <ErrorModal error={addError} onClear={clearAddError} />
       {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
       <ErrorModal error={deleteError} onClear={clearDeleteError} />
-      <Container className="py-5" style={{minHeight:"70vh"}}>
+      <Container className="py-5" style={{ minHeight: "62vh" }}>
+
         <Row>
           <Col lg={6}>
             <AddTheaterComponent
