@@ -70,10 +70,10 @@ function CarouselManager() {
       );
       setImgUrl("");
       setAvatars((prevAvatars) => [...prevAvatars, responseData.slide]);
+      cancelAddSlide();
     } catch (err) {
       /* */
     }
-    cancelAddSlide();
   };
 
   const removeAvatar = async (avatarId) => {
@@ -109,7 +109,10 @@ function CarouselManager() {
                 value={title}
                 placeholder="Enter Movie Title"
                 onChange={handleTitleChange}
+                required
               />
+            </Form.Group>
+            <Form.Group controlId="imageURL" className="mb-2">
               <Form.Label>Slide Image URL</Form.Label>
               <Form.Control
                 type="text"
@@ -117,19 +120,20 @@ function CarouselManager() {
                 value={imgUrl}
                 placeholder="Enter Image URL"
                 onChange={handleChange}
+                required
               />
-              <Button
-                variant="primary"
-                type="submit"
-                className="mt-2 float-end me-3"
-                disabled={isLoading}
-                onClick={addAvatar}
-              >
-                {isLoading ? "Adding..." : "Add"}
-              </Button>
             </Form.Group>
+            <Button
+              variant="primary"
+              type="submit"
+              className="mt-2 float-end me-3"
+              disabled={isLoading}
+            >
+              {isLoading ? "Adding..." : "Add"}
+            </Button>
           </Form>
         </Modal.Body>
+
       </Modal>
       {isLoading && <LoadingOverlay asOverlay />}
 
