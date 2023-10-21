@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import CarouselManager from "../components/CarouselManager";
 import LineChart from "../components/Charts/LineChart";
-import BarChartVertical from "../components/Charts/BarChartVertical";
+import BarChartVertical from "../components/Charts/BookingCountChart";
 
 const rowStyle = {
   marginBottom: "20px", // Add space between rows
@@ -18,10 +18,10 @@ function DashboardPage() {
 
       <Row style={rowStyle}>
         <Col>
-          <LineChart />
+          <BarChartVertical />
         </Col>
         <Col>
-          <BarChartVertical />
+          <LineChart />
         </Col>
       </Row>
     </Container>

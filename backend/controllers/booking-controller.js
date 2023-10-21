@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 import HttpError from "../models/http-error.js";
 
 import Booking from "../models/booking.js";
+import moment from "moment";
 
 export const createBooking = async (req, res, next) => {
   const errors = validationResult(req);
@@ -115,6 +116,68 @@ export const getBookingsByUser = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a bookings",
+      500
+    );
+    return next(error);
+  }
+};
+
+export const getDailyBookingCountByTitle = async (req, res, next) => {
+  try {
+    // Define the date range for today
+    const todayStart = moment().startOf("day"); // Midnight
+    const todayEnd = moment().endOf("day"); // 11:59:59 PM
+
+    const bookingCounts = await Booking.aggregate([
+      {
+        $match: {
+          bookingTime: {
+            $gte: todayStart.toDate(),
+            $lte: todayEnd.toDate(),
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "shows", // Assuming the collection name for shows is 'shows'
+          localField: "show",
+          foreignField: "_id",
+          as: "show",
+        },
+      },
+      {
+        $unwind: "$show",
+      },
+      {
+        $lookup: {
+          from: "movies", // Assuming the collection name for movies is 'movies'
+          localField: "show.movie",
+          foreignField: "_id",
+          as: "movie",
+        },
+      },
+      {
+        $unwind: "$movie",
+      },
+      {
+        $group: {
+          _id: "$movie.title",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude _id from results
+          movie: "$_id",
+          count: 1,
+        },
+      },
+    ]);
+
+    res.json({ dailyBookingCounts: bookingCounts });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not get daily booking counts",
       500
     );
     return next(error);
