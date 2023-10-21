@@ -59,7 +59,7 @@ function useGoogleAuth(handleLoginClose) {
       text: "continue_with",
     });
 
-    //google.accounts.id.prompt();
+    google.accounts.id.prompt();
   }); //dependency array [] removed...
 }
 
