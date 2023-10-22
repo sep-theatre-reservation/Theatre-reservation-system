@@ -16,26 +16,26 @@ function ContactUsPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log('Form data:', formData);
   };
 
   return (
-    <Container  className='pt-5'>
+    <Container className='pt-5'>
       <Stack direction='horizontal' gap={5}>
         <Card className='w-50 mb-auto'>
           <Card.Body>
             <Card.Title>
-              <h3 style={{fontWeight:'bold'}}>Contact Us</h3>
+              <h3 style={{ fontWeight: 'bold' }}>Contact Us</h3>
             </Card.Title>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="name"  className='mb-2'>
+              <Form.Group controlId="name" className='mb-2'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="email" className='mb-2'>
@@ -45,6 +45,7 @@ function ContactUsPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="message">
@@ -55,6 +56,7 @@ function ContactUsPage() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               <Button variant="primary" type="submit" className='mt-3 float-end'>
@@ -63,7 +65,7 @@ function ContactUsPage() {
             </Form>
           </Card.Body>
         </Card>
-      <ContactDetails className='mb-auto'></ContactDetails>
+        <ContactDetails className='mb-auto'></ContactDetails>
       </Stack>
     </Container>
   );

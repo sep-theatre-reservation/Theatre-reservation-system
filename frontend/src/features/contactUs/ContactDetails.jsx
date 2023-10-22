@@ -23,7 +23,7 @@ function ContactDetails() {
 
   const helpDeskInfo = [
     'Help Desk: (09.00 am - 06.00 pm Monday - Friday)',
-    'Phone: 011-8965421',
+    'Phone: 011-8965421 - Nisala',
     'Email: helpdesk@bookingz.com',
   ];
 
