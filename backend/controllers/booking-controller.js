@@ -183,3 +183,63 @@ export const getDailyBookingCountByTitle = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const getRevenuuePastWeek = async (req, res, next) => {
+  try {
+    // Calculate the date 7 days ago from the current date
+    const sevenDaysAgo = moment().subtract(7, "days");
+
+    // Use MongoDB aggregation to group income by day
+    const result = await Booking.aggregate([
+      {
+        $match: {
+          bookingTime: { $gte: sevenDaysAgo.toDate() },
+        },
+      },
+      {
+        $lookup: {
+          from: "show", // Assuming the collection name for shows is 'shows'
+          localField: "show",
+          foreignField: "_id",
+          as: "show",
+        },
+      },
+      {
+        $unwind: "$show",
+      },
+      {
+        $lookup: {
+          from: "theatre", // Assuming the collection name for theatres is 'theatres'
+          localField: "show.theatre",
+          foreignField: "_id",
+          as: "theatre",
+        },
+      },
+      {
+        $unwind: "$theatre",
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$bookingTime" },
+            month: { $month: "$bookingTime" },
+            day: { $dayOfMonth: "$bookingTime" },
+          },
+          totalIncome: {
+            $sum: {
+              $multiply: [{ $size: "$seats" }, "$theatre.ticketPrice"],
+            },
+          },
+        },
+      },
+    ]);
+
+    res.json({ incomeByDay: result });
+  } catch (error) {
+    const httpError = new HttpError(
+      "Something went wrong while fetching revenue for the past week.",
+      500
+    );
+    return next(httpError);
+  }
+};
