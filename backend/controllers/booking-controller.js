@@ -2,7 +2,9 @@ import { validationResult } from "express-validator";
 import HttpError from "../models/http-error.js";
 
 import Booking from "../models/booking.js";
+import Show from "../models/show.js";
 import moment from "moment";
+import mongoose from "mongoose";
 
 export const createBooking = async (req, res, next) => {
   const errors = validationResult(req);
@@ -59,26 +61,63 @@ export const updateBookingStatus = async (req, res, next) => {
 
   let booking;
 
-  try {
-    booking = await Booking.findById(bookingId);
-  } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, cannot get booking by id",
-      500
-    );
-    return next(error);
-  }
+  if (status == "Cancelled") {
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-  booking.status = status;
+    try {
+      // Find the booking by ID and mark it as "Cancelled"
+      booking = await Booking.findByIdAndUpdate(
+        bookingId,
+        { status: "Cancelled" },
+        { new: true, session }
+      );
 
-  try {
-    await booking.save();
-  } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, updating status failed",
-      500
-    );
-    return next(error);
+      // Update seat availability in the corresponding show
+      const show = await Show.findById(booking.show).session(session);
+      for (const seat of booking.seats) {
+        const seatIndex = show.showSeats.findIndex((s) => s.id === seat);
+        if (seatIndex !== -1) {
+          show.showSeats[seatIndex].availability = true;
+        }
+      }
+
+      await show.save({ session });
+      await session.commitTransaction();
+      session.endSession();
+
+      //console.log("Booking has been cancelled, and seats are now available.");
+    } catch (err) {
+      await session.abortTransaction();
+      session.endSession();
+      const error = new HttpError(
+        "Something went wrong, cancellation failed",
+        500
+      );
+      return next(error);
+    }
+  } else {
+    try {
+      booking = await Booking.findById(bookingId);
+    } catch (err) {
+      const error = new HttpError(
+        "Something went wrong, cannot get booking by id",
+        500
+      );
+      return next(error);
+    }
+
+    booking.status = status;
+
+    try {
+      await booking.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Something went wrong, updating status failed",
+        500
+      );
+      return next(error);
+    }
   }
   res.status(200).json({ booking: booking.toObject({ getters: true }) });
 };
