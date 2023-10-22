@@ -67,7 +67,7 @@ function BookingCountChart() {
       {
         label: "Movies",
         data: dailyBookingCounts.map((item) => item.count),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
@@ -75,7 +75,7 @@ function BookingCountChart() {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>Daily Booking Counts by Movie Title</Card.Title>
+        <Card.Title>Today Booking Counts by Movie Title</Card.Title>
         {isLoading && <LoadingOverlay asOverlay />}
         <Bar options={options} data={data} />
       </Card.Body>
