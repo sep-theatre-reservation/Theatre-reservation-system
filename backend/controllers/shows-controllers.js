@@ -187,3 +187,26 @@ export const reserveSelectedseats = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getNumberOfAvailableSeats = async (req, res, next) => {
+  const showId = req.params.sid;
+
+  try {
+    const show = await Show.findById(showId);
+
+    if (!show) {
+      const error = new HttpError("Show not found", 404);
+      return next(error);
+    }
+
+    const showSeats = show.showSeats;
+    const availableSeats = showSeats.filter((seat) => seat.availability);
+
+    res.status(200).json({
+      availableSeats: availableSeats.length,
+    });
+  } catch (err) {
+    const error = new HttpError("Failed to get available seats", 500);
+    return next(error);
+  }
+};
