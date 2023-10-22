@@ -25,7 +25,7 @@ Theatre Reservation System is a web application that allows users to book ticket
 
 ## Demo
 
-You can see a live demo of the Theatre Reservation System [here](#insert-link-to-demo).
+You can see a live demo of the Theatre Reservation System [here](https://main--fascinating-tiramisu-dad239.netlify.app/).
 
 ## Installation
 

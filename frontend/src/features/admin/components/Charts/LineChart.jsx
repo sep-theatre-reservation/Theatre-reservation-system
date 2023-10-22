@@ -30,12 +30,20 @@ const options = {
     },
     title: {
       display: true,
-      text: "Chart.js Line Chart",
+      text: "Line Chart",
     },
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 const data = {
   labels,
@@ -46,12 +54,6 @@ const data = {
       borderColor: "rgb(255, 99, 132)",
       backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
   ],
 };
 
@@ -59,7 +61,7 @@ function LineChart() {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>Line Chart</Card.Title>
+        <Card.Title>Daily Revenue</Card.Title>
         <Line options={options} data={data} />
       </Card.Body>
     </Card>
