@@ -1,6 +1,7 @@
 import { Container, Col, Row } from "react-bootstrap";
 import AddTheaterComponent from "../components/Theatre/AddTheaterComponent";
 import ShowTheatreComponent from "../components/Theatre/ShowTheatreComponent";
+import EditTheatreModal from "../components/Theatre/EditTheatreModal";
 import { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/ErrorModal";
@@ -29,12 +30,14 @@ function TheatreManagePage() {
     clearError: clearDeleteError,
   } = useHttpClient();
 
+  const [showEditTheatreModal, setShowEditTheatreModal] = useState(false);
+  const [selectedTheatre, setSelectedTheatre] = useState(null);
+
   useEffect(() => {
     const getTheatres = async () => {
       try {
         const responseData = await sendShowTheatreRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
-
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -88,13 +91,31 @@ function TheatreManagePage() {
     }
   };
 
+  const editTheatre = (theatre,showTimeArray) => {
+    setSelectedTheatre(theatre);
+    
+    //theatre,showtimearray pass to backend using http
+    setShowEditTheatreModal(true);
+  };
+
   return (
     <>
       <ErrorModal error={addError} onClear={clearAddError} />
       {/* <ErrorModal error={showError} onClear={clearShowError} /> */}
       <ErrorModal error={deleteError} onClear={clearDeleteError} />
-      <Container className="py-5" style={{ minHeight: "62vh" }}>
+      
+      {!isShowTheatreLoading && theatreList && (
+        <>
+          <EditTheatreModal
+            show={showEditTheatreModal}
+            onHide={() => setShowEditTheatreModal(false)}
+            // setAray={setShowTimeArray}
+            
+          />
+        </>
+      )}
 
+      <Container className="py-5" style={{ minHeight: "62vh" }}>
         <Row>
           <Col lg={6}>
             <AddTheaterComponent
@@ -108,6 +129,7 @@ function TheatreManagePage() {
               isDeleteTheatreLoading={isDeleteTheatreLoading}
               theatreList={theatreList}
               onDeleteTheatre={deleteTheatre}
+              onEditTheatre={editTheatre}
             />
           </Col>
         </Row>

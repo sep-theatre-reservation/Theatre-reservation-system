@@ -5,20 +5,31 @@ import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import ConfirmationModal from "../../../shared/components/ConfirmationModal";
 import { useState } from "react";
 
-const TheatreItem = ({ theatre, isLoading,onDeleteTheatre }) => {
+const TheatreItem = ({
+  theatre,
+  isLoading,
+  onDeleteTheatre,
+  onEditTheatre,
+}) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showTimeArray, setShowTimeArray] = useState([]);
 
   const handleDeleteClick = () => {
     setShowConfirmationModal(true);
   };
-  
+
+  const handleEditClick = () => {
+    onEditTheatre(theatre,showTimeArray);
+    //onEditTheatre(theatre,showTimeArray);
+  };
+
   const cancelDeletion = () => {
     setShowConfirmationModal(false);
   };
 
   const ConfirmDeletion = async () => {
     setShowConfirmationModal(false);
-    onDeleteTheatre(theatre.id)
+    onDeleteTheatre(theatre.id);
   };
 
   return (
@@ -27,7 +38,9 @@ const TheatreItem = ({ theatre, isLoading,onDeleteTheatre }) => {
         show={showConfirmationModal}
         onClose={cancelDeletion}
         onConfirm={ConfirmDeletion}
-        text={'Do you want to proceed and remove this theatre? Please note that, this action cannot be reverted'}
+        text={
+          "Do you want to proceed and remove this theatre? Please note that, this action cannot be reverted"
+        }
       />
       <Stack key={theatre.id} id={theatre.id} direction="horizontal" gap={3}>
         {isLoading && <LoadingOverlay asOverlay />}
@@ -35,7 +48,9 @@ const TheatreItem = ({ theatre, isLoading,onDeleteTheatre }) => {
           <FaMapMarkerAlt size={20} className="mb-2" />
           {theatre.theatreName}
         </span>
-        <Button variant="warning"> Edit</Button>
+        <Button variant="warning" onClick={handleEditClick}>
+          Edit
+        </Button>
         <Button variant="danger" onClick={handleDeleteClick}>
           Remove
         </Button>
