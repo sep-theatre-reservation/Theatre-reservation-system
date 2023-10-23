@@ -14,8 +14,27 @@ const TheatreItem = ({
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showTimeArray, setShowTimeArray] = useState([]);
 
-  const handleDeleteClick = () => {
-    setShowConfirmationModal(true);
+
+  //look at this
+  const getTheatreShowTimes = async () => {
+    try {
+      const responseData = await fetch(
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/theatre/${theatre}/showtimes`
+      );
+      const data = await responseData.json();
+      setShowTimeArray(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleDeleteClick = async () => {
+    try {
+      await getTheatreShowTimes();
+      onEditTheatre(theatre,showTimeArray);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditClick = () => {

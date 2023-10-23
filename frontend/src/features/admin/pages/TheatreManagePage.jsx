@@ -91,11 +91,15 @@ function TheatreManagePage() {
     }
   };
 
+  const [addedTimes, setAddedTimes] = useState([]);
+
   const editTheatre = (theatre,showTimeArray) => {
     setSelectedTheatre(theatre);
-    
-    //theatre,showtimearray pass to backend using http
+    setAddedTimes(showTimeArray);
     setShowEditTheatreModal(true);
+
+    //theatre,showtimearray pass to backend using http
+    
   };
 
   return (
@@ -109,7 +113,9 @@ function TheatreManagePage() {
           <EditTheatreModal
             show={showEditTheatreModal}
             onHide={() => setShowEditTheatreModal(false)}
-            // setAray={setShowTimeArray}
+            theatre={selectedTheatre}
+            addedTimes={addedTimes}
+            setAddedTimes={setAddedTimes}
             
           />
         </>

@@ -9,12 +9,16 @@ import {
   Table,
 } from "react-bootstrap";
 
-const EditTheatreModal = ({ show, onHide}) => {
+const EditTheatreModal = ({
+  show,
+  onHide,
+  theatre,
+  addedTimes,
+  setAddedTimes,
+}) => {
   // Initialize state variables for hour, minute, and added times
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
-  
-  const [addedTimes, setAddedTimes] = useState([]);
 
   const handleHourChange = (e) => {
     setHour(e.target.value);
@@ -26,10 +30,10 @@ const EditTheatreModal = ({ show, onHide}) => {
   };
 
   // Function to add a showtime
-  const addShowtime = (theatre) => {
+  const addShowtime = (addedTimes, setAddedTimes) => {
     if (hour && minute) {
       const newTime = `${hour}:${minute}`;
-      setAddedTimes([...addedTimes, newTime]);
+      setAddedTimes([...addedTimes, newTime]); // Append the newTime to the addedTimes array
       // Clear the hour and minute for the next input
       setHour("");
       setMinute("");
@@ -42,9 +46,27 @@ const EditTheatreModal = ({ show, onHide}) => {
     setAddedTimes(updatedTimes);
   };
 
-  const onCloseClick = (theater, ) => {
-    // Call the scheduling function with addedTimes
-    // onSchedule(addedTimes);
+  const onSubmitClick = async (theater, addedTimes) => {
+    try {
+      const responseData = await sendUpdateTimesRequest(
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/theaters/${theater}/showtimes`, // Update the URL and endpoint according to your API
+
+        "PATCH",
+        JSON.stringify({
+          addedTimes,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+      console.log(responseData);
+      // Handle the response as needed.
+    } catch (error) {
+      // Handle errors (e.g., show an error message).
+      console.error("Error updating addedTimes:", error);
+    }
+
+    // Close the modal and trigger any necessary updates
     onHide();
   };
 
@@ -96,7 +118,6 @@ const EditTheatreModal = ({ show, onHide}) => {
                 type="button"
                 className="mt-4 float-end me-3"
                 onClick={addShowtime}
-
               >
                 Add
               </Button>
@@ -127,8 +148,8 @@ const EditTheatreModal = ({ show, onHide}) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onCloseClick}>
-          Close
+        <Button variant="secondary" onClick={onSubmitClick}>
+          Submit
         </Button>
       </Modal.Footer>
     </Modal>
