@@ -37,7 +37,7 @@ export const getBookingById = async (req, res, next) => {
     booking = await Booking.findById(bookingId).populate({
       path: "show",
       populate: {
-        path: "theatre",
+        path: "movie theatre",
       },
     });
   } catch (err) {
