@@ -24,6 +24,7 @@ import CustomerProfile from "./features/customer/pages/CustomerProfile";
 
 import { useAuth } from "./features/shared/hooks/auth-hook";
 import ContactUsPage from "./features/contactUs/ContactUsPage";
+import ScrollToTop from "./features/shared/tools/ScrollToTop";
 
 function App() {
   let { token, login, logout, user, isAdmin, userId } = useAuth();
@@ -90,6 +91,7 @@ function App() {
       }}
     >
       <Router>
+        <ScrollToTop />
         <NavbarComponent />
         <main style={mainStyle}>{routes}</main>
         <Footer />

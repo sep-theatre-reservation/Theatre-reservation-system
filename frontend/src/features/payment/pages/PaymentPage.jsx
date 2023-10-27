@@ -59,8 +59,8 @@ function PaymentPage() {
         "POST",
         JSON.stringify({
           to: email,
-          subject: "Movie ticket",
-          text: "heres the ticket",
+          subject: "Booking.Lk You Ticket",
+          text: "Hi , Booking ID: AAMM0000010052. Seats: ODC - C6, C7, 2 seat(s) for Oppenheimer  on Sat, 22 Jul, 2023 09:15pm at Amity Lite 3D Cinema: Maharagama(SCREEN1)."
         }),
         {
           "Content-Type": "application/json",
@@ -154,7 +154,7 @@ function PaymentPage() {
               marginBottom: "0px",
             }}
           >
-            THE NUN II
+            EXPEN4BLES
           </h1>
           <div className="w-50">
             <hr />
@@ -163,15 +163,15 @@ function PaymentPage() {
             {/* {console.log(booking.show)} */}
             <div>
               <FaMapMarkerAlt size={20} className="me-2 mb-2" />
-              Rio Cinema
+              Majestic Cineplex: Colombo
             </div>
             <div>
               <FaCalendarAlt size={20} className="me-2 mb-2" />
-              20/08/2023
+              25/10/2023
             </div>
             <div>
               <FaRegClock size={20} className="me-2 mb-2" />
-              7.30 P.M.
+              6.30 P.M.
             </div>
           </Stack>
           <Col lg={6}>
