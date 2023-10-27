@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { AuthContext } from "../../shared/context/auth-context";
+
 import {
   Button,
   Col,
@@ -16,6 +18,7 @@ const EditTheatreModal = ({
   addedTimes,
   setAddedTimes,
 }) => {
+  const auth = useContext(AuthContext);
   // Initialize state variables for hour, minute, and added times
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
@@ -49,13 +52,15 @@ const EditTheatreModal = ({
   const onSubmitClick = async (theater, addedTimes) => {
     try {
       const responseData = await sendUpdateTimesRequest(
-        import.meta.env.VITE_REACT_APP_BASE_URL + `/theaters/${theater}/showtimes`, // Update the URL and endpoint according to your API
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/theaters/showtimes/${theater}`, // Update the URL and endpoint according to your API
 
         "PATCH",
         JSON.stringify({
           addedTimes,
         }),
+
         {
+          Authorization: "Bearer " + auth.token, // Ensure you have the auth token
           "Content-Type": "application/json",
         }
       );
