@@ -29,7 +29,7 @@ function MovieManagerPage() {
   } = useHttpClient();
 
   const [showScheduleModal, setShowScheduleModal] = useState(false);
-  const [scheduleMovieId, setScheduleMovieId] = useState(null);
+  const [schedulingMovie, setSchedulingMovie] = useState(null);
   const [theatreList, setTheatreList] = useState();
 
   useEffect(() => {
@@ -37,7 +37,6 @@ function MovieManagerPage() {
       try {
         const responseData = await sendShowMoviesRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/movies"
-
         );
         setMoviesList(responseData.movies);
       } catch (err) {
@@ -52,7 +51,6 @@ function MovieManagerPage() {
       try {
         const responseData = await sendShowTheatreRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + "/theatres"
-
         );
         setTheatreList(responseData.theatres);
       } catch (err) {
@@ -100,7 +98,7 @@ function MovieManagerPage() {
 
         "POST",
         JSON.stringify({
-          movie: scheduleMovieId,
+          movie: schedulingMovie.id,
           theatre: theatreId,
           showtime: date,
         }),
@@ -115,20 +113,21 @@ function MovieManagerPage() {
     }
   };
 
-  const onShowSchedule = (movieId) => {
-    setScheduleMovieId(movieId);
+  const onShowSchedule = (movie) => {
+    setSchedulingMovie(movie);
     setShowScheduleModal(true);
   };
 
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
-      {!isShowTheatreLoading && theatreList && (
+      {!isShowTheatreLoading && theatreList && schedulingMovie && (
         <ScheduleMovieModal
           show={showScheduleModal}
           onHide={() => setShowScheduleModal(false)}
           onSchedule={scheduleMovie}
           theatres={theatreList}
+          movie={schedulingMovie}
         />
       )}
       <Container className="py-5">

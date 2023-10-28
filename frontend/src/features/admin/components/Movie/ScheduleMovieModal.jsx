@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
+const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres, movie }) => {
   // Initialize state variables for date, time, and ISO string
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
@@ -63,7 +64,12 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Schedule a Showtime</Modal.Title>
+        <Modal.Title>
+          {"Schedule a Showtime for "}{" "}
+          <span style={{ fontWeight: "bold", color: "blue" }}>
+            {movie.title}
+          </span>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -146,6 +152,14 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+ScheduleMovieModal.propTypes = {
+  show: PropTypes.bool,
+  onHide: PropTypes.func,
+  onSchedule: PropTypes.func,
+  theatres: PropTypes.array,
+  movie: PropTypes.object,
 };
 
 export default ScheduleMovieModal;
