@@ -12,15 +12,13 @@ import checkAuth from "../middleware/check-auth.js";
 const router = express.Router();
 
 router.get("/", getTheatres);
-
 router.get("/showtimes/:tid", getTheatreShowtimes);
+router.patch("/showtimes/:tid", editTheatreShowtimes);
 
 router.use(checkAuth);
 
 router.post("/", addTheatre);
-
 router.delete("/:tid", deleteTheatre);
 
-router.post("/showtimes/:tid", editTheatreShowtimes);
 
 export default router;

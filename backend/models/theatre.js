@@ -7,7 +7,7 @@ const theatreSchema = new Schema({
   rows: { type: Number, required: true },
   cols: { type: Number, required: true },
   ticketPrice:{type:Number, default:250},
-  showtimes: [{ type: Date }]
+  showtimes: [{ type: String }]
 
 });
 

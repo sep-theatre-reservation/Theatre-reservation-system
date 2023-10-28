@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { AuthContext } from "../../shared/context/auth-context";
+import { useEffect, useState,useContext } from "react";
+import { AuthContext } from "../../../shared/context/auth-context";
 
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 const EditTheatreModal = ({
   show,
@@ -19,6 +20,8 @@ const EditTheatreModal = ({
   setAddedTimes,
 }) => {
   const auth = useContext(AuthContext);
+  const { isLoading, sendRequest } = useHttpClient();
+
   // Initialize state variables for hour, minute, and added times
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
@@ -51,17 +54,17 @@ const EditTheatreModal = ({
 
   const onSubmitClick = async (theater, addedTimes) => {
     try {
-      const responseData = await sendUpdateTimesRequest(
-        import.meta.env.VITE_REACT_APP_BASE_URL + `/theaters/showtimes/${theater}`, // Update the URL and endpoint according to your API
+      const responseData = await sendRequest(
+        import.meta.env.VITE_REACT_APP_BASE_URL + `/theatres/showtimes/${theater}`, // Update the URL and endpoint according to your API
 
         "PATCH",
         JSON.stringify({
-          addedTimes,
+          showtimes:addedTimes,
         }),
 
         {
-          Authorization: "Bearer " + auth.token, // Ensure you have the auth token
           "Content-Type": "application/json",
+          //Authorization: "Bearer " + auth.token,
         }
       );
       console.log(responseData);
@@ -71,10 +74,9 @@ const EditTheatreModal = ({
       console.error("Error updating addedTimes:", error);
     }
 
-    // Close the modal and trigger any necessary updates
     onHide();
   };
-
+// change the code to Show the theatre name on top of the modal
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -122,7 +124,7 @@ const EditTheatreModal = ({
                 variant="primary"
                 type="button"
                 className="mt-4 float-end me-3"
-                onClick={addShowtime}
+                onClick={() => addShowtime(addedTimes,setAddedTimes)}
               >
                 Add
               </Button>
@@ -132,7 +134,7 @@ const EditTheatreModal = ({
             <Col>
               <Table borderless>
                 <tbody>
-                  {addedTimes.map((time, index) => (
+                  {addedTimes && addedTimes.map((time, index) => (
                     <tr key={index}>
                       <td>{time}</td>
                       <td>
@@ -153,7 +155,7 @@ const EditTheatreModal = ({
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onSubmitClick}>
+        <Button variant="secondary" onClick={() => onSubmitClick(theatre,addedTimes)}>
           Submit
         </Button>
       </Modal.Footer>
