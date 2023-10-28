@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import LoadingOverlay from '../../../shared/components/LoadingOverlay';
 
-function AddPromoComponent({onAddPromotion,isLoading}) {
+function AddPromoComponent({ onAddPromotion, isLoading }) {
 
     const [formData, setFormData] = useState({
         title: "",
@@ -12,12 +12,12 @@ function AddPromoComponent({onAddPromotion,isLoading}) {
         imageUrl: ""
     })
 
-    const handleChange = (event)=>{
-        const {name,value} = event.target;
-        setFormData((prevData)=>({...prevData,[name]:value}))
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }))
     }
 
-    const handleAddPromotion =(event)=>{
+    const handleAddPromotion = (event) => {
         event.preventDefault()
         onAddPromotion(formData)
         setFormData({
@@ -32,24 +32,46 @@ function AddPromoComponent({onAddPromotion,isLoading}) {
             <Card.Body>
                 <Card.Title>Add Promotion</Card.Title>
                 <Form onSubmit={handleAddPromotion}>
-                    <Form.Group controlId="cardName" className='mb-2'>
+                    <Form.Group className="mb-2">
                         <Form.Label>Promotion Title</Form.Label>
-                        <Form.Control type="text" name='title' value={formData.title} onChange={handleChange} placeholder="Enter Title" />
+                        <Form.Control
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            placeholder="Enter Title"
+                            required
+                        />
                     </Form.Group>
-                    <Form.Group controlId="cardName" className='mb-2'>
+                    <Form.Group className="mb-2">
                         <Form.Label>Promotion Description</Form.Label>
-                        <Form.Control type="text" name='description' value={formData.description} onChange={handleChange} placeholder="Enter Description" />
+                        <Form.Control
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Enter Description"
+                            required
+                        />
                     </Form.Group>
-                    <Form.Group controlId="cardName" className='mb-2'>
+                    <Form.Group className="mb-2">
                         <Form.Label>Card Image Url</Form.Label>
-                        <Form.Control type="text" name='imageUrl' value={formData.imageUrl} onChange={handleChange} placeholder="Enter Source Url" />
+                        <Form.Control
+                            type="text"
+                            name="imageUrl"
+                            value={formData.imageUrl}
+                            onChange={handleChange}
+                            placeholder="Enter Source Url"
+                            required
+                        />
                     </Form.Group>
-                    <Button variant="primary" type="submit" className='mt-2 float-end me-3'>
+                    <Button variant="primary" type="submit" className="mt-2 float-end me-3">
                         Add
                     </Button>
                 </Form>
             </Card.Body>
         </Card>
+
     )
 }
 
