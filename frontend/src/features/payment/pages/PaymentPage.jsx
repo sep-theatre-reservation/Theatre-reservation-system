@@ -58,7 +58,17 @@ function PaymentPage() {
         JSON.stringify({
           to: email,
           subject: "Booking.Lk You Ticket",
-          text: "Hi , Booking ID: AAMM0000010052. Seats: ODC - C6, C7, 2 seat(s) for Oppenheimer  on Sat, 22 Jul, 2023 09:15pm at Amity Lite 3D Cinema: Maharagama(SCREEN1)."
+          text: `We're thrilled to confirm your upcoming movie experience! Here are the details of your booked tickets:
+
+          Booking ID: ${bookingId}. Seats: ODC - ${booking.seats.join(
+            ", "
+          )} seat(s) for ${booking.show.movie.title}  on ${`${new Date(
+            booking.show.showtime
+          ).getFullYear()}-${
+            new Date(booking.show.showtime).getMonth() + 1
+          }-${new Date(booking.show.showtime).getDate()}`} at ${
+            booking.show.theatre.theatreName
+          }.`
         }),
         {
           "Content-Type": "application/json",
