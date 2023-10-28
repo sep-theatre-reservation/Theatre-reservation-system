@@ -6,28 +6,48 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
+  
+  const [showtime, setShowtime] = useState(null);
+
   const [theater, setTheater] = useState(null);
   const [isoString, setISOString] = useState(null);
+
+  const [showTimeArray, setShowTimeArray] = useState([]);
 
   // Handle date input change
   const handleDateChange = (e) => {
     setDate(e.target.value);
   };
 
-  // Handle hour input change
-  const handleHourChange = (e) => {
-    setHour(e.target.value);
+
+  const handleTheaterChange = async (e) => {
+    const selectedTheaterId = e.target.value;
+
+    // Perform other actions if needed
+    try {
+      const responseData = await fetch(
+        import.meta.env.VITE_REACT_APP_BASE_URL +
+          `/theatres/showtimes/${selectedTheaterId}`
+      );
+      const data = await responseData.json();
+      // console.log(data.showtimes);
+      setShowTimeArray(data.showtimes);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // Handle minute input change
-  const handleMinuteChange = (e) => {
-    setMinute(e.target.value);
-  };
+  const handleShowtimeChange = (e) => {
+    // Split the time string into hours and minutes
+    const [hours, minutes] = e.target.value.split(":");
+    
+    // Call the setHour and setMinute functions
+    setHour(hours);
+    setMinute(minutes);
 
-  const handleTheaterChange = (e) => {
-    setTheater(e.target.value);
-  };
-
+    console.log(hours, minutes);
+  }
+  
   // Function to generate ISO string from date and time
   const generateISOString = () => {
     if (date && hour && minute) {
@@ -79,42 +99,7 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
               </Form.Group>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <Form.Label>Time:</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={hour}
-                  onChange={handleHourChange}
-                >
-                  <option value="">Hour</option>
-                  {Array.from({ length: 24 }, (_, i) => (
-                    <option key={i} value={i.toString().padStart(2, "0")}>
-                      {i.toString().padStart(2, "0")}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.Label>&nbsp;</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={minute}
-                  onChange={handleMinuteChange}
-                >
-                  <option value="">Minute</option>
-                  {Array.from({ length: 60 }, (_, i) => (
-                    <option key={i} value={i.toString().padStart(2, "0")}>
-                      {i.toString().padStart(2, "0")}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-          </Row>
+
           <Row>
             <Col>
               <Form.Group>
@@ -134,6 +119,27 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres }) => {
               </Form.Group>
             </Col>
           </Row>
+
+          <Row>
+            <Col>
+              <Form.Group>
+                <Form.Label>Select a Showtime:</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={showtime}
+                  onChange={handleShowtimeChange}
+                >
+                  <option value="">Select a Showtime</option>
+                  {showTimeArray.map((showtimeItem) => (
+                    <option key={showtimeItem.id} value={showtimeItem.id}>
+                      {showtimeItem}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+
         </Container>
       </Modal.Body>
       <Modal.Footer>
