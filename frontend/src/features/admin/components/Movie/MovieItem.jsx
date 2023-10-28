@@ -13,7 +13,7 @@ const MovieItem = ({ movie, showSchedule, onStatusChange }) => {
   const { sendRequest } = useHttpClient();
 
   const onSchedule = () => {
-    showSchedule(movie.id);
+    showSchedule(movie);
   };
 
   // Use useEffect to watch for changes in selectedStatus
