@@ -13,7 +13,6 @@ function PaymentPage() {
   const { bookingId } = useParams();
   const { sendRequest: sendBookingFetchRequest } = useHttpClient();
   const { sendRequest: sendBookingConfirmRequest } = useHttpClient();
-  const { sendRequest: sendBookingCancelRequest } = useHttpClient();
   const { sendRequest: sendEmailRequest } = useHttpClient();
   const { sendRequest: sendCreatePaymentDataRequest } = useHttpClient();
   const [booking, setBooking] = useState(null);
@@ -36,7 +35,6 @@ function PaymentPage() {
       try {
         const responseData = await sendBookingFetchRequest(
           import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`
-
         );
         setBooking(responseData.booking);
       } catch (err) {
@@ -45,7 +43,7 @@ function PaymentPage() {
       }
     };
     fetchBooking();
-  }, []);
+  }, [sendBookingFetchRequest, bookingId]);
 
   const sendTicketEmail = async () => {
     console.log(auth.isLoggedIn);
@@ -114,25 +112,11 @@ function PaymentPage() {
     sendTicketEmail();
   };
 
-  const cancelBooking = async () => {
-    try {
-      const responseData = await sendBookingCancelRequest(
-        import.meta.env.VITE_REACT_APP_BASE_URL + `/bookings/${bookingId}`,
-
-        "PATCH",
-        JSON.stringify({
-          status: "Cancelled",
-        }),
-        {
-          "Content-Type": "application/json",
-        }
-      );
-      console.log(responseData);
-    } catch (err) {
-      /* */
-    }
-  };
-
+  function formatDateToTime(inputDateStr) {
+    const inputDate = new Date(inputDateStr);
+    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+    return inputDate.toLocaleTimeString([], options);
+  }
   return (
     <>
       {!auth.isLoggedIn && (
@@ -146,33 +130,44 @@ function PaymentPage() {
       )}
       <Container className="py-5" style={{ minHeight: "80vh" }}>
         <Row>
-          <h1
-            style={{
-              fontWeight: "bold",
-              textTransform: "uppercase",
-              marginRight: "50px",
-              marginBottom: "0px",
-            }}
-          >
-            EXPEN4BLES
-          </h1>
+          {booking && booking.show && (
+            <h1
+              style={{
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                marginRight: "50px",
+                marginBottom: "0px",
+              }}
+            >
+              {booking.show.movie.title}
+            </h1>
+          )}
           <div className="w-50">
             <hr />
           </div>
           <Stack direction="horizontal" gap={4} className="mb-5">
             {/* {console.log(booking.show)} */}
-            <div>
-              <FaMapMarkerAlt size={20} className="me-2 mb-2" />
-              Majestic Cineplex: Colombo
-            </div>
-            <div>
-              <FaCalendarAlt size={20} className="me-2 mb-2" />
-              25/10/2023
-            </div>
-            <div>
-              <FaRegClock size={20} className="me-2 mb-2" />
-              6.30 P.M.
-            </div>
+            {/* Conditional rendering based on the existence of booking.show */}
+            {booking && booking.show && (
+              <div>
+                <FaMapMarkerAlt size={20} className="me-2 mb-2" />
+                {booking.show.theatre.theatreName}
+              </div>
+            )}
+            {booking && booking.show && (
+              <div>
+                <FaCalendarAlt size={20} className="me-2 mb-2" />
+                {`${new Date(booking.show.showtime).getFullYear()}-${
+                  new Date(booking.show.showtime).getMonth() + 1
+                }-${new Date(booking.show.showtime).getDate()}`}
+              </div>
+            )}
+            {booking && booking.show && (
+              <div>
+                <FaRegClock size={20} className="me-2 mb-2" />
+                {formatDateToTime(booking.show.showtime)}
+              </div>
+            )}
           </Stack>
           <Col lg={6}>
             <Stack className="w-75">
