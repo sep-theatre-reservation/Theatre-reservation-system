@@ -3,7 +3,8 @@ import { Stack, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import ConfirmationModal from "../../../shared/components/ConfirmationModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 const TheatreItem = ({
   theatre,
@@ -12,26 +13,31 @@ const TheatreItem = ({
   onEditTheatre,
 }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showTimeArray, setShowTimeArray] = useState([]);
+  const [showTimeArray, setShowTimeArray] = useState(null);
+  const {  sendRequest } =useHttpClient();
 
 
   const getTheatreShowTimes = async () => {
     try {
-      const responseData = await fetch(
+      const responseData = await sendRequest(
         import.meta.env.VITE_REACT_APP_BASE_URL + `/theatres/showtimes/${theatre.id}`
       );
-      const data = await responseData.json();
-      // console.log(data.showtimes);
-      setShowTimeArray(data.showtimes);
+      setShowTimeArray(responseData.showtimes);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const handleEditClick = async () => {
+  useEffect(() => {
+    if(showTimeArray){
+    onEditTheatre(theatre.id, showTimeArray);
+    }
+  }, [showTimeArray]); 
+  
+  const handleShowtimesClick = async () => {
     try {
       await getTheatreShowTimes();
-      onEditTheatre(theatre.id,showTimeArray);
+      //onEditTheatre(theatre.id,showTimeArray);
     } catch (error) {
       console.log(error);
     }
@@ -66,8 +72,8 @@ const TheatreItem = ({
           <FaMapMarkerAlt size={20} className="mb-2" />
           {theatre.theatreName}
         </span>
-        <Button variant="warning" onClick={handleEditClick}>
-          Edit
+        <Button variant="warning" onClick={handleShowtimesClick}>
+          Showtimes
         </Button>
         <Button variant="danger" onClick={handleDeleteClick}>
           Remove

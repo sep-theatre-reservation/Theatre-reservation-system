@@ -88,14 +88,14 @@ export const getTheatreShowtimes = async (req, res, next) => {
 };
 
 export const editTheatreShowtimes = async (req, res, next) => {
-  // // Check if the user is an admin
-  // if (!req.userData.isAdmin) {
-  //   const error = new HttpError(
-  //     "You do not have permission to perform this action",
-  //     403
-  //   );
-  //   return next(error);
-  // }
+  // Check if the user is an admin
+  if (!req.userData.isAdmin) {
+    const error = new HttpError(
+      "You do not have permission to perform this action",
+      403
+    );
+    return next(error);
+  }
   
   const theatreId = req.params.tid;
   const newShowtimes = req.body.showtimes; 

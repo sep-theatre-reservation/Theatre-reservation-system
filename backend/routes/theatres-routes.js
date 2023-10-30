@@ -13,10 +13,10 @@ const router = express.Router();
 
 router.get("/", getTheatres);
 router.get("/showtimes/:tid", getTheatreShowtimes);
-router.patch("/showtimes/:tid", editTheatreShowtimes);
 
 router.use(checkAuth);
 
+router.patch("/showtimes/:tid", editTheatreShowtimes);
 router.post("/", addTheatre);
 router.delete("/:tid", deleteTheatre);
 

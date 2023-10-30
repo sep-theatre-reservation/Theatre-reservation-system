@@ -64,7 +64,7 @@ const EditTheatreModal = ({
 
         {
           "Content-Type": "application/json",
-          //Authorization: "Bearer " + auth.token,
+          Authorization: "Bearer " + auth.token,
         }
       );
       console.log(responseData);

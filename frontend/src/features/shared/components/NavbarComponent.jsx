@@ -73,7 +73,7 @@ function NavbarComponent() {
         style={{ backgroundColor: "#0c0342" }}
       >
         <Container fluid>
-          {true && (
+          {auth.isLoggedIn && auth.isAdmin && (
             <Button
               variant="danger"
               className={"me-3 d-none d-lg-block"}
