@@ -30,7 +30,7 @@ function App() {
   let { token, login, logout, user, isAdmin, userId } = useAuth();
   let routes;
 
-  if (true) {
+  if (isAdmin) {
     routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
