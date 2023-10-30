@@ -1,6 +1,6 @@
 import TheatreItem from "./TheatreItem";
 
-const TheatreList = ({ isLoading,theatreList,onDeleteTheatre }) => {
+const TheatreList = ({ isLoading,theatreList,onDeleteTheatre,onEditTheatre }) => {
   return (
     <>
       {theatreList.map((theatre) => (
@@ -9,6 +9,7 @@ const TheatreList = ({ isLoading,theatreList,onDeleteTheatre }) => {
           isLoading={isLoading}
           theatre={theatre}
           onDeleteTheatre={onDeleteTheatre}
+          onEditTheatre={onEditTheatre}
         ></TheatreItem>
       ))}
     </>
