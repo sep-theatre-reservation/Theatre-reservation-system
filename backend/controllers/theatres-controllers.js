@@ -72,3 +72,47 @@ export const deleteTheatre = async (req, res, next) => {
 
   res.status(200).json({ message: "Theatre Deleted!.." });
 };
+
+export const getTheatreShowtimes = async (req, res, next) => {
+
+  const theatreId = req.params.tid;
+
+  try {
+    const theatre = await Theatre.findById(theatreId);
+    res.json({showtimes: theatre.showtimes});
+    
+  }catch (error) {
+    next(error);
+  }
+
+};
+
+export const editTheatreShowtimes = async (req, res, next) => {
+  // // Check if the user is an admin
+  // if (!req.userData.isAdmin) {
+  //   const error = new HttpError(
+  //     "You do not have permission to perform this action",
+  //     403
+  //   );
+  //   return next(error);
+  // }
+  
+  const theatreId = req.params.tid;
+  const newShowtimes = req.body.showtimes; 
+
+  try {
+    const theatre = await Theatre.findById(theatreId);
+
+    // Update the showtimes array with the new array
+    theatre.showtimes = newShowtimes;
+
+    // Save the updated theater document
+    await theatre.save();
+
+    res.json({ message: "Showtimes updated successfully" });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
