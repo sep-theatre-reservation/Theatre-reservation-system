@@ -85,10 +85,10 @@ export default function Paypal({ orderDetails, onPaymentConfirm }) {
         // (3) Successful transaction -> Show confirmation or thank you message
         // Or go to another URL:  actions.redirect('thank_you.html');
         const transaction =
-          orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
+          orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||  
           orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
         alert(
-          `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`
+          `Transaction ${transaction.status}: ${transaction.id}`
         );
         console
           .log

@@ -84,7 +84,7 @@ const BookingPage = () => {
 
   return (
     <div className=" custom-background2">
-      <Container className="py-5">
+      <Container className="py-5" style={{minHeight:"80vh"}}>
         {selectedShowtime && (
           <SeatCountModal
             show={modalShow}

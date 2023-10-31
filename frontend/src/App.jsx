@@ -23,6 +23,8 @@ import MovieManagerPage from "./features/admin/pages/MovieManagerPage";
 import CustomerProfile from "./features/customer/pages/CustomerProfile";
 
 import { useAuth } from "./features/shared/hooks/auth-hook";
+import ContactUsPage from "./features/contactUs/ContactUsPage";
+import ScrollToTop from "./features/shared/tools/ScrollToTop";
 
 function App() {
   let { token, login, logout, user, isAdmin, userId } = useAuth();
@@ -38,15 +40,18 @@ function App() {
         <Route path="admin/movies" element={<MovieManagerPage />}></Route>
         <Route path="admin/theatres" element={<TheatreManagePage />}></Route>
         <Route path="admin/promotions" element={<PromoManagerPage />}></Route>
+
         <Route path="/movies" element={<MoviesPage />}>
           <Route index element={<NowShowing />}></Route>
           <Route path="nowshowing" element={<NowShowing />}></Route>
           <Route path="comingsoon" element={<CommingSoon />}></Route>
         </Route>
+        
         <Route path="movies/:movieId" element={<MovieShowcasePage />}></Route>
         <Route path="booking/:movieId" element={<BookingPage />}></Route>
         <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="payment/:bookingId" element={<PaymentPage />}></Route>
+        <Route path="contactus" element={<ContactUsPage />}></Route>
       </Routes>
     );
   } else {
@@ -65,6 +70,7 @@ function App() {
         <Route path="booking/:movieId" element={<BookingPage />}></Route>
         <Route path="/seats/:showId/:seatCount" element={<SeatSelection />} />
         <Route path="payment/:bookingId" element={<PaymentPage />}></Route>
+        <Route path="contactus" element={<ContactUsPage />}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
@@ -87,6 +93,7 @@ function App() {
       }}
     >
       <Router>
+        <ScrollToTop />
         <NavbarComponent />
         <main style={mainStyle}>{routes}</main>
         <Footer />

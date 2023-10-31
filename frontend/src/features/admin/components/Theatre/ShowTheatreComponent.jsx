@@ -2,7 +2,7 @@ import { Card, Stack } from "react-bootstrap";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 import TheatreList from "./TheatreList";
 
-function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,theatreList,onDeleteTheatre }) {
+function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,theatreList,onDeleteTheatre, onEditTheatre}) {
   return (
     <>
       {isShowTheatreLoading && <LoadingOverlay asOverlay />}
@@ -15,6 +15,7 @@ function ShowTheatreComponent({ isShowTheatreLoading,isDeleteTheatreLoading,thea
                   theatreList={theatreList}
                   onDeleteTheatre={onDeleteTheatre}
                   isLoading={isDeleteTheatreLoading}
+                  onEditTheatre={onEditTheatre}
                 />
               )}
             </Stack>

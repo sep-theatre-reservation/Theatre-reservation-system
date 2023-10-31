@@ -80,6 +80,7 @@ function AddMovieComponent({ onAddMovie, isLoading }) {
                 value={formData.title}
                 onChange={handleInputChange}
                 placeholder="Enter Title"
+                required
               />
             </Form.Group>
 
@@ -93,6 +94,7 @@ function AddMovieComponent({ onAddMovie, isLoading }) {
                 value={formData.description}
                 onChange={handleInputChange}
                 placeholder="Enter Description"
+                required
               />
             </Form.Group>
 
@@ -104,6 +106,7 @@ function AddMovieComponent({ onAddMovie, isLoading }) {
                 value={formData.imageUrl}
                 onChange={handleInputChange}
                 placeholder="Enter Source Url"
+                required
               />
             </Form.Group>
 
@@ -115,6 +118,7 @@ function AddMovieComponent({ onAddMovie, isLoading }) {
                 value={formData.trailerLink}
                 onChange={handleInputChange}
                 placeholder="Enter Trailer Link"
+                required
               />
             </Form.Group>
 
@@ -125,6 +129,7 @@ function AddMovieComponent({ onAddMovie, isLoading }) {
                 selected={formData.releaseDate}
                 onChange={handleDateChange}
                 dateFormat="MMMM d, yyyy"
+                required
               />
             </Form.Group>
             <Form.Group controlId="directorName" className="mb-2">
