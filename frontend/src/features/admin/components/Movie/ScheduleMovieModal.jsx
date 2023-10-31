@@ -7,7 +7,7 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres, movie }) => {
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
-  
+
   const [showtime, setShowtime] = useState(null);
 
   const [theater, setTheater] = useState(null);
@@ -20,8 +20,8 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres, movie }) => {
     setDate(e.target.value);
   };
 
-
   const handleTheaterChange = async (e) => {
+    setTheater(e.target.value);
     const selectedTheaterId = e.target.value;
 
     // Perform other actions if needed
@@ -39,16 +39,17 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres, movie }) => {
   };
 
   const handleShowtimeChange = (e) => {
+    setShowtime(e.target.value);
     // Split the time string into hours and minutes
     const [hours, minutes] = e.target.value.split(":");
-    
+
     // Call the setHour and setMinute functions
     setHour(hours);
     setMinute(minutes);
 
     console.log(hours, minutes);
-  }
-  
+  };
+
   // Function to generate ISO string from date and time
   const generateISOString = () => {
     if (date && hour && minute) {
@@ -145,7 +146,6 @@ const ScheduleMovieModal = ({ show, onHide, onSchedule, theatres, movie }) => {
               </Form.Group>
             </Col>
           </Row>
-
         </Container>
       </Modal.Body>
       <Modal.Footer>
